@@ -1,0 +1,10 @@
+footer {
+  width: 100wh;
+  height: 10vh;
+  background-color: maroon;
+}
+
+p {
+  color: white;
+  text-align: center;
+}

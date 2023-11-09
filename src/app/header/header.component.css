@@ -1,0 +1,38 @@
+header {
+  width: 100wh;
+  height: 20vh;
+  background-color: black;
+  color: white;
+}
+
+.banner {
+  background-color: maroon;
+}
+
+nav {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+a {
+  width: 20%;
+  margin: 10px 5px 10px 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: maroon;
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+a:first-child {
+  margin-left: 10px;
+}
+
+a:last-child {
+  margin-right: 10px;
+}
+
+a:hover {
+  color: yellow;
+}
