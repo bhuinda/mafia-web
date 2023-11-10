@@ -13,8 +13,7 @@ const routes: Routes = [
   { path: 'login', component: AuthComponent },
   { path: 'home', component: HomeComponent,
     children: [
-      { path: '', redirectTo: 'news', pathMatch: 'full' },
-      { path: 'news', component: NewsComponent }
+      { path: 'news', component: NewsComponent },
     ]
   },
   { path: 'game', component: GameComponent },
