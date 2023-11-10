@@ -44,3 +44,14 @@ p, h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+
+/* My CSS */
+
+@font-face {
+  font-family: 'VT323';
+  src: url('assets/fonts/VT323-Regular.ttf');
+}
+
+* {
+  font-family: VT323;
+}
