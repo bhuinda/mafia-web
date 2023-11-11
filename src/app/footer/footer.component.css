@@ -1,15 +1,17 @@
-footer {
-  margin: 10px;
+.wrapper {
   display: flex;
-  width: 100wh;
-  height: calc(10vh - 20px);
+  flex-direction: column;
+}
+
+footer {
+  height: 3rem;
+  width: calc(100% - 20px);
+  margin: 10px;
   background-color: black;
-  justify-content: center;
 }
 
 p {
-  display: inline-block;
   color: white;
   text-align: center;
-  font-size: 30px;
+  font-size: 2rem;
 }
