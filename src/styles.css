@@ -54,6 +54,10 @@ p, h1, h2, h3, h4, h5, h6 {
 
 * {
   font-size: 16px;
-  font-family: VT323;
-  background-color: black;
+  font-family: 'VT323';
+}
+
+/* Flex all components inside router-outlet */
+router-outlet + * {
+  flex: 1;
 }

@@ -1,12 +1,11 @@
 .wrapper {
-  display: flex;
-  flex-direction: column;
+  background-color: white;
 }
 
 footer {
-  height: 3rem;
-  width: calc(100% - 20px);
-  margin: 10px;
+  height: 3.4rem;
+  width: 100%;
+  margin-top: 5px;
   background-color: black;
 }
 
