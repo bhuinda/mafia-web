@@ -1,16 +1,15 @@
 .wrapper {
-  background-color: white;
+  color: white;
+  border: 5px solid;
 }
 
 footer {
-  height: 3.4rem;
   width: 100%;
-  margin-top: 5px;
   background-color: black;
 }
 
 p {
-  color: white;
+  padding: 0.5rem;
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5em;
 }

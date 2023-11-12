@@ -55,9 +55,41 @@ p, h1, h2, h3, h4, h5, h6 {
 * {
   font-size: 16px;
   font-family: 'VT323';
+  overflow: hidden;
 }
 
 /* Flex all components inside router-outlet */
 router-outlet + * {
   flex: 1;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  color: white;
+}
+
+/* Scrollbar styling */
+
+/* Width */
+::-webkit-scrollbar {
+  width: 1.5em;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-track-piece {
+  border-left: 5px solid;
+  background: black;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-left: 5px solid;
+  background: gray;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darkgray;
 }

@@ -1,12 +1,28 @@
 <header>
-  <div class="banner">
+  <div id="banner">
     <img src="../assets/banner.jpg" alt="Banner">
   </div>
   <nav>
-    <a routerLink="home">HOME</a>
-    <a routerLink="game">GAME</a>
-    <a routerLink="info">INFO</a>
-    <a routerLink="settings">SETTINGS</a>
-    <a routerLink="profile">PROFILE</a>
+    <a routerLink="home"
+       routerLinkActive="active">
+      <span class="selector">HOME</span>
+    </a>
+    <a routerLink="info"
+       routerLinkActive="active">
+      <span class="selector">INFO</span>
+    </a>
+    <a routerLink="game"
+       routerLinkActive="active"
+       id="focus">
+      <span class="selector">GAME</span>
+    </a>
+    <a routerLink="profile"
+       routerLinkActive="active">
+      <span class="selector">PROFILE</span>
+    </a>
+    <a routerLink="settings"
+       routerLinkActive="active">
+      <span class="selector">SETTINGS</span>
+    </a>
   </nav>
 </header>
