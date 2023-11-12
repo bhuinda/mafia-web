@@ -4,25 +4,24 @@
   </div>
   <nav>
     <a routerLink="home"
-       routerLinkActive="active">
-      <span class="selector">HOME</span>
+       routerLinkActive="active"
+       [innerHTML]="getSelectorHTML('home')">
     </a>
     <a routerLink="info"
-       routerLinkActive="active">
-      <span class="selector">INFO</span>
+       routerLinkActive="active"
+      [innerHTML]="getSelectorHTML('info')">
     </a>
     <a routerLink="game"
        routerLinkActive="active"
-       id="focus">
-      <span class="selector">GAME</span>
+       [innerHTML]="getSelectorHTML('game')">
     </a>
     <a routerLink="profile"
-       routerLinkActive="active">
-      <span class="selector">PROFILE</span>
+       routerLinkActive="active"
+       [innerHTML]="getSelectorHTML('profile')">
     </a>
     <a routerLink="settings"
-       routerLinkActive="active">
-      <span class="selector">SETTINGS</span>
+       routerLinkActive="active"
+       [innerHTML]="getSelectorHTML('settings')">
     </a>
   </nav>
 </header>

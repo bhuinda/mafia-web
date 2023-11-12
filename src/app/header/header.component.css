@@ -1,6 +1,8 @@
 header {
   color: white;
-  border: 5px solid;
+  border-top: 5px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
 }
 
 #banner {
@@ -17,8 +19,8 @@ a {
   width: 100%;
   border-left: 3px solid;
   border-right: 3px solid;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   background-color: black;
   color: white;
   text-align: center;
@@ -33,21 +35,25 @@ a:last-child {
   border-right: none;
 }
 
-.selector {
-  font-size: 2em;
+/*** [innerHTML] Styling ***/
+:host ::ng-deep .selector {
+  font-size: 3em;
 }
 
-/* TODO: Finalize style of selectors */
-a:hover > .selector {
+:host ::ng-deep .selector span {
+  font-size: 3rem;
+}
+
+/* Active selector text highlighted */
+:host ::ng-deep .active > .selector > .highlight {
   color: yellow;
 }
 
-.active > .selector {
+/* Selector brackets turn yellow on hover */
+:host ::ng-deep a:hover > .selector {
   color: yellow;
 }
 
-#focus {
-  padding: 0;
-  font-size: 2em;
-  line-height: 1.2;
+:host ::ng-deep a:not(.active):hover > .selector > .highlight {
+  color: white;
 }
