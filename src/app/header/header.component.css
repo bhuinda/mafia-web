@@ -6,6 +6,7 @@ header {
 }
 
 #banner {
+  display: none;
   border-bottom: 5px solid;
 }
 
@@ -56,4 +57,22 @@ a:last-child {
 
 :host ::ng-deep a:not(.active):hover > .selector > .highlight {
   color: white;
+}
+
+@media screen and (max-width: 1200px) {
+  :host ::ng-deep .selector {
+    font-size: 2em;
+  }
+
+  :host ::ng-deep .selector span {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    display: none;
+  }
+
+  /* TODO: Add menu icon for navigation for screens 768px and under. */
 }

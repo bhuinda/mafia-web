@@ -1,6 +1,8 @@
 .wrapper {
   color: white;
-  border: 5px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-bottom: 5px solid;
 }
 
 footer {
@@ -12,4 +14,10 @@ p {
   padding: 0.5rem;
   text-align: center;
   font-size: 1.5em;
+}
+
+@media screen and (max-width: 768px) {
+  footer {
+    display: none;
+  }
 }

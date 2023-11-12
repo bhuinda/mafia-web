@@ -61,19 +61,18 @@ p, h1, h2, h3, h4, h5, h6 {
 /* Flex all components inside router-outlet */
 router-outlet + * {
   flex: 1;
-  border-left: 5px solid;
-  border-right: 5px solid;
+  border: 5px solid;
   color: white;
 }
 
-/* Scrollbar styling */
 
-/* Width */
+
+/*** Scrollbar styling ***/
+
 ::-webkit-scrollbar {
   width: 1.5em;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: white;
 }
@@ -83,13 +82,18 @@ router-outlet + * {
   background: black;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   border-left: 5px solid;
   background: gray;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: darkgray;
+}
+
+/* Fix for border consistency when footer isn't displayed */
+@media screen and (max-width: 768px) {
+  router-outlet + * {
+    border-bottom: none;
+  }
 }
