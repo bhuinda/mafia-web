@@ -9,7 +9,7 @@ import { NewsComponent } from './home/news/news.component';
 import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: AuthComponent },
   { path: 'home', component: HomeComponent,
     children: [

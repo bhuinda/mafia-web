@@ -1,18 +1,30 @@
 <main>
-  <div class="container">
-    <p style="color: yellow; font-size: 4em">Hello! Welcome to Mafia.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, culpa quasi, ex necessitatibus provident tenetur perferendis, ea nemo doloremque libero atque deleniti asperiores sequi reiciendis autem a! Quaerat, omnis hic?</p>
+  <div class="column">
+    <div class="row-1">
+      <div id="welcome">
+        <h1>Welcome to Mafia.</h1>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo, illum eaque deserunt debitis rerum tempore dignissimos consequatur. Sunt architecto accusamus, doloremque soluta eveniet, fuga rem quisquam necessitatibus fugit hic unde.</p>
+      </div>
+      <!-- Dummy of app-home-stats -->
+      <div id="overview">
+        <div class="container">
+          <div class="login-prompt" *ngIf="!isAuthenticated">
+            <p>[<a routerLink="/login" style="color: lime; text-decoration: none">LOGIN</a>] to see your stats.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row-divider">
+      <hr>
+    </div>
+    <div class="row-2">
+      <!-- Dummy of app-home-news -->
+      <div id="news">
+        <div class="container">
+          <h2>({{ date }}) BREAKING NEWS: World ending soon.</h2>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat, pariatur maxime deleniti odit alias numquam corrupti? Quisquam, deleniti. Optio officia provident sunt incidunt, dolorum ducimus commodi repellat dolorem repudiandae nam.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </main>

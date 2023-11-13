@@ -5,6 +5,65 @@ main {
   color: white;
 }
 
-p {
-  font-size: 2em;
+p, span, a {
+  font-size: 2rem;
+}
+
+h1 {
+  color: yellow;
+  font-size: 4.5rem;
+  font-weight: normal;
+}
+
+h2 {
+  color: yellow;
+  font-size: 3rem;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-divider {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: black;
+}
+
+.row-divider hr {
+  background-color: white;
+  height: 5px;
+}
+
+.row-1 {
+  display: flex;
+}
+
+.row-1 > * {
+  flex: 1;
+  max-width: 50%;
+}
+
+#welcome {
+  margin-right: 1rem;
+}
+
+#overview {
+  margin-left: 1rem;
+  color: yellow;
+  border: 3px dashed;
+}
+
+#overview .container {
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  background-color: black;
+}
+
+.login-prompt {
+  text-align: center;
 }
