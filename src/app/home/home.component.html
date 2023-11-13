@@ -2,29 +2,26 @@
   <div class="column">
     <div class="row-1">
       <div id="welcome">
-        <h1>WELCOME TO MAFIA</h1>
-        <p>Mafia4Web is a fast-paced social deduction game where you collaborate, investigate, and conspire with up to 15 players. With over <span style="color: yellow">50</span> roles and endless ways to customize the game, every round will be wildly different. Learn the roles, outplay your foes, and try to survive.
+        <h1>Sabotage. Sleep. Repeat.</h1>
+        <p>Mafia is a fast-paced social deduction game where you collaborate, investigate, and conspire with up to 15 players. With over 50 roles and endless ways to customize the game, every round will be wildly different. Learn the roles, outplay your foes, and try to survive until the end.
         <br>
-        <p style="text-align: center;">Always remember: <span style="color: red; text-align: center">DEATH IS PERMANENT.</span></p>
+        <p style="text-align: center;">Always remember: <span style="color: red; display: inline-flex">DEATH IS PERMANENT.</span></p>
       </div>
       <!-- Dummy of app-home-stats -->
       <div id="overview">
         <div class="container">
           <div class="login-prompt" *ngIf="!isAuthenticated">
-            <p>[<a routerLink="/login" style="color: lime; text-decoration: none">LOGIN</a>] to see your stats.</p>
+            <p><a routerLink="/login" style="color: lime; text-decoration: none">LOGIN</a> to see your stats.</p>
           </div>
           <div class="stats-card" *ngIf="isAuthenticated"></div>
         </div>
       </div>
     </div>
-    <div class="row-divider">
-      <hr>
-    </div>
     <div class="row-2">
       <!-- Dummy of app-home-news -->
       <div id="news">
         <div class="container">
-          <h2>({{ date }}) BREAKING NEWS: World ending soon.</h2>
+          <h1>({{ date }}) BREAKING NEWS: World ending soon.</h1>
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat, pariatur maxime deleniti odit alias numquam corrupti? Quisquam, deleniti. Optio officia provident sunt incidunt, dolorum ducimus commodi repellat dolorem repudiandae nam.</p>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, itaque nam soluta veniam consequuntur magni nulla labore placeat quae quis similique animi officiis corrupti laudantium ducimus saepe cum sequi sit!</p>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto consectetur dicta doloremque accusamus aliquid blanditiis delectus, saepe eligendi voluptatibus natus tempora, cum hic, maxime eos aperiam quisquam distinctio accusantium culpa!</p>

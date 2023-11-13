@@ -6,8 +6,13 @@ header {
 }
 
 #banner {
-  display: none;
+  /* display: none; */
   border-bottom: 5px solid;
+}
+
+#banner img {
+  width: 100%;
+  height: 15vh;
 }
 
 nav {
@@ -37,6 +42,10 @@ a:last-child {
 }
 
 /*** [innerHTML] Styling ***/
+:host ::ng-deep * {
+  font-family: 'VT323';
+}
+
 :host ::ng-deep .selector {
   font-size: 3em;
 }

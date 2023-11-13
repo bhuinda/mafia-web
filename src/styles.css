@@ -49,7 +49,7 @@ p, h1, h2, h3, h4, h5, h6 {
 
 @font-face {
   font-family: 'VT323';
-  src: url('assets/fonts/VT323-Regular.ttf');
+  src: url('assets/fonts/vt323/VT323-Regular.ttf');
 }
 
 * {
