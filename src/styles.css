@@ -58,13 +58,6 @@ p, h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-/* Flex all components inside router-outlet */
-router-outlet + * {
-  flex: 1;
-  border: 5px solid;
-  color: white;
-}
-
 /*** Scrollbar styling ***/
 
 ::-webkit-scrollbar {
@@ -87,11 +80,4 @@ router-outlet + * {
 
 ::-webkit-scrollbar-thumb:hover {
   background: darkgray;
-}
-
-/* Fix for border consistency when footer isn't displayed */
-@media screen and (max-width: 768px) {
-  router-outlet + * {
-    border-bottom: none;
-  }
 }

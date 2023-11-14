@@ -1,12 +1,13 @@
 header {
   color: white;
-  border-top: 5px solid;
+  border: 5px solid;
+  /* border-top: 5px solid;
   border-left: 5px solid;
-  border-right: 5px solid;
+  border-right: 5px solid; */
 }
 
 #banner {
-  /* display: none; */
+  display: none;
   border-bottom: 5px solid;
 }
 
@@ -25,8 +26,8 @@ a {
   width: 100%;
   border-left: 3px solid;
   border-right: 3px solid;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   background-color: black;
   color: white;
   text-align: center;
@@ -47,7 +48,7 @@ a:last-child {
 }
 
 :host ::ng-deep .selector {
-  font-size: 3em;
+  font-size: 3rem;
 }
 
 :host ::ng-deep .selector span {
@@ -69,11 +70,7 @@ a:last-child {
 }
 
 @media screen and (max-width: 1200px) {
-  :host ::ng-deep .selector {
-    font-size: 2em;
-  }
-
-  :host ::ng-deep .selector span {
+  :host ::ng-deep .selector, :host ::ng-deep .selector span {
     font-size: 2rem;
   }
 }

@@ -2,12 +2,20 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  /* padding: 30px; */
+  padding: 3rem;
   background-color: black;
+}
+
+.wrapper {
+  flex: 1;
 }
 
 /* @media screen and (max-width: 1200px) {
   .container {
     padding: 20px;
   }
+} */
+
+/* app-footer {
+  display: none;
 } */

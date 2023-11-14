@@ -2,16 +2,14 @@
   <div class="column">
     <div class="row-1">
       <div id="welcome">
-        <h1>Sabotage. Sleep. Repeat.</h1>
-        <p>Mafia is a fast-paced social deduction game where you collaborate, investigate, and conspire with up to 15 players. With over 50 roles and endless ways to customize the game, every round will be wildly different. Learn the roles, outplay your foes, and try to survive until the end.
-        <br>
-        <p style="text-align: center;">Always remember: <span style="color: red; display: inline-flex">DEATH IS PERMANENT.</span></p>
+        <h1>Lie. Sleep. Repeat.</h1>
+        <p>Mafia is a fast-paced social deduction game where you investigate, collaborate with, and conspire against up to 15 players. With over 50 roles and endless ways to customize the game, every round will be wildly different. Survive the night, outplay your foes, and win. And always remember: <span style="color: red; display: inline-flex">DEATH IS PERMANENT.</span></p>
       </div>
       <!-- Dummy of app-home-stats -->
       <div id="overview">
         <div class="container">
           <div class="login-prompt" *ngIf="!isAuthenticated">
-            <p><a routerLink="/login" style="color: lime; text-decoration: none">LOGIN</a> to see your stats.</p>
+            <p>[<a routerLink="/login" style="color: lime; text-decoration: none">LOGIN</a>] to see your stats.</p>
           </div>
           <div class="stats-card" *ngIf="isAuthenticated"></div>
         </div>
@@ -27,6 +25,31 @@
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto consectetur dicta doloremque accusamus aliquid blanditiis delectus, saepe eligendi voluptatibus natus tempora, cum hic, maxime eos aperiam quisquam distinctio accusantium culpa!</p>
           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet deserunt omnis vitae voluptatem, recusandae culpa quis tempore, beatae rerum minima fugiat. Vitae adipisci iusto sed est omnis nostrum, esse optio.</p>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex minima accusamus eveniet odit necessitatibus hic, consequatur labore rem, omnis quo, ad dolores voluptatum ducimus veniam est inventore alias nemo neque.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div id="lobby-finder">
+          <div class="container">
+            <p style="color: yellow">Current Lobbies</p>
+            <hr style="border-style: solid">
+            <br>
+            <p><span style="color: yellow">(13/15)</span> JOIN NOW</p>
+            <p><span style="color: yellow">(9/15)</span> 8331</p>
+            <p><span style="color: yellow">(8/15)</span> Cult save</p>
+            <p><span style="color: yellow">(2/15)</span> 1 cit 1 maf 13 jester</p>
+            <p><span style="color: yellow">(1/15)</span> Coroner save</p>
+            <p><span style="color: yellow">(1/15)</span> fkalmsdoiaoiejd</p>
+          </div>
+        </div>
+        <div id="global-chat">
+          <div class="container">
+            <p style="color: yellow">Global Chat</p>
+            <hr style="border-style: solid">
+            <br>
+            <div class="chat-box">
+              <p>[<a routerLink="/login" style="color: lime; text-decoration: none">LOGIN</a>] to chat.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
