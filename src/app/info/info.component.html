@@ -1,3 +1,18 @@
 <main>
-  hi
+  <nav>
+    <a routerLink="gameplay"
+       routerLinkActive="active"
+       class="box">Gameplay</a>
+    <a routerLink="mechanics"
+       routerLinkActive="active"
+       class="box">Mechanics</a>
+    <a routerLink="roles"
+       routerLinkActive="active"
+       class="box">Roles</a>
+    <a routerLink="/info"
+       class="box title">BACK</a>
+  </nav>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </main>
