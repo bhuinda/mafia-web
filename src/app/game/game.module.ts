@@ -7,7 +7,7 @@ import { GameRoutingModule } from './game-routing.module';
 @NgModule({
   declarations: [
     GameComponent,
-    LobbyComponent
+    LobbyComponent,
   ],
   imports: [
     CommonModule,

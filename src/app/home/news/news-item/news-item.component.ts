@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NewsItem } from './news-item.model';
 
 @Component({
   selector: 'app-news-item',
@@ -6,5 +7,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./news-item.component.css']
 })
 export class NewsItemComponent {
-
 }

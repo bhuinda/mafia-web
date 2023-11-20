@@ -90,6 +90,7 @@ h1 {
 }
 
 .chat-box {
+  display: none;
   color: white;
   padding: 1rem;
   padding-bottom: 165%;
