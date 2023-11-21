@@ -3,6 +3,8 @@
   border: 3px dashed;
 }
 
+/* Layout */
+
 .row {
   display: flex;
   flex-direction: row;

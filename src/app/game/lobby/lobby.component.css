@@ -1,0 +1,17 @@
+.box {
+  color: yellow;
+  border: 3px dashed;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.config {
+  flex: 1;
+}
+
+.start {
+  background-color: lime;
+}

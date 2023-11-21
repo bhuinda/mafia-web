@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GameComponent } from './game.component';
 import { LobbyComponent } from './lobby/lobby.component';
+import { MatchComponent } from './match/match.component';
 
 const routes: Routes = [
   { path: 'game', component: GameComponent,
     children: [
       { path: 'lobby', component: LobbyComponent },
-      { path: '', redirectTo: 'lobby', pathMatch: 'full' },
+      { path: 'match', component: MatchComponent }
     ]
   },
 ];

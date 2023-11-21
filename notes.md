@@ -1,3 +1,7 @@
+Notes:
+
+LobbyComponent and MatchComponent will have unique generated IDs that display in the route path. Implement auth guard so that only users assigned to a lobby/match can access them
+
 Roles:
 
 Town (Investigative Protective Government Killing Power)
