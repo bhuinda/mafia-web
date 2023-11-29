@@ -13,5 +13,15 @@
 }
 
 .start {
+  width: 3em;
+  height: 3em;
   background-color: lime;
+  line-height: 2em;
+  text-align: center;
+  font-size: 3em;
+  text-decoration: none;
+}
+
+.start:hover {
+  background-color: gray;
 }
