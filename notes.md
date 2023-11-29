@@ -19,3 +19,34 @@ Administrator Deceiver Dragon Head Enforcer Forger Incense Master Informant Inte
 Neutral (Benign Evil Killing)
 
 Amnesiac Arsonist Auditor Cultist Executioner Jester Judge Mass Murderer Scumbag Serial Killer Survivor Witch Witch Doctor
+
+ROLE IDEAS:
+- Wizard: At night, transform a player into a random role. This can only be used once.
+
+  #isExcludedFromRandomAny = false;
+  #isExcludedFromRandomTown = false;
+  #isExcludedFromRandomMafia = false;
+  #isExcludedFromRandomTriad = false;
+  #isExcludedFromRandomNeutral = false;
+
+  #isExcludedFromMafiaRandom = false;
+  #isExcludedFromMafiaSupport = false;
+  #isExcludedFromMafiaKilling = false;
+  #isExcludedFromMafiaDeception =  false;
+
+  #isExcludedFromTriadRandom = false;
+  #isExcludedFromTriadSupport = false;
+  #isExcludedFromTriadKilling = false;
+  #isExcludedFromTriadDeception =  false;
+
+  #isExcludedFromTownRandom = false;
+  #isExcludedFromTownGovernment = false;
+  #isExcludedFromTownInvestigative = false;
+  #isExcludedFromTownKilling = false;
+  #isExcludedFromTownPower = false;
+  #isExcludedFromTownProtective = false;
+
+  #isExcludedFromNeutralRandom = false;
+  #isExcludedFromNeutralBenign = false;
+  #isExcludedFromNeutralEvil = false;
+  #isExcludedFromNeutralKilling = false;
