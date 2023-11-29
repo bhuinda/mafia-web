@@ -1,4 +1,4 @@
-import { Action } from "./action.model";
+import { Action } from "../action.model";
 
 export class ActionVest extends Action {
   #name = "Vest";
