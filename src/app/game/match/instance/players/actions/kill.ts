@@ -1,6 +1,4 @@
-import { Action } from "./action.model";
-
-export class ActionAttack extends Action {
+export class AbilityAttack {
   #name = "Attack";
   #description = "At night, attack a player.";
   #isCommitted = false;
