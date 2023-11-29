@@ -1,0 +1,6 @@
+{
+  "name": "Citizen",
+  "description": "A core member of the Town. At night, you may equip an invulnerable vest to protect against all attack.",
+  "msgCommit": "You decide to equip a vest.",
+  "msgUncommit": "You decide to unequip your vest."
+}

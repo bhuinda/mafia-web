@@ -1,0 +1,14 @@
+{
+  "id": "Mafioso",
+  "faction": "Mafia",
+  "alignment": "Mafia",
+  "types": [
+    "Killing"
+  ],
+  "config": {
+    "action": {
+      "name": "Attack"
+    },
+    "traits": []
+  }
+}

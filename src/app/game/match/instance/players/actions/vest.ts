@@ -15,11 +15,7 @@ export class ActionVest extends Action {
     return this.#uses > 0 ? this.#usesLeft : this.#usesNone;
   }
 
-  get info() { // Explicitly cast as RoleInfo type?
-    return [this.#name, this.#description]
-  }
-
-  get use() {
+  override get use() {
     this.#isCommitted = !this.#isCommitted;
     return this.#isCommitted ? this.#useCommit : this.#useUncommit;
   }
