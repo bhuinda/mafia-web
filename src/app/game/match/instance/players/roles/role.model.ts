@@ -9,13 +9,7 @@ export abstract class Role {
   readonly ability: string;
   readonly traits: string[];
 
-  constructor(
-    roleProfile: RoleProfile,
-    roleOptions: RoleOptions = {
-      isUnique: false,
-      randomTypeExclusions: [],
-    }
-  ) {
+  constructor(roleProfile: RoleProfile, roleOptions: RoleOptions) {
     this.name = roleProfile.name;
     this.description = roleProfile.description;
     this.alignment = roleProfile.alignment;

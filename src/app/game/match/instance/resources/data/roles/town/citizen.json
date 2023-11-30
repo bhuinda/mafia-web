@@ -1,15 +1,10 @@
 {
   "id": "Citizen",
-  "faction": "Town",
   "alignment": "Town",
+  "faction": "Town",
   "types": [
     "Government"
   ],
-  "config": {
-    "action": {
-      "name": "Vest",
-      "uses": 1
-    },
-    "traits": ["Tiebreaker"]
-  }
+  "ability": "Vest",
+  "traits": ["Tiebreaker"]
 }
