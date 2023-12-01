@@ -1,17 +1,73 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { ActionVest } from './instance/players/actions/vest';
-import Citizen from './instance/resources/locale/en-US/roles/town/citizen.json';
+interface Config {
+  name: string;
+  description: string;
+  messageCommit: string;
+}
+
+class Citizen {
+  name: string;
+  description: string;
+  messageCommit: string;
+  messageProperties: { [key: string]: any } = {};
+
+  constructor(config: Config) {
+    this.name = config.name;
+    this.description = config.description;
+    this.messageCommit = config.messageCommit;
+  }
+
+  getEmbeddedValues(message: string): string {
+    let embeddedMessage = message;
+    for (const key in this.messageProperties) {
+      embeddedMessage = embeddedMessage.replace(`{${key}}`, this.messageProperties[key]);
+    }
+
+    return embeddedMessage;
+  }
+}
 
 @Component({
   selector: 'app-match',
   templateUrl: './match.component.html',
   styleUrls: ['./match.component.css']
 })
-export class MatchComponent {
-  actionVest = new ActionVest(Citizen.name, Citizen.description, Citizen.msgCommit, Citizen.msgUncommit);
-  constructor() {}
+export class MatchComponent implements OnInit {
+  messageProperties: { [key: string]: any } = {
+    name: 'John',
+    count: 5
+  }
 
-  roleName = this.actionVest.name;
-  roleDescription = this.actionVest.description;
+  config = {
+    name: 'Citizen',
+    description: 'A regular member of the Town.',
+    messageCommit: 'You decide to attack {name} {count} times.'
+  };
+
+  stringified = JSON.stringify(this.config);
+  conversion = JSON.parse(this.stringified);
+
+  citizen = new Citizen(this.conversion);
+
+  ngOnInit(): void {
+    console.log(this.stringified);
+  }
+
+  addNewProperty(key: string, value: any) {
+    this.messageProperties[key] = value;
+    console.log(this.messageProperties);
+  }
+
+  templateLiteralEmulator(message: string): string {
+    let convertedMessage = message;
+    for (const key in this.messageProperties) {
+      convertedMessage = convertedMessage.replace(`{${key}}`, this.messageProperties[key]);
+    }
+        // Original: convertedMessage = 'You decide to attack {name} {count} times.'
+        // Pass 1: convertedMessage = 'You decide to attack John {count} times.'
+        // Pass 2: convertedMessage = 'You decide to attack John 5 times.'
+
+    return convertedMessage;
+  }
 }

@@ -1,10 +1,10 @@
 export abstract class Action {
-  #name: string;
-  #description: string;
+  name: string;
+  description: string;
 
-  #commitMessage: string;
-  #uncommitMessage: string;
-  #isCommitted = false;
+  commitMessage: string;
+  uncommitMessage: string;
+  isCommitted = false;
 
   constructor(
     name: string,
@@ -12,22 +12,9 @@ export abstract class Action {
     commitMessage: string,
     uncommitMessage: string
     ){
-    this.#name = name;
-    this.#description = description;
-    this.#commitMessage = commitMessage;
-    this.#uncommitMessage = uncommitMessage;
-  }
-
-  get name() {
-    return this.#name;
-  }
-
-  get description() {
-    return this.#description;
-  }
-
-  get use() {
-    this.#isCommitted = !this.#isCommitted;
-    return this.#isCommitted ? this.#commitMessage : this.#uncommitMessage;
+    this.name = name;
+    this.description = description;
+    this.commitMessage = commitMessage;
+    this.uncommitMessage = uncommitMessage;
   }
 }
