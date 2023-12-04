@@ -26,9 +26,8 @@ export class Metadata implements OnInit {
     },
   ]
 
-  getMetadata(directory: string): Metadata[] {
-    const metadata = JSON.parse(localStorage.getItem(directory) || '[]');
-    return metadata;
+  getMetadata(directory: string): Observable<any> {
+    return this.http.get("https://ng-mafia4web-default-rtdb.firebaseio.com/roles/citizen")
   }
 
   // getMetadata(directory: string) {
@@ -56,7 +55,7 @@ export class Metadata implements OnInit {
   ngOnInit(): void {
     // Finds all relevant JSON files and creates an array of their IDs
     for (const directory of this.directories) {
-      this.catalog[directory.name] = this.getMetadata(directory.path);
+      //this.catalog[directory.name] = this.getMetadata(directory.path);
     }
   }
 }

@@ -1,5 +1,5 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { RoleController } from './instance/players/roles/role-controller.service';
 
 @Component({
   selector: 'app-match',
@@ -10,10 +10,17 @@ import { RoleController } from './instance/players/roles/role-controller.service
 export class MatchComponent implements OnInit {
 
 
-  constructor(private roleController: RoleController) {}
+  constructor(private http: HttpClient) {}
+
+  testRole() {
+    return this.http.get("https://ng-mafia4web-default-rtdb.firebaseio.com/roles/citizen.json")
+    .subscribe((data: any) => {
+      console.log(data);
+    })
+  }
 
   ngOnInit(): void {
-
+    this.testRole();
   }
 }
 
