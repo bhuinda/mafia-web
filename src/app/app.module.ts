@@ -12,6 +12,19 @@ import { FooterComponent } from './footer/footer.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCkqYBq3krhnhc50U6IdECblCV9tnNJyzw",
+  authDomain: "ng-mafia4web.firebaseapp.com",
+  databaseURL: "https://ng-mafia4web-default-rtdb.firebaseio.com",
+  projectId: "ng-mafia4web",
+  storageBucket: "ng-mafia4web.appspot.com",
+  messagingSenderId: "1065272022680",
+  appId: "1:1065272022680:web:0ff57c33700cf5dd55e2ed",
+  measurementId: "G-48X3FQG9EH"
+};
 
 @NgModule({
   declarations: [
@@ -19,12 +32,14 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     FooterComponent,
     SettingsComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirestore(() => getFirestore()),
     HomeModule,
     InfoModule,
     GameModule,
