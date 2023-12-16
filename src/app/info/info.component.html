@@ -13,6 +13,10 @@
        class="box title">BACK</a>
   </nav>
   <div class="content">
-    <router-outlet></router-outlet>
+    <router-outlet
+    (activate)="onActivate()"
+    (deactivate)="onDeactivate()">
+    </router-outlet>
+    <p id="prompt" *ngIf="!isComponentActive">Please select a category.</p>
   </div>
 </main>
