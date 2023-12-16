@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
@@ -6,17 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FirebaseService {
-  firestore: Firestore = inject(Firestore);
-  roles$: Observable<any[]>;
-  locale$: Observable<any[]>;
+  roles$ = collectionData(collection(this.firestore, 'roles')) as Observable<any>;
+  locale$ = collectionData(collection(this.firestore, 'resources/locale/en-US')) as Observable<any>;
 
-  constructor() {
-    const roleCollection = collection(this.firestore, 'roles')
-    this.roles$ = collectionData(roleCollection);
-
-    const localeCollection = collection(this.firestore, 'resources/locale/en-US')
-    this.locale$ = collectionData(localeCollection);
-  }
+  constructor(private readonly firestore: Firestore) {}
 
   get roles () {
     return this.roles$;

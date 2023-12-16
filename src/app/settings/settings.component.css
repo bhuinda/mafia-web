@@ -1,4 +1,24 @@
 main {
-  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+  overflow-y: auto;
   color: white;
+  border-left: 5px solid;
+  border-right: 5px solid;
+}
+
+.construction {
+  font-size: 100px;
+  color: yellow;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    border: 5px solid;
+  }
 }

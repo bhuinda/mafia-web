@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-match',
@@ -7,21 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./match.component.css']
 })
 
-export class MatchComponent implements OnInit {
-
-
-  constructor(private http: HttpClient) {}
-
-  testRole() {
-    return this.http.get("https://ng-mafia4web-default-rtdb.firebaseio.com/roles/citizen.json")
-    .subscribe((data: any) => {
-      console.log(data);
-    })
-  }
-
-  ngOnInit(): void {
-    this.testRole();
-  }
+export class MatchComponent {
 }
 
 // interface Config {
@@ -89,4 +74,3 @@ export class MatchComponent implements OnInit {
 
 //   return convertedMessage;
 // }
-

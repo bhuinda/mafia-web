@@ -6,3 +6,9 @@ main {
   border-left: 5px solid;
   border-right: 5px solid;
 }
+
+@media screen and (max-width: 768px) {
+  main {
+    border: 5px solid;
+  }
+}
