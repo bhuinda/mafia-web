@@ -5,6 +5,7 @@ import { LobbyComponent } from './lobby/lobby.component';
 import { GameRoutingModule } from './game-routing.module';
 import { MatchComponent } from './match/match.component';
 import { ChatComponent } from './lobby/chat/chat.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ChatComponent } from './lobby/chat/chat.component';
     ChatComponent,
   ],
   imports: [
+    FormsModule,
     CommonModule,
     GameRoutingModule
   ]
