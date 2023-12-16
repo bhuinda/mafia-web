@@ -43,14 +43,8 @@ a:last-child {
 }
 
 /*** [innerHTML] Styling ***/
-:host ::ng-deep * {
-  font-family: 'VT323';
-}
 
-:host ::ng-deep .selector {
-  font-size: 3rem;
-}
-
+:host ::ng-deep .selector,
 :host ::ng-deep .selector span {
   font-size: 3rem;
 }
