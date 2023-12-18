@@ -76,3 +76,31 @@ a:last-child {
 
   /* TODO: Add menu icon for navigation for screens 768px and under. */
 }
+
+/* Hamburger icon */
+
+#hamburger-dropdown {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  #hamburger-dropdown {
+    z-index: 0;
+    display: block;
+    margin: 1rem;
+    font-size: 10rem;
+    cursor: pointer;
+  }
+
+  #hamburger-dropdown:hover .hamburger {
+    z-index: 0;
+    display: block;
+    margin: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+}

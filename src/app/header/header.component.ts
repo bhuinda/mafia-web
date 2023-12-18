@@ -14,4 +14,8 @@ export class HeaderComponent {
       </div>
     `;
   }
+
+  onBurgerClick(): void {
+
+  }
 }

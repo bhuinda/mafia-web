@@ -1,7 +1,9 @@
 <header>
+
   <div id="banner">
     <img src="../assets/banner.jpg" alt="Banner">
   </div>
+
   <nav>
     <a routerLink="home"
        routerLinkActive="active"
@@ -29,4 +31,35 @@
        draggable="false">
     </a>
   </nav>
+
 </header>
+<div class="container">
+  <button id="hamburger-dropdown" (click)="onBurgerClick()"><p>☰</p></button>
+  <div class="hamburger">
+    <a routerLink="home"
+      routerLinkActive="active"
+      [innerHTML]="getSelectorHTML('home')"
+      draggable="false">
+    </a>
+    <a routerLink="info"
+      routerLinkActive="active"
+      [innerHTML]="getSelectorHTML('info')"
+      draggable="false">
+    </a>
+    <a routerLink="game"
+      routerLinkActive="active"
+      [innerHTML]="getSelectorHTML('game')"
+      draggable="false">
+    </a>
+    <a routerLink="profile"
+      routerLinkActive="active"
+      [innerHTML]="getSelectorHTML('profile')"
+      draggable="false">
+    </a>
+    <a routerLink="settings"
+      routerLinkActive="active"
+      [innerHTML]="getSelectorHTML('settings')"
+      draggable="false">
+    </a>
+  </div>
+</div>
