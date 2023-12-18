@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { GameComponent } from './game.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { GameRoutingModule } from './game-routing.module';
@@ -18,6 +18,9 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     CommonModule,
     GameRoutingModule
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class GameModule { }
