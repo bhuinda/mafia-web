@@ -14,7 +14,9 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.chatService.getMessages().subscribe((data: any) => {
-      this.messages = data;
+      this.messages = data.sort((a: any, b: any) =>
+        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+      );
     });
   }
 

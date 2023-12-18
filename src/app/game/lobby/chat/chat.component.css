@@ -1,0 +1,57 @@
+.chatbox {
+  display: flex;
+  flex-direction: column;
+  color: yellow;
+  border: 3px solid;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  line-height: 1;
+}
+
+.message {
+  /* margin-bottom: 20px; */
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+input[type="text"] {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  margin-left: 20px;
+  padding: 10px;
+  font-size: 16px;
+  background: lime;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Message formatting */
+#timestamp {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+#username {
+  font-size: 2rem;
+  color: lime;
+}
+
+#text {
+  font-size: 2rem;
+  margin-left: 0px;
+}
