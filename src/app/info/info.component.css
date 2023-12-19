@@ -1,4 +1,8 @@
+/* Making main a flexbox works for making content flex properly, BUT */
+/* The subcomponents, when overflowed, are not recognized by main */
 main {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   padding: 2rem;
   background-color: black;
@@ -9,12 +13,12 @@ main {
 
 nav {
   display: flex;
+  margin-bottom: 1rem;
 }
 
 a {
   width: 100%;
   margin-left: 1rem;
-  margin-bottom: 1rem;
   background-color: black;
   color: white;
   text-align: center;
@@ -45,11 +49,11 @@ a:hover {
 }
 
 .content {
+  flex: 1;
   color: yellow;
   border: 3px dashed;
   padding: 1rem;
   /* Future fix needed for consistency; height is only approximate */
-  height: 95%;
 }
 
 @media screen and (max-width: 768px) {
