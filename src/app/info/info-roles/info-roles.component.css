@@ -1,8 +1,11 @@
 /* Layout */
 
-.row {
+/* suggestion to use min-height: 0 for child container with overflow */
+
+section {
   display: flex;
   flex-direction: row;
+  overflow-y: auto;
 }
 
 .column {
@@ -10,14 +13,20 @@
 }
 
 .roles {
+  display: flex;
+  flex-direction: column;
   margin-right: 1rem;
   padding: 0.5rem;
   flex: 0 1 auto;
 }
 
-span {
-  display: block;
+.roles > p,
+.roles > span {
+  line-height: 1;
+  font-size: 1.5rem;
 }
+
+/* Role selector */
 
 .alignment.town {
   background-color: green;
@@ -37,19 +46,30 @@ span {
   color: red;
 }
 
+/* Role info */
+
 .info {
-  padding: 1rem;
+  padding: 0;
+  color: white;
 }
 
-h1 {
+.tag {
+  font-size: 1.1rem;
+  color: yellow;
+}
+
+#name {
+  font-size: 4rem;
+}
+
+.info > p,
+.info > span {
   line-height: 1;
-  font-size: 3rem;
+  font-size: 1rem;
 }
 
-p, span {
+#description {
+  padding-top: 1rem;
   font-size: 1.5rem;
-}
-
-.description {
   overflow: auto;
 }

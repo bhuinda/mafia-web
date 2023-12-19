@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
+  isComponentActive = false;
 
+  onActivate() {
+    this.isComponentActive = true;
+  }
+
+  onDeactivate() {
+    this.isComponentActive = false;
+  }
 }

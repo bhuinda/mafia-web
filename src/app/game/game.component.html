@@ -1,9 +1,31 @@
 <main>
-  <nav>
-    <a routerLink="lobby">To Lobby</a>
-    <a routerLink="match">To Match</a>
-  </nav>
+
+  <section *ngIf="!isComponentActive">
+
+    <div class="row-1">
+      <div class="column">
+        <nav>
+          <a routerLink="lobby">To Lobby</a>
+          <a routerLink="match">To Match</a>
+        </nav>
+      </div>
+      <div class="column">
+        <div class="lobby-finder">
+
+        </div>
+      </div>
+    </div>
+    <div class="row-2">
+      <p>hi</p>
+    </div>
+
+  </section>
+
   <div class="content">
-    <router-outlet></router-outlet>
+    <router-outlet
+      (activate)="onActivate()"
+      (deactivate)="onDeactivate()">
+    </router-outlet>
   </div>
+
 </main>
