@@ -5,7 +5,7 @@ import { LobbyComponent } from './lobby/lobby.component';
 import { MatchComponent } from './match/match.component';
 
 const routes: Routes = [
-  { path: 'game', component: GameComponent,
+  { path: '', component: GameComponent,
     children: [
       { path: 'lobby', component: LobbyComponent },
       { path: 'match', component: MatchComponent }
