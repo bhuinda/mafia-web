@@ -1,6 +1,8 @@
 main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100%;
-  flex: 1;
 }
 
 .box {
@@ -13,12 +15,20 @@ main {
   flex-direction: row;
 }
 
+.box .row {
+  padding: 10px; /* adjust as needed */
+}
+
+.row .column {
+  flex: 1;
+}
+
 .config {
   flex: 1;
 }
 
 .start {
-  flex: 1;
+  flex: 0.2;
   width: 2em;
   height: 2em;
   padding: 10px;
@@ -31,8 +41,4 @@ main {
 
 .start:hover {
   background-color: gray;
-}
-
-.column {
-  flex: 1;
 }

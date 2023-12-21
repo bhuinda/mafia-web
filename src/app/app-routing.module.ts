@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
   { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
 
-  { path: 'auth', component: AuthComponent },
+  { path: 'auth', component: AuthComponent }, // Keep eager-loaded to access auth service?
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 

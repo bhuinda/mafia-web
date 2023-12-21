@@ -9,10 +9,10 @@ import { ChatService } from '../../../shared/chat.service';
 export class ChatComponent implements OnInit, OnDestroy {
   chatService = inject(ChatService);
   text = '';
-  messages!: any;
+  messages;
 
   ngOnInit(): void {
-    this.chatService.getMessages().subscribe((data: any) => {
+    this.chatService.getMessages().subscribe((data) => {
       this.messages = data.sort((a: any, b: any) =>
         new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
       );
@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     this.chatService.sendMessage(this.text);
+    this.text = '';
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-game',
@@ -6,13 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent {
+  cdr = inject(ChangeDetectorRef); // To fix ExpressionChangedAfterItHasBeenCheckedError
   isComponentActive = false;
 
   onActivate() {
     this.isComponentActive = true;
+    this.cdr.detectChanges();
   }
 
   onDeactivate() {
     this.isComponentActive = false;
+    this.cdr.detectChanges();
   }
 }

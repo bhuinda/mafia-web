@@ -25,6 +25,7 @@ export class ChatService {
     });
   }
 
+  // TO-DO: Change deleteMessages() to use cloud functions to incur less read/write costs on Firebase
   deleteMessages() {
     getDocs(collection(this.firestore, 'chat'))
       .then((data) => {
