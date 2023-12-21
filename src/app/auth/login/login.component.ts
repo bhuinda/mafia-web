@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,19 +8,21 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  auth = inject(AuthService);
   fb = inject(FormBuilder);
   submitted = false;
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(3)]]
+    password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  onSubmit(): void {
+  onSubmit(email: string, password: string): void {
     this.submitted = true;
     if (this.form.invalid) {
       return;
     }
-    console.log('login');
+
+    this.auth.login(email, password);
   }
 }
