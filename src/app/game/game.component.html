@@ -27,7 +27,7 @@
 
   </section>
 
-  <div class="content">
+  <div class="content" [ngStyle]="{'flex': isComponentActive ? '1' : '0'}">
     <router-outlet
       (activate)="onActivate()"
       (deactivate)="onDeactivate()">

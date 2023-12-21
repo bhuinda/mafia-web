@@ -46,6 +46,7 @@ a:hover {
 #prompt {
   font-size: 5rem;
   text-align: center;
+  color: white;
 }
 
 .content {

@@ -31,6 +31,19 @@ main {
   justify-content: center;
 }
 
+.logout button {
+  font-size: 10rem;
+  color: white;
+  background-color: black;
+  border: 5px solid;
+  padding: 2rem;
+  width: 100%;
+}
+.logout button:hover {
+  color: yellow;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   main {
     border: 5px solid;
