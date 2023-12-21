@@ -35,11 +35,11 @@ const firebaseConfig = {
     AuthComponent,
   ],
   imports: [
+    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideFirestore(() => getFirestore()),
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideFirestore(() => getFirestore()),
     HomeModule,
     InfoModule,
     GameModule,

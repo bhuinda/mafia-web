@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ChatService } from '../../../shared/chat.service';
 
 @Component({
@@ -7,10 +7,9 @@ import { ChatService } from '../../../shared/chat.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  chatService = inject(ChatService)
   text = '';
   messages!: any;
-
-  constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
     this.chatService.getMessages().subscribe((data: any) => {
