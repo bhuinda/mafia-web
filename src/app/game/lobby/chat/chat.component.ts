@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ChatService } from '../../../shared/chat.service';
 
 @Component({
@@ -6,8 +6,8 @@ import { ChatService } from '../../../shared/chat.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
-  chatService = inject(ChatService)
+export class ChatComponent implements OnInit, OnDestroy {
+  chatService = inject(ChatService);
   text = '';
   messages!: any;
 
@@ -21,5 +21,10 @@ export class ChatComponent implements OnInit {
 
   sendMessage() {
     this.chatService.sendMessage(this.text);
+  }
+
+  ngOnDestroy(): void {
+    // This implementation is flawed; in future, only delete messages in chat collection when lobby reaches 0 players, e.g. check for playerCount == 0.
+    this.chatService.deleteMessages();
   }
 }

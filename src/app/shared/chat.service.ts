@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc} from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, deleteDoc, getDocs} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  firestore = inject(Firestore)
+  firestore = inject(Firestore);
   private chat$ = collectionData(collection(this.firestore, 'chat')) as Observable<any>;
 
   get chat() {
@@ -24,4 +24,15 @@ export class ChatService {
       text: text,
     });
   }
+
+  deleteMessages() {
+    getDocs(collection(this.firestore, 'chat'))
+      .then((data) => {
+        data.forEach((doc) => {
+          deleteDoc(doc.ref);
+        });
+      });
+  };
 }
+
+// TO-DO: Refactor so multiple chat instances can be created; currently, every method refers to the same chat object
