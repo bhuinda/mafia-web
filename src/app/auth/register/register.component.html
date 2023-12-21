@@ -8,12 +8,12 @@
         <li class="warning" *ngIf="form.controls.password.invalid">* Password must be at least 3 characters long.</li>
 
         <li class="warning resolved" *ngIf="!form.controls.email.invalid">* Valid email required.</li>
-        <li class="warning resolved" *ngIf="!form.controls.password.invalid">* Password must be at least 3 characters long.</li>
+        <li class="warning resolved" *ngIf="!form.controls.password.invalid">* Password must be at least 6 characters long.</li>
 
       </ul>
     </div>
 
-  <form id="form-container" [formGroup]="form" (ngSubmit)="signUp(form.value.email, form.value.password)">
+  <form id="form-container" [formGroup]="form" (ngSubmit)="onSubmit(form.value.email, form.value.password)">
     <div class="email">
       <input type="email" placeholder="Email" formControlName="email">
     </div>

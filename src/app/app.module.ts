@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
@@ -17,6 +17,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCkqYBq3krhnhc50U6IdECblCV9tnNJyzw",
@@ -42,6 +43,7 @@ const firebaseConfig = {
   imports: [
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,

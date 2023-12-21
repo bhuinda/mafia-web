@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,12 +8,13 @@ import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  submitted = false;
+  auth = inject(AuthService);
   fb = inject(FormBuilder);
 
+  submitted = false;
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(3)]]
+    password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
   onSubmit(email: string, password: string) {
@@ -22,21 +23,6 @@ export class RegisterComponent {
       return;
     }
 
-    this.signUp(email, password);
-  }
-
-  signUp(email: string, password: string) {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
+    this.auth.register(email, password);
   }
 }
