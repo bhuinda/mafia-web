@@ -1,61 +1,56 @@
 import { Injectable, inject } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
-import { Router } from "@angular/router";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "@firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "@firebase/auth";
+import { BehaviorSubject, catchError, from, throwError } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private auth = inject(Auth);
-  private router = inject(Router);
-  isAuthorized = false;
+  private userSubject: BehaviorSubject<any>;
+
+  constructor() {
+    this.userSubject = new BehaviorSubject(this.auth.currentUser);
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        // Upon login
+        this.userSubject.next(user);
+      } else {
+        // Upon logout
+        this.userSubject.next(null);
+      }
+    });
+  }
 
   register(email: string, password: string) {
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        this.isAuthorized = true;
+    return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
+      catchError(error => {
+        console.log(error);
+        return throwError(() => new Error('Registration failed.'));
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
+    );
   }
 
   login(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        this.isAuthorized = true;
-        console.log(user);
-        console.log(this.isAuthorized);
-        this.router.navigateByUrl('/home');
+    return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
+      catchError(error => {
+        console.log(error);
+        return throwError(() => new Error('Login failed.'));
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    );
   }
 
   logout() {
-
+    return from(signOut(this.auth)).pipe(
+      catchError(error => {
+        console.log(error);
+        return throwError(() => new Error('Logout failed.'));
+      })
+    );
   }
 
-  user() {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const uid = user.uid;
-        // ...
-      } else {
-        // User is signed out
-        // ...
-      }
-    });
+  get user() {
+    return this.userSubject;
   }
 }

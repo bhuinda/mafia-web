@@ -11,6 +11,10 @@ main {
   border-right: 5px solid;
 }
 
+.button-container {
+  padding-top: 1rem;
+}
+
 .button-container > button {
   background: none;
   border: none;

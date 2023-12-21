@@ -5,11 +5,12 @@
       <ul>
 
         <li class="warning" *ngIf="form.controls.email.invalid">* Email must be valid.</li>
-        <li class="warning" *ngIf="form.controls.password.invalid">* Password must be at least 3 characters long.</li>
-
         <li class="warning resolved" *ngIf="!form.controls.email.invalid">* Valid email required.</li>
+
+        <li class="warning" *ngIf="form.controls.password.invalid">* Password must be at least 6 characters long.</li>
         <li class="warning resolved" *ngIf="!form.controls.password.invalid">* Password must be at least 6 characters long.</li>
 
+        <li class="warning" *ngIf="loginFailed">* Login attempt failed; email/password is incorrect.</li>
       </ul>
     </div>
 
