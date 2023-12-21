@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData, addDoc} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
@@ -6,9 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ChatService {
+  firestore = inject(Firestore)
   private chat$ = collectionData(collection(this.firestore, 'chat')) as Observable<any>;
-
-  constructor(private readonly firestore: Firestore) {}
 
   get chat() {
     return this.chat$;
