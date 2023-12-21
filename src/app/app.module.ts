@@ -14,6 +14,7 @@ import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { RegisterComponent } from './auth/register/register.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCkqYBq3krhnhc50U6IdECblCV9tnNJyzw",
@@ -33,6 +34,7 @@ const firebaseConfig = {
     FooterComponent,
     SettingsComponent,
     AuthComponent,
+    RegisterComponent,
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
