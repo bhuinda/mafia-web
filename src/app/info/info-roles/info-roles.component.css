@@ -23,7 +23,7 @@ section {
 .roles > p,
 .roles > span {
   line-height: 1;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 /* Role selector */
@@ -54,7 +54,7 @@ section {
 }
 
 .tag {
-  font-size: 1.1rem;
+  font-size: 2rem;
   color: yellow;
 }
 
@@ -65,7 +65,7 @@ section {
 .info > p,
 .info > span {
   line-height: 1;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 #description {

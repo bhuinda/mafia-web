@@ -11,7 +11,10 @@
           <div class="login-prompt" *ngIf="(user$ | async) == null">
             <p>[<a routerLink="/auth" style="color: lime; text-decoration: none">LOGIN</a>] to see your stats.</p>
           </div>
-          <p *ngIf="(user$ | async) != null">Logged in! (Stats)</p>
+          <div *ngIf="(user$ | async) != null">
+            <p>Logged in! (Stats)</p>
+            <p>[<a routerLink="/auth" style="color: lime; text-decoration: none">LOGOUT</a>]</p>
+          </div>
           <!-- <div class="stats-card" *ngIf="user != null"></div> -->
         </div>
       </div>
