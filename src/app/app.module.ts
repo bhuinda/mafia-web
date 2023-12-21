@@ -14,7 +14,9 @@ import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCkqYBq3krhnhc50U6IdECblCV9tnNJyzw",
@@ -34,7 +36,8 @@ const firebaseConfig = {
     FooterComponent,
     SettingsComponent,
     AuthComponent,
-    RegisterComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
@@ -45,7 +48,8 @@ const firebaseConfig = {
     HomeModule,
     InfoModule,
     GameModule,
-    ProfileModule
+    ProfileModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,18 +5,21 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  standalone: true,
-  imports: [ReactiveFormsModule]
 })
 export class LoginComponent {
-  fb = inject(FormBuilder)
+  fb = inject(FormBuilder);
+  submitted = false;
 
   form = this.fb.nonNullable.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(3)]]
   });
 
   onSubmit(): void {
+    this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
     console.log('login');
   }
 }

@@ -1,3 +1,5 @@
+import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+
 export class AuthService {
   isAuthorized = false;
 
@@ -8,4 +10,6 @@ export class AuthService {
   logout() {
     this.isAuthorized = false;
   }
+
+
 }
