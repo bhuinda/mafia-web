@@ -6,7 +6,7 @@ import { InfoGameplayComponent } from './info-gameplay/info-gameplay.component';
 import { InfoMechanicsComponent } from './info-mechanics/info-mechanics.component';
 
 const routes: Routes = [
-  { path: 'info', component: InfoComponent,
+  { path: '', component: InfoComponent,
     children: [
       { path: 'gameplay', component: InfoGameplayComponent },
       { path: 'mechanics', component: InfoMechanicsComponent },
