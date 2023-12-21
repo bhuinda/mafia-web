@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-  isAuthenticated = false;
+  isRegistered = true;
+
+  switchAuthMode(mode: string) {
+    switch (mode) {
+      case 'login':
+        this.isRegistered = true;
+        break;
+      case 'register':
+        this.isRegistered = this.isRegistered = false;
+        break;
+    }
+  }
 }

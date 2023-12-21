@@ -1,8 +1,26 @@
-<h1>Login</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <input type="text" placeholder="Email" formControlName="email">
+<section>
 
-  <input type="password" placeholder="password" formControlName="password">
+  <div *ngIf="submitted" id="validation-container">
+    <h1>Validation</h1>
+      <ul>
 
-  <button type="submit">Sign In</button>
-</form>
+        <li class="warning" *ngIf="form.controls.email.invalid">* Email must be valid.</li>
+        <li class="warning" *ngIf="form.controls.password.invalid">* Password must be at least 3 characters long.</li>
+
+        <li class="warning resolved" *ngIf="!form.controls.email.invalid">* Valid email required.</li>
+        <li class="warning resolved" *ngIf="!form.controls.password.invalid">* Password must be at least 3 characters long.</li>
+
+      </ul>
+    </div>
+
+  <form id="form-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="email">
+      <input type="email" placeholder="Email" formControlName="email">
+    </div>
+    <div class="password">
+      <input type="password" placeholder="Password" formControlName="password">
+    </div>
+    <button type="submit">LOGIN</button>
+  </form>
+
+</section>
