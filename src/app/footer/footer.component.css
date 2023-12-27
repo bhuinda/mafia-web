@@ -27,11 +27,15 @@
 
 .terminal > form > input,
 .terminal > form > label {
-  font-size: 1.5em;
+  font-size: 1.5rem;
+}
+
+#user-and-domain {
+  color: yellow;
 }
 
 #command {
-  margin-left: 0.5rem;
+  padding-left: 0.8rem;
   background: transparent;
   border: none;
   outline: none;
@@ -44,10 +48,9 @@ footer {
   background-color: black;
 }
 
-p {
-  padding: 0.5rem;
+p, span {
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 
 @media screen and (max-width: 768px) {
