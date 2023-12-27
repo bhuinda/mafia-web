@@ -13,17 +13,25 @@
 
 .terminal-container {
   padding: 1rem;
-  display: flex;
   color: white;
   border: 5px solid;
 }
 
-.terminal > form > label,
+.terminal form {
+  display: flex;
+}
+
 .terminal > form > input {
+  flex: 1;
+}
+
+.terminal > form > input,
+.terminal > form > label {
   font-size: 1.5em;
 }
 
 #command {
+  margin-left: 0.5rem;
   background: transparent;
   border: none;
   outline: none;
@@ -45,5 +53,10 @@ p {
 @media screen and (max-width: 768px) {
   .credits-container {
     display: none;
+  }
+
+  .footer-wrapper {
+    color: white;
+    /* border-top: 5px solid; */
   }
 }

@@ -18,16 +18,46 @@ export class FooterComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
   user: any;
 
+  placeholderText = 'Please enter a command. Type /help for a list of all commands.';
   commandList = [
     {
       command: '/help',
-      action: () => console.log("Help command executed.")
+      action: () => this.placeholderText = 'Available commands: ' + this.commandList
+        .filter(obj => !this.commandListSecrets.includes(obj.command))
+        .map(obj => obj.command)
+        .join(', ')
     },
     {
       command: '/home',
       action: () => this.router.navigateByUrl('/home')
+    },
+    {
+      command: '/info',
+      action: () => this.router.navigateByUrl('/info')
+    },
+    {
+      command: '/game',
+      action: () => this.router.navigateByUrl('/game')
+    },
+    {
+      command: '/profile',
+      action: () => this.router.navigateByUrl('/profile')
+    },
+    {
+      command: '/settings',
+      action: () => this.router.navigateByUrl('/settings')
+    },
+    {
+      command: '/credits',
+      action: () => this.placeholderText = 'CREDIT: DarkRevenant ... MADE BY: bhuinda'
+    },
+    {
+      command: '/bhuinda',
+      action: () => this.placeholderText = 'You found a secret!'
     }
   ]
+
+  commandListSecrets = ['/bhuinda']
 
   commandForm = new FormGroup({
     command: new FormControl('')

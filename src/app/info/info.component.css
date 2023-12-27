@@ -58,7 +58,4 @@ a:hover {
 }
 
 @media screen and (max-width: 768px) {
-  main {
-    border: 5px solid;
-  }
 }
