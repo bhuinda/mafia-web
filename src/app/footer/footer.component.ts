@@ -38,13 +38,13 @@ export class FooterComponent implements OnInit, OnDestroy {
     },
 
     '/nav': {
-      arguments: ['help', 'home', 'info', 'game', 'profile', 'settings'],
+      arguments: ['home', 'info', 'game', 'profile', 'settings'],
       action: (argument: string) => {
-        if (argument == null || argument == 'help') {
+        if (argument == null) {
           this.placeholderText = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`
           return;
         } else if (!this.commandList['/nav'].arguments.includes(argument)) {
-          this.placeholderText = `Argument "${argument}" not found. Try "/nav help".`
+          this.placeholderText = `Argument "${argument}" not found. Try "/nav".`
           return;
         }
 
@@ -54,11 +54,15 @@ export class FooterComponent implements OnInit, OnDestroy {
     },
 
     '/credits': {
-      action: () => this.placeholderText = 'CREDIT: DarkRevenant ... MADE BY: bhuinda'
+      action: () => this.placeholderText = 'CREDIT: DarkRevenant | MADE BY: bhuinda'
     },
 
     '/bhuinda': {
-      action: () => this.placeholderText = 'You found a secret!'
+      action: () => {
+        this.placeholderText = 'Witness!';
+
+        this.settings.switchSecretMode();
+      }
     }
 
   };
@@ -76,8 +80,15 @@ export class FooterComponent implements OnInit, OnDestroy {
     const { command, argument } = this.parseCommand(input);
     const commandTarget = this.commandList[command];
 
+    // Check if command exists
     if (!commandTarget) {
       this.placeholderText = `Command "${command}" not found.`
+    }
+
+    // Check if command accepts arguments
+    if (!commandTarget.arguments && argument) {
+      this.placeholderText = `Argument not accepted. Try "${command}".`;
+      return;
     }
 
     commandTarget.action(argument);
