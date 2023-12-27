@@ -17,42 +17,15 @@
 
 .credits-container {
   display: none;
+  padding: 1rem;
 }
 
 .terminal-container,
 .credits-container {
   flex: 0 0 auto;
   width: 100%;
-  padding: 1rem;
   color: white;
   border: 5px solid;
-}
-
-.terminal form {
-  display: flex;
-}
-
-.terminal > form > input {
-  flex: 1;
-}
-
-.terminal > form > input,
-.terminal > form > label {
-  font-size: 2rem;
-}
-
-#user-and-domain {
-  color: yellow;
-}
-
-#command {
-  padding-left: 0.8rem;
-  background: transparent;
-  border: none;
-  outline: none;
-  caret-color: lime;
-  color: lime;
-  font-size: 1.9rem;
 }
 
 footer {
