@@ -9,8 +9,14 @@
   <div class="terminal-container" (click)="focusInput()">
     <div class="terminal">
       <form [formGroup]="commandForm" (ngSubmit)="onSubmit()">
-        <label for="command">{{ this.user ? this.user.displayName : 'anonymous' }}@mafia4web ~ $</label>
-        <input #commandInput id="command" formControlName="command" type="text" autocomplete="off" spellcheck="false" [placeholder]="placeholderText">
+        <label for="command">[{{ this.user ? this.user.displayName : 'anonymous' }}@mafia4web ~] $</label>
+        <input #commandInput
+               id="command"
+               formControlName="command"
+               type="text"
+               autocomplete="off"
+               spellcheck="false"
+               [placeholder]="placeholderText">
       </form>
     </div>
   </div>

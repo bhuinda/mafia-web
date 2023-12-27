@@ -18,62 +18,76 @@ export class FooterComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
   user: any;
 
-  placeholderText = 'Please enter a command. Type /help for a list of all commands.';
-  commandList = [
-    {
-      command: '/help',
-      action: () => this.placeholderText = 'Available commands: ' + this.commandList
-        .filter(obj => !this.commandListSecrets.includes(obj.command))
-        .map(obj => obj.command)
-        .join(', ')
-    },
-    {
-      command: '/home',
-      action: () => this.router.navigateByUrl('/home')
-    },
-    {
-      command: '/info',
-      action: () => this.router.navigateByUrl('/info')
-    },
-    {
-      command: '/game',
-      action: () => this.router.navigateByUrl('/game')
-    },
-    {
-      command: '/profile',
-      action: () => this.router.navigateByUrl('/profile')
-    },
-    {
-      command: '/settings',
-      action: () => this.router.navigateByUrl('/settings')
-    },
-    {
-      command: '/credits',
-      action: () => this.placeholderText = 'CREDIT: DarkRevenant ... MADE BY: bhuinda'
-    },
-    {
-      command: '/bhuinda',
-      action: () => this.placeholderText = 'You found a secret!'
-    }
-  ]
-
-  commandListSecrets = ['/bhuinda']
+  placeholderDefault = 'Please enter a command. Try /help for a list of all available commands.';
+  placeholderText = this.placeholderDefault;
 
   commandForm = new FormGroup({
     command: new FormControl('')
   });
+  commandList: { [name: string]: Command } = {
 
-  onSubmit() {
-    const command = this.commandForm.get('command').value;
-    const commandObj = this.commandList.find(obj => obj.command == command);
+    '/help':{
+      action: () => this.placeholderText = `Available commands: ${Object.keys(this.commandList)
+        .filter(command => !this.commandListSecrets.includes(command))
+        .join(', ')}`
+    },
 
-    if (commandObj) {
-      commandObj.action();
-    } else {
-      console.error(`Command "${command}" not found.`);
+    '/nav': {
+      arguments: ['help', 'home', 'info', 'game', 'profile', 'settings'],
+      action: (argument: string) => {
+        if (argument == null || argument == 'help') {
+          this.placeholderText = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`
+          return;
+        } else if (!this.commandList['/nav'].arguments.includes(argument)) {
+          this.placeholderText = `Argument "${argument}" not found. Try "/nav help".`
+          return;
+        }
+
+        this.placeholderText = this.placeholderDefault;
+        this.router.navigateByUrl(`/${argument}`);
+      }
+    },
+
+    '/credits': {
+      action: () => this.placeholderText = 'CREDIT: DarkRevenant ... MADE BY: bhuinda'
+    },
+
+    '/bhuinda': {
+      action: () => this.placeholderText = 'You found a secret!'
     }
 
+  };
+  commandListSecrets = ['/bhuinda'];
+
+  parseCommand(input: string): { command: string, argument: string | null } {
+    const parts = input.split(' ');
+    return {
+      command: parts[0],
+      argument: parts.length > 1 ? parts[1] : null
+    };
+  }
+
+  handleCommand(input: string) {
+    const { command, argument } = this.parseCommand(input);
+    const commandTarget = this.commandList[command];
+
+    if (!commandTarget) {
+      this.placeholderText = `Command "${command}" not found.`
+    }
+
+    commandTarget.action(argument);
+  }
+
+  onSubmit() {
+    let command = this.commandForm.get('command').value;
     this.commandForm.reset();
+
+    if (!command.startsWith('/')) {
+      this.placeholderText = this.placeholderDefault;
+      return;
+    }
+
+    this.handleCommand(command);
   }
 
   focusInput() {
@@ -81,7 +95,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.user = this.auth.user.subscribe(user => {
+    this.userSubscription = this.auth.user.subscribe(user => {
       this.user = user;
     });
   }
@@ -89,4 +103,10 @@ export class FooterComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
   }
+}
+
+// If args are provided, there should be a "help" and blank arg that explains how to use the command.
+interface Command {
+  action: (arg?: any) => void;
+  arguments?: any[];
 }
