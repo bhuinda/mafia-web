@@ -16,6 +16,7 @@ export class RegisterComponent implements OnDestroy {
 
   registrationSubscription: Subscription;
   registrationFailed = false;
+  registrationFailedDuplicateEmail = false;
   formSubmitted = false;
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -37,8 +38,15 @@ export class RegisterComponent implements OnDestroy {
       },
       error: (error) => {
         console.log(error);
-        this.registrationFailed = true;
         this.formSubmitted = true;
+
+        if (error.code === 'auth/email-already-in-use') {
+          this.registrationFailedDuplicateEmail = true;
+          this.registrationFailed = false;
+        } else {
+          this.registrationFailed = true;
+          this.registrationFailedDuplicateEmail = false;
+        }
       }
     });
   }

@@ -9,6 +9,16 @@
   background-color: black;
 }
 
+.optional-container {
+  color: white;
+  border-top: 5px solid;
+  width: 100%;
+}
+
+.credits-container {
+  display: none;
+}
+
 .terminal-container,
 .credits-container {
   flex: 0 0 auto;

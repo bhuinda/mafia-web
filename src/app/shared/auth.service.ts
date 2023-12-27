@@ -25,8 +25,7 @@ export class AuthService {
   register(email: string, password: string) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
       catchError(error => {
-        console.log(error);
-        return throwError(() => new Error('Registration failed.'));
+        return throwError(() => error);
       })
     );
   }
@@ -34,8 +33,7 @@ export class AuthService {
   login(email: string, password: string) {
     return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
       catchError(error => {
-        console.log(error);
-        return throwError(() => new Error('Login failed.'));
+        return throwError(() => error);
       })
     );
   }
@@ -43,8 +41,7 @@ export class AuthService {
   logout() {
     return from(signOut(this.auth)).pipe(
       catchError(error => {
-        console.log(error);
-        return throwError(() => new Error('Logout failed.'));
+        return throwError(() => error);
       })
     );
   }
@@ -62,8 +59,7 @@ export class AuthService {
     if (user) {
       return from(updateProfile(user, { displayName: newDisplayName })).pipe(
         catchError(error => {
-          console.log(error);
-          return throwError(() => new Error('Changing display name failed.'));
+          return throwError(() => error);
         })
       );
     } else {
