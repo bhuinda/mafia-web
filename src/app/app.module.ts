@@ -13,6 +13,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { TerminalComponent } from './footer/terminal/terminal.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCkqYBq3krhnhc50U6IdECblCV9tnNJyzw",
@@ -32,7 +33,8 @@ const firebaseConfig = {
     FooterComponent,
     AuthComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    TerminalComponent
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(firebaseConfig)),

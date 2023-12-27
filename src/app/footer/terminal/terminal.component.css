@@ -1,0 +1,34 @@
+p, span {
+  font-size: 2rem;
+}
+
+.terminal {
+  padding: 1rem;
+}
+
+.terminal form {
+  display: flex;
+}
+
+.terminal > form > input {
+  flex: 1;
+}
+
+.terminal > form > input,
+.terminal > form > label {
+  font-size: 2rem;
+}
+
+#user-and-domain {
+  color: yellow;
+}
+
+#command {
+  padding-left: 0.8rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  caret-color: lime;
+  color: lime;
+  font-size: 1.9rem;
+}
