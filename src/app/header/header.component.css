@@ -88,6 +88,10 @@ a:last-child {
 }
 
 @media screen and (max-width: 768px) {
+  .header-wrapper {
+    color: white;
+    border-bottom: 5px solid;
+  }
   /* #hamburger-dropdown {
     z-index: 0;
     display: block;
