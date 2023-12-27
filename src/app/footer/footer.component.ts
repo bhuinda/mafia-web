@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit, OnDestroy {
+  @ViewChild('commandInput') commandInput: ElementRef;
+
   router = inject(Router);
   auth = inject(AuthService);
 
@@ -36,16 +38,20 @@ export class FooterComponent implements OnInit, OnDestroy {
     const commandObj = this.commandList.find(obj => obj.command == command);
 
     if (commandObj) {
-      this.commandForm.reset();
       commandObj.action();
     } else {
       console.error(`Command "${command}" not found.`);
     }
+
+    this.commandForm.reset();
+  }
+
+  focusInput() {
+    this.commandInput.nativeElement.focus();
   }
 
   ngOnInit(): void {
     this.user = this.auth.user.subscribe(user => {
-      console.log(typeof(user))
       this.user = user;
     });
   }

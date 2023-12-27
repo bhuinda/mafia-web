@@ -12,9 +12,23 @@
 }
 
 .terminal-container {
+  padding: 1rem;
   display: flex;
   color: white;
   border: 5px solid;
+}
+
+.terminal > form > label,
+.terminal > form > input {
+  font-size: 1.5em;
+}
+
+#command {
+  background: transparent;
+  border: none;
+  outline: none;
+  caret-color: lime;
+  color: lime;
 }
 
 footer {
