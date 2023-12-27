@@ -1,5 +1,15 @@
-<div class="wrapper">
+<div class="credits-container">
   <footer>
     <p>[made by bhuinda]</p>
   </footer>
+</div>
+
+<div class="terminal-container">
+  <div class="terminal">
+    <form [formGroup]="commandForm" (ngSubmit)="onSubmit()">
+      <label for="command">{{ this.user ? this.user.email : 'Anonymous' }}@terminal:~$</label>
+      <input id="command" formControlName="command" type="text" autocomplete="off">
+      <button type="submit">Enter</button>
+    </form>
+  </div>
 </div>
