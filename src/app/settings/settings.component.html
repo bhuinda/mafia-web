@@ -1,10 +1,13 @@
 <main>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
+  <div class="user-settings">
+    <p class="setting-label">Terminal Mode</p>
+    <div class="setting-container">
+      <button class="setting-button" (click)="switchTerminalMode()">TOGGLE</button>
+      <div class="toggle-box" [ngClass]="{'toggled-on': terminalMode, 'toggled-off': !terminalMode}"></div>
+    </div>
+  </div>
+
+  <div class="ui-settings">
+
+  </div>
 </main>
