@@ -4,12 +4,11 @@
   </footer>
 </div>
 
-<div class="terminal-container">
+<div class="terminal-container" (click)="focusInput()">
   <div class="terminal">
     <form [formGroup]="commandForm" (ngSubmit)="onSubmit()">
-      <label for="command">{{ this.user ? this.user.email : 'Anonymous' }}@terminal:~$</label>
-      <input id="command" formControlName="command" type="text" autocomplete="off">
-      <button type="submit">Enter</button>
+      <label for="command">{{ this.user ? this.user.displayName : 'anonymous' }}@mafia4web ~ $ </label>
+      <input #commandInput id="command" formControlName="command" type="text" autocomplete="off" spellcheck="false">
     </form>
   </div>
 </div>
