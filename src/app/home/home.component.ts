@@ -9,10 +9,12 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   auth = inject(AuthService);
+
   userSubscription: Subscription;
   user: any;
+
   now = new Date();
-  date!: string;
+  date: string;
 
   ngOnInit(): void {
     this.userSubscription = this.auth.user.subscribe((user) => {

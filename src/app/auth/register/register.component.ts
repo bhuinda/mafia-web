@@ -32,6 +32,7 @@ export class RegisterComponent implements OnDestroy {
       next: () => {
         this.registrationFailed = false;
         this.formSubmitted = false;
+
         this.router.navigateByUrl('/home');
       },
       error: (error) => {
