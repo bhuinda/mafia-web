@@ -8,10 +8,10 @@
       <!-- Dummy of app-home-stats -->
       <div id="overview">
         <div class="container">
-          <div class="login-prompt" *ngIf="(user$ | async) == null">
+          <div class="login-prompt" *ngIf="user == null">
             <p>[<a routerLink="/auth" style="color: lime; text-decoration: none">LOGIN</a>] to see your stats.</p>
           </div>
-          <div *ngIf="(user$ | async) != null">
+          <div *ngIf="user != null">
             <p>Logged in! (Stats)</p>
             <p>[<a routerLink="/auth" style="color: lime; text-decoration: none">LOGOUT</a>]</p>
           </div>

@@ -1,5 +1,5 @@
 <main>
-  <ng-container *ngIf="user$ | async; else noCurrentUser">
+  <ng-container *ngIf="user; else noCurrentUser">
 
     <div class="warning" *ngIf="logoutFailed">Logout attempt failed; please try again.</div>
     <div class="logout">

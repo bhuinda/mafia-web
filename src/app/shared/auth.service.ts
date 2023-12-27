@@ -8,10 +8,9 @@ import { BehaviorSubject, catchError, from, throwError } from "rxjs";
 })
 export class AuthService {
   private auth = inject(Auth);
-  private userSubject: BehaviorSubject<any>;
+  private userSubject: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() {
-    this.userSubject = new BehaviorSubject(this.auth.currentUser);
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         // Upon login
@@ -51,6 +50,6 @@ export class AuthService {
   }
 
   get user() {
-    return this.userSubject;
+    return this.userSubject.asObservable();
   }
 }
