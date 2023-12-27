@@ -30,7 +30,6 @@ const firebaseConfig = {
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    SettingsComponent,
     AuthComponent,
     LoginComponent,
     RegisterComponent

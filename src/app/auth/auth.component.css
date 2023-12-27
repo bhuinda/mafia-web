@@ -4,7 +4,7 @@ main {
   align-items: center;
   flex-direction: column;
   height: 100%;
-  padding: 12rem;
+  padding: 2rem;
   overflow-y: auto;
   color: white;
   border-left: 5px solid;
