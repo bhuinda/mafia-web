@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -8,15 +7,17 @@ import { Subscription } from 'rxjs';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnDestroy {
+export class AuthComponent implements OnInit, OnDestroy {
   // Note: consider changing login/register/logout to signin/signup/signout
   // Bug: login/signup template flashes when logged in; workaround needed
   auth = inject(AuthService);
-  router = inject(Router);
+
+  userSubscription: Subscription;
+  user: any;
 
   logoutSubscription: Subscription;
   logoutFailed = false;
-  user$ = this.auth.user;
+
   authMode = 'login';
 
   switchAuthMode(mode: string) {
@@ -32,7 +33,6 @@ export class AuthComponent implements OnDestroy {
     this.logoutSubscription = this.auth.logout().subscribe({
       next: () => {
         this.logoutFailed = false;
-        this.router.navigateByUrl('/auth');
       },
       error: (error) => {
         this.logoutFailed = true;
@@ -41,7 +41,14 @@ export class AuthComponent implements OnDestroy {
     });
   }
 
+  ngOnInit(): void {
+    this.userSubscription = this.auth.user.subscribe((user) => {
+      this.user = user; // Update $user with the new user object
+    });
+  }
+
   ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
     if (this.logoutSubscription) {
       this.logoutSubscription.unsubscribe();
     }
