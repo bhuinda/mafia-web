@@ -37,6 +37,7 @@ export class LoginComponent implements OnDestroy {
       error: (error) => {
         console.log(error);
         this.loginFailed = true;
+        this.formSubmitted = true;
       }
     });
   }

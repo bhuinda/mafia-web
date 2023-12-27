@@ -37,6 +37,7 @@ export class RegisterComponent implements OnDestroy {
       error: (error) => {
         console.log(error);
         this.registrationFailed = true;
+        this.formSubmitted = true;
       }
     });
   }
