@@ -32,6 +32,7 @@ export class LoginComponent implements OnDestroy {
       next: () => {
         this.loginFailed = false;
         this.formSubmitted = false;
+
         this.router.navigateByUrl('/home');
       },
       error: (error) => {

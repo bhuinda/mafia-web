@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
 
   { path: 'auth', component: AuthComponent }, // Keep eager-loaded to access auth service?
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
 ];
 
 @NgModule({

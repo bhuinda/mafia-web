@@ -1,6 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "@firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "@firebase/auth";
 import { BehaviorSubject, catchError, from, throwError } from "rxjs";
 
 @Injectable({
@@ -13,14 +13,14 @@ export class AuthService {
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        // Upon login
         this.userSubject.next(user);
       } else {
-        // Upon logout
         this.userSubject.next(null);
       }
     });
   }
+
+  // Auth section
 
   register(email: string, password: string) {
     return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
@@ -49,7 +49,25 @@ export class AuthService {
     );
   }
 
+  // User section
+
   get user() {
     return this.userSubject.asObservable();
+  }
+
+  updateDisplayName(input: string) {
+    const user = this.auth.currentUser;
+    const newDisplayName = input.split('@')[0];
+
+    if (user) {
+      return from(updateProfile(user, { displayName: newDisplayName })).pipe(
+        catchError(error => {
+          console.log(error);
+          return throwError(() => new Error('Changing display name failed.'));
+        })
+      );
+    } else {
+      return throwError(() => new Error('No user is currently logged in.'));
+    }
   }
 }
