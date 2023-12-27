@@ -1,9 +1,8 @@
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100%;
+  width: 100%;
   padding: 2rem;
   overflow-y: auto;
   color: white;
@@ -11,10 +10,49 @@ main {
   border-right: 5px solid;
 }
 
-.construction {
+p, span {
   font-size: 3rem;
+}
+
+.setting-container {
+  display: flex;
+  align-items: center;
+}
+
+.setting-label {
   color: yellow;
   white-space: nowrap;
+}
+
+.setting-button {
+  height: 5rem;
+  color: yellow;
+  background-color: black;
+  border: 5px solid;
+  font-size: 3rem;
+}
+
+.setting-button:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+
+.toggle-box {
+  color: yellow;
+  border-top: 5px solid;
+  border-bottom: 5px solid;
+  border-right: 5px solid;
+  width: 5rem;
+  height: 5rem;
+  display: block;
+}
+
+.toggled-on {
+  background-color: green;
+}
+
+.toggled-off {
+  background-color: maroon;
 }
 
 @media screen and (max-width: 768px) {
