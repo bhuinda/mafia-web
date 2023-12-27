@@ -2,12 +2,19 @@
   font-family: 'VT323';
 }
 
-.wrapper {
+.credits-container {
+  display: none;
   color: white;
   border: 5px solid;
   /* border-left: 5px solid;
   border-right: 5px solid;
   border-bottom: 5px solid; */
+}
+
+.terminal-container {
+  display: flex;
+  color: white;
+  border: 5px solid;
 }
 
 footer {
@@ -22,7 +29,7 @@ p {
 }
 
 @media screen and (max-width: 768px) {
-  .wrapper {
+  .credits-container {
     display: none;
   }
 }
