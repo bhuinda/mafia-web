@@ -21,30 +21,38 @@
          [innerHTML]="getSelectorHTML('game')"
          draggable="false">
       </a>
-      <a routerLink="profile"
-         routerLinkActive="active"
-         [innerHTML]="getSelectorHTML('profile')"
-         draggable="false">
-      </a>
-      <div id="profile-overview">
+      <div class="profile-container">
+
         <div *ngIf="user" class="signed-in">
+          <div class="info-container">
 
-          <div id="profile-stats">
-            <p>WELCOME, {{ user.displayName }}</p>
-            <p>LVL. 0</p>
+            <div class="welcome">
+              <p>WELCOME, {{(user ? 'User' : 'Anonymous').toUpperCase()}}.</p>
+            </div>
+            <div id="profile-level">
+
+              <span id="experience-level">LVL.0</span>
+              <div id="experience-bar">
+                <div id="experience-progress"></div>
+              </div>
+
+            </div>
+
           </div>
-          <div id="profile-icon"></div>
-
+          <div class="icon-container">
+            <a id="profile-icon" routerLink="profile"></a>
+          </div>
         </div>
+
         <div *ngIf="!user" class="signed-out">
-
           <p>Sign in to see info.</p>
-
         </div>
-      </div>
-    </nav>
 
+      </div>
+
+    </nav>
   </header>
+
   <div class="hamburger-container">
     <button id="hamburger-dropdown" (click)="onBurgerClick()"><p>☰</p></button>
     <div class="hamburger">
