@@ -23,6 +23,7 @@ nav {
 }
 
 a {
+  flex: 1;
   width: 100%;
   border-left: 3px solid;
   border-right: 3px solid;
@@ -39,7 +40,35 @@ a:first-child {
 }
 
 a:last-child {
-  border-right: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+#profile-overview {
+  border-left: 3px solid;
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  color: white;
+  font-size: 3rem;
+}
+
+#profile-icon {
+  flex: 0 0 50%;
+  background-image: url('../../assets/pfp.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#profile-stats {
+  flex: 0 0 50%;
+  padding: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*** [innerHTML] Styling ***/

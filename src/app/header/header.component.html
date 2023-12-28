@@ -26,11 +26,22 @@
          [innerHTML]="getSelectorHTML('profile')"
          draggable="false">
       </a>
-      <a routerLink="settings"
-         routerLinkActive="active"
-         [innerHTML]="getSelectorHTML('settings')"
-         draggable="false">
-      </a>
+      <div id="profile-overview">
+        <div *ngIf="user" class="signed-in">
+
+          <div id="profile-stats">
+            <p>WELCOME, {{ user.displayName }}</p>
+            <p>LVL. 0</p>
+          </div>
+          <div id="profile-icon"></div>
+
+        </div>
+        <div *ngIf="!user" class="signed-out">
+
+          <p>Sign in to see info.</p>
+
+        </div>
+      </div>
     </nav>
 
   </header>
@@ -55,11 +66,6 @@
       <a routerLink="profile"
         routerLinkActive="active"
         [innerHTML]="getSelectorHTML('profile')"
-        draggable="false">
-      </a>
-      <a routerLink="settings"
-        routerLinkActive="active"
-        [innerHTML]="getSelectorHTML('settings')"
         draggable="false">
       </a>
     </div>

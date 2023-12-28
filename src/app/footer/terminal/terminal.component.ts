@@ -5,6 +5,12 @@ import { AuthService } from '../../shared/auth.service';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '../../shared/settings.service';
 
+// If args are provided, there should be a "help" and blank arg that explains how to use the command.
+interface Command {
+  action: (arg?: any) => void;
+  arguments?: any[];
+}
+
 @Component({
   selector: 'app-terminal',
   templateUrl: './terminal.component.html',
@@ -33,7 +39,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
     '/help':{
       action: () => this.placeholderText = `Available commands: ${Object.keys(this.commandList)
-        .filter(command => !this.commandListSecrets.includes(command))
+        .filter(command => !this.commandListSecrets.includes(command)) // Filter could be removed if secret & admin commands are moved to separate instance
         .join(', ')}`
     },
 
@@ -124,10 +130,4 @@ export class TerminalComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
     this.terminalModeSubscription.unsubscribe();
   }
-}
-
-// If args are provided, there should be a "help" and blank arg that explains how to use the command.
-interface Command {
-  action: (arg?: any) => void;
-  arguments?: any[];
 }

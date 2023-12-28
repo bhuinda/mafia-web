@@ -41,8 +41,8 @@ export class RegisterComponent implements OnDestroy {
         this.formSubmitted = true;
 
         if (error.code === 'auth/email-already-in-use') {
-          this.registrationFailedDuplicateEmail = true;
           this.registrationFailed = false;
+          this.registrationFailedDuplicateEmail = true;
         } else {
           this.registrationFailed = true;
           this.registrationFailedDuplicateEmail = false;
