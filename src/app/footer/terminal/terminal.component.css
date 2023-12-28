@@ -1,9 +1,9 @@
 p, span {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .terminal {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .terminal form {
@@ -16,7 +16,7 @@ p, span {
 
 .terminal > form > input,
 .terminal > form > label {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 #user-and-domain {
@@ -30,5 +30,5 @@ p, span {
   outline: none;
   caret-color: lime;
   color: lime;
-  font-size: 1.9rem;
+  font-size: 1.4rem;
 }
