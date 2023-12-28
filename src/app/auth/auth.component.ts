@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 })
 export class AuthComponent implements OnInit, OnDestroy {
   // Note: consider changing login/register/logout to signin/signup/signout
-  // Bug: login/signup template flashes when logged in; workaround needed
   auth = inject(AuthService);
 
   userSubscription: Subscription;
@@ -43,7 +42,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userSubscription = this.auth.user.subscribe((user) => {
-      this.user = user; // Update $user with the new user object
+      this.user = user;
     });
   }
 

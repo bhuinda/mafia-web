@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ChatService {
-  firestore = inject(Firestore);
+  private readonly firestore = inject(Firestore);
   private chat$ = collectionData(collection(this.firestore, 'chat')) as Observable<any>;
 
   get chat() {
@@ -32,7 +32,8 @@ export class ChatService {
         data.forEach((doc) => {
           deleteDoc(doc.ref);
         });
-      });
+      }
+    );
   };
 }
 
