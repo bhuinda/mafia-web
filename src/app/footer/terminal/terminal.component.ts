@@ -11,6 +11,8 @@ interface Command {
   arguments?: any[];
 }
 
+type ArgumentPackage = { [key: number]: string };
+
 @Component({
   selector: 'app-terminal',
   templateUrl: './terminal.component.html',
@@ -32,35 +34,50 @@ export class TerminalComponent implements OnInit, OnDestroy {
   placeholderDefault = 'Please enter a command. Try /help for a list of all available commands.';
   placeholderText = this.placeholderDefault;
 
+  checkIfArgsExist(args: ArgumentPackage) {
+    if (!Object.keys(args).length) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  convertArgsToString(args: ArgumentPackage) {
+    return Object.values(args).toString().replace(/[[],]/g, '');
+  }
+
   commandForm = new FormGroup({
     command: new FormControl('')
   });
   commandList: { [name: string]: Command } = {
 
-    '/help':{
-      action: () => this.placeholderText = `Available commands: ${Object.keys(this.commandList)
+    '/help': {
+      action: () => { this.placeholderText = `Available commands: ${Object.keys(this.commandList)
         .filter(command => !this.commandListSecrets.includes(command)) // Filter could be removed if secret & admin commands are moved to separate instance
-        .join(', ')}`
+        .join(', ')}`;
+      }
     },
 
     '/nav': {
       arguments: ['home', 'info', 'game', 'profile', 'settings'],
-      action: (argument: string) => {
-        if (argument == null) {
-          this.placeholderText = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`
+      action: (args: ArgumentPackage) => {
+        if (!this.checkIfArgsExist(args)) {
+          this.placeholderText = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`;
           return;
-        } else if (!this.commandList['/nav'].arguments.includes(argument)) {
-          this.placeholderText = `Argument "${argument}" not found. Try "/nav".`
+        }
+
+        if (!this.commandList['/nav'].arguments.includes(args[0])) {
+          this.placeholderText = `Argument "${this.convertArgsToString(args)}" not found. Try "/nav".`;
           return;
         }
 
         this.placeholderText = this.placeholderDefault;
-        this.router.navigateByUrl(`/${argument}`);
+        this.router.navigateByUrl(`/${args}`);
       }
     },
 
     '/credits': {
-      action: () => this.placeholderText = 'CREDIT: DarkRevenant | MADE BY: bhuinda'
+      action: () => { this.placeholderText = 'CREDIT: DarkRevenant | MADE BY: bhuinda'; }
     },
 
     '/bhuinda': {
@@ -72,39 +89,48 @@ export class TerminalComponent implements OnInit, OnDestroy {
     }
 
   };
-  commandListSecrets = ['/bhuinda'];
+  commandListSecrets = [
+    '/bhuinda',
+  ];
 
-  parseCommand(input: string): { command: string, argument: string | null } {
-    const parts = input.split(' ');
-    return {
-      command: parts[0],
-      argument: parts.length > 1 ? parts[1] : null
-    };
+  parseCommand(input: string): { name: string, args: ArgumentPackage } {
+    const commandParts = input.split(' ');
+    const commandName = commandParts[0];
+    const commandArgs = commandParts.slice(1).reduce((arg, part, index) => {
+      arg[`${index}`] = part;
+      return arg;
+    }, {});
+
+    return { name: commandName, args: commandArgs };
   }
 
   handleCommand(input: string) {
-    const { command, argument } = this.parseCommand(input);
-    const commandTarget = this.commandList[command];
+    const parsedCommand = this.parseCommand(input);
+
+    const commandName = parsedCommand['name'];
+    const commandArgs = parsedCommand['args'];
+    const command = this.commandList[commandName];
 
     // Check if command exists
-    if (!commandTarget) {
-      this.placeholderText = `Command "${command}" not found.`
+    if (!command) {
+      this.placeholderText = `Command "${commandName}" not found.`;
       return;
     }
 
     // Check if command accepts arguments
-    if (!commandTarget.arguments && argument) {
-      this.placeholderText = `Argument not accepted. Try "${command}".`;
+    if (!command.arguments && this.checkIfArgsExist(commandArgs)) {
+      this.placeholderText = `Argument not accepted. Try "${commandName}".`;
       return;
     }
 
-    commandTarget.action(argument);
+    command.action(commandArgs);
   }
 
   onSubmit() {
-    let command = this.commandForm.get('command').value;
+    const command = this.commandForm.get('command').value;
     this.commandForm.reset();
 
+    // May need to change this to
     if (!command.startsWith('/')) {
       this.placeholderText = this.placeholderDefault;
       return;
