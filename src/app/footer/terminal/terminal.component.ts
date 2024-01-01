@@ -7,9 +7,11 @@ import { SettingsService } from '../../shared/settings.service';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
-  action: (arg?: any) => void;
   arguments?: any[];
+  action: (args?: any) => void;
 }
+
+type ArgumentPackage = string[] | null;
 
 @Component({
   selector: 'app-terminal',
@@ -46,8 +48,8 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
     '/nav': {
       arguments: ['home', 'info', 'game', 'profile', 'settings'],
-      action: (args: string[]) => {
-        if (!args.length) {
+      action: (args: ArgumentPackage) => {
+        if (!args) {
           this.placeholderText = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`;
           return;
         }
@@ -81,12 +83,11 @@ export class TerminalComponent implements OnInit, OnDestroy {
     '/bhuinda',
   ];
 
-  parseCommand(input: string): { name: string, args: string[] } {
+  parseCommand(input: string): { name: string, args: ArgumentPackage } {
     const commandParts = input.split(' ');
-    const commandName = commandParts[0];
-    const commandArgs = commandParts.slice(1);
 
-    return { name: commandName, args: commandArgs };
+    if (commandParts.length == 1) return { name: commandParts[0], args: null };
+    else return { name: commandParts[0], args: commandParts.slice(1) };
   }
 
   handleCommand(input: string) {
@@ -96,15 +97,26 @@ export class TerminalComponent implements OnInit, OnDestroy {
     const commandArgs = parsedCommand['args'];
     const command = this.commandList[commandName];
 
+    // Check if command is hidden -- added to circumvent revealing extra info about hidden com.s in other guards
+    if (this.commandListSecrets.includes(commandName)) {
+      if (!command.arguments && commandArgs) {
+        this.placeholderText = `Command "${commandName + ' ' + commandArgs}" not found.`;
+        return;
+      }
+
+      command.action(commandArgs);
+      return;
+    }
+
     // Check if command exists
     if (!command) {
-      this.placeholderText = `Command "${commandName}" not found.`;
+      this.placeholderText = `Command "${commandName + (commandArgs ? (' ' + commandArgs) : '')}" not found.`;
       return;
     }
 
     // Check if command accepts arguments
-    if (!command.arguments && commandArgs.length) {
-      this.placeholderText = `Argument not accepted. Try "${commandName}".`;
+    if (!command.arguments && commandArgs) {
+      this.placeholderText = `Argument(s) not accepted. Try "${commandName}".`;
       return;
     }
 
@@ -115,7 +127,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
     const command = this.commandForm.get('command').value;
     this.commandForm.reset();
 
-    // May need to change this to
+    // May need to change this to work with other prefixes
     if (!command.startsWith('/')) {
       this.placeholderText = this.placeholderDefault;
       return;
