@@ -11,8 +11,6 @@ interface Command {
   arguments?: any[];
 }
 
-type ArgumentPackage = { [key: number]: string };
-
 @Component({
   selector: 'app-terminal',
   templateUrl: './terminal.component.html',
@@ -34,18 +32,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
   placeholderDefault = 'Please enter a command. Try /help for a list of all available commands.';
   placeholderText = this.placeholderDefault;
 
-  checkIfArgsExist(args: ArgumentPackage) {
-    if (!Object.keys(args).length) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  convertArgsToString(args: ArgumentPackage) {
-    return Object.values(args).toString().replace(/[[],]/g, '');
-  }
-
   commandForm = new FormGroup({
     command: new FormControl('')
   });
@@ -60,24 +46,26 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
     '/nav': {
       arguments: ['home', 'info', 'game', 'profile', 'settings'],
-      action: (args: ArgumentPackage) => {
-        if (!this.checkIfArgsExist(args)) {
+      action: (args: string[]) => {
+        if (!args.length) {
           this.placeholderText = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`;
           return;
         }
 
         if (!this.commandList['/nav'].arguments.includes(args[0])) {
-          this.placeholderText = `Argument "${this.convertArgsToString(args)}" not found. Try "/nav".`;
+          this.placeholderText = `Argument "${args.join(' ')}" not found. Try "/nav".`;
           return;
         }
 
         this.placeholderText = this.placeholderDefault;
-        this.router.navigateByUrl(`/${args}`);
+        this.router.navigateByUrl(`/${args[0]}`);
       }
     },
 
     '/credits': {
-      action: () => { this.placeholderText = 'CREDIT: DarkRevenant | MADE BY: bhuinda'; }
+      action: () => {
+        this.placeholderText = 'CREDIT: DarkRevenant | MADE BY: bhuinda';
+      }
     },
 
     '/bhuinda': {
@@ -93,13 +81,10 @@ export class TerminalComponent implements OnInit, OnDestroy {
     '/bhuinda',
   ];
 
-  parseCommand(input: string): { name: string, args: ArgumentPackage } {
+  parseCommand(input: string): { name: string, args: string[] } {
     const commandParts = input.split(' ');
     const commandName = commandParts[0];
-    const commandArgs = commandParts.slice(1).reduce((arg, part, index) => {
-      arg[`${index}`] = part;
-      return arg;
-    }, {});
+    const commandArgs = commandParts.slice(1);
 
     return { name: commandName, args: commandArgs };
   }
@@ -118,7 +103,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
     }
 
     // Check if command accepts arguments
-    if (!command.arguments && this.checkIfArgsExist(commandArgs)) {
+    if (!command.arguments && commandArgs.length) {
       this.placeholderText = `Argument not accepted. Try "${commandName}".`;
       return;
     }
