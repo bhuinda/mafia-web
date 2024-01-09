@@ -1,21 +1,33 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+type Settings = 'terminalMode' |
+                'secretMode';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  private terminalMode = new BehaviorSubject<boolean>(true);
-  terminalMode$ = this.terminalMode.asObservable();
+  private settings = {
+    terminalMode: new BehaviorSubject<boolean>(this.getLocalSetting('terminalMode', true)),
+    secretMode: new BehaviorSubject<boolean>(this.getLocalSetting('secretMode', false))
+  };
 
-  private secretMode = new BehaviorSubject<boolean>(false);
-  secretMode$ = this.secretMode.asObservable();
+  terminalMode$ = this.settings.terminalMode.asObservable();
+  secretMode$ = this.settings.secretMode.asObservable();
 
-  switchTerminalMode() {
-    this.terminalMode.next(!this.terminalMode.value);
+  switchSetting(settingKey: Settings) {
+    const currentValue = this.settings[settingKey].value;
+    this.setLocalSetting(settingKey, !currentValue);
+    this.settings[settingKey].next(!currentValue);
   }
 
-  switchSecretMode() {
-    this.secretMode.next(!this.secretMode.value);
+  private getLocalSetting(key: string, defaultValue: boolean): boolean {
+    const localValue = localStorage.getItem(key);
+    return localValue !== null ? localValue === 'true' : defaultValue;
+  }
+
+  private setLocalSetting(key: string, value: boolean): void {
+    localStorage.setItem(key, value.toString());
   }
 }

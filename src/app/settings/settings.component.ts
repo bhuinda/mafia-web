@@ -14,7 +14,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   terminalMode: boolean;
 
   switchTerminalMode() {
-    this.settings.switchTerminalMode();
+    this.settings.switchSetting('terminalMode');
   }
 
   ngOnInit(): void {
