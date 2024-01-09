@@ -74,7 +74,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
       action: () => {
         this.placeholderText = 'Witness!';
 
-        this.settings.switchSecretMode();
+        this.settings.switchSetting('secretMode');
       }
     }
 
