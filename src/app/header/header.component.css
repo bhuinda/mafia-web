@@ -134,7 +134,8 @@ a:last-child {
 }
 
 @media screen and (max-width: 1200px) {
-  :host ::ng-deep .selector, :host ::ng-deep .selector span {
+  :host ::ng-deep .selector,
+  :host ::ng-deep .selector span {
     font-size: 2rem;
   }
 }

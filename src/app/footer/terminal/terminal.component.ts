@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../shared/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { Subscription } from 'rxjs';
-import { SettingsService } from '../../shared/settings.service';
+import { SettingsService } from '../../shared/services/settings.service';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {

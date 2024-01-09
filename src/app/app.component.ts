@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { SettingsService } from './shared/settings.service';
+import { SettingsService } from './shared/services/settings.service';
 import { Subscription } from 'rxjs';
 
 @Component({
