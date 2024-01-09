@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SettingsService } from '../shared/settings.service';
+import { SettingsService } from '../shared/services/settings.service';
 
 @Component({
   selector: 'app-footer',
