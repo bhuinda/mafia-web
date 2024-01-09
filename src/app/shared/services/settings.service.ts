@@ -16,10 +16,10 @@ export class SettingsService {
   terminalMode$ = this.settings.terminalMode.asObservable();
   secretMode$ = this.settings.secretMode.asObservable();
 
-  switchSetting(settingKey: Settings) {
-    const currentValue = this.settings[settingKey].value;
-    this.setLocalSetting(settingKey, !currentValue);
-    this.settings[settingKey].next(!currentValue);
+  switchSetting(key: Settings) {
+    const currentValue = this.settings[key].value;
+    this.setLocalSetting(key, !currentValue);
+    this.settings[key].next(!currentValue);
   }
 
   private getLocalSetting(key: string, defaultValue: boolean): boolean {
