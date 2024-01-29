@@ -59,6 +59,11 @@ export class TerminalComponent implements OnInit, OnDestroy {
           return;
         }
 
+        if (this.router.url == `/${args[0]}`) {
+          this.placeholderText = `You are already on this page.`;
+          return;
+        }
+
         this.placeholderText = this.placeholderDefault;
         this.router.navigateByUrl(`/${args[0]}`);
       }
