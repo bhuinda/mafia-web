@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { ChatService } from '../../../shared/chat.service';
+import { ChatService } from '../../../shared/services/chat.service';
 
 @Component({
   selector: 'app-chat',

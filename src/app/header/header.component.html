@@ -21,6 +21,17 @@
          [innerHTML]="getSelectorHTML('game')"
          draggable="false">
       </a>
+      <a routerLink="profile"
+        routerLinkActive="active"
+        [innerHTML]="getSelectorHTML('profile')"
+        draggable="false">
+      </a>
+      <a routerLink="settings"
+        routerLinkActive="active"
+        [innerHTML]="getSelectorHTML('settings')"
+        draggable="false">
+      </a>
+
       <div class="profile-container">
 
         <div *ngIf="user" class="signed-in">
