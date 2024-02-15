@@ -31,9 +31,9 @@ export class ChatService {
       .then((data) => {
         data.forEach((doc) => {
           deleteDoc(doc.ref);
-        });
-      }
-    );
+          });
+        }
+      );
   };
 }
 
