@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "mafia4web:build:production"
+              "buildTarget": "mafia4web:build:production"
             },
             "development": {
-              "browserTarget": "mafia4web:build:development"
+              "buildTarget": "mafia4web:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mafia4web:build"
+            "buildTarget": "mafia4web:build"
           }
         },
         "test": {
