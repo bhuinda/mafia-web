@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ChatService } from '../../../shared/services/chat.service';
+import { FormsModule } from '@angular/forms';
+import { NgFor, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+    selector: 'app-chat',
+    templateUrl: './chat.component.html',
+    styleUrls: ['./chat.component.css'],
+    standalone: true,
+    imports: [NgFor, FormsModule, DatePipe]
 })
 export class ChatComponent implements OnInit, OnDestroy {
   chatService = inject(ChatService);

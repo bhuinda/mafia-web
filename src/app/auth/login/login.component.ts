@@ -1,13 +1,20 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: true,
+    imports: [
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
 })
 export class LoginComponent implements OnDestroy {
   auth = inject(AuthService);

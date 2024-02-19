@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 import { Subscription } from 'rxjs';
@@ -14,9 +14,11 @@ interface Command {
 type ArgumentPackage = string[] | null;
 
 @Component({
-  selector: 'app-terminal',
-  templateUrl: './terminal.component.html',
-  styleUrls: ['./terminal.component.css']
+    selector: 'app-terminal',
+    templateUrl: './terminal.component.html',
+    styleUrls: ['./terminal.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class TerminalComponent implements OnInit, OnDestroy {
   @ViewChild('commandInput') commandInput: ElementRef;
