@@ -8,8 +8,8 @@ describe('TerminalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TerminalComponent]
-    });
+    imports: [TerminalComponent]
+});
     fixture = TestBed.createComponent(TerminalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

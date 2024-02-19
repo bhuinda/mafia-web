@@ -1,11 +1,15 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Subscription } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
+    standalone: true,
+    imports: [NgIf, RouterLink],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   auth = inject(AuthService);

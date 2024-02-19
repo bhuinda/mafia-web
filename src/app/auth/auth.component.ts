@@ -1,11 +1,16 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Subscription } from 'rxjs';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+    selector: 'app-auth',
+    templateUrl: './auth.component.html',
+    styleUrls: ['./auth.component.css'],
+    standalone: true,
+    imports: [NgIf, LoginComponent, RegisterComponent]
 })
 export class AuthComponent implements OnInit, OnDestroy {
   // Note: consider changing login/register/logout to signin/signup/signout
