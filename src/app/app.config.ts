@@ -10,17 +10,7 @@ import { getAuth } from "@firebase/auth";
 import { BrowserModule } from "@angular/platform-browser";
 import { ReactiveFormsModule } from "@angular/forms";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-
-const FIREBASE = {
-  apiKey: "AIzaSyCkqYBq3krhnhc50U6IdECblCV9tnNJyzw",
-  authDomain: "ng-mafia4web.firebaseapp.com",
-  databaseURL: "https://ng-mafia4web-default-rtdb.firebaseio.com",
-  projectId: "ng-mafia4web",
-  storageBucket: "ng-mafia4web.appspot.com",
-  messagingSenderId: "1065272022680",
-  appId: "1:1065272022680:web:0ff57c33700cf5dd55e2ed",
-  measurementId: "G-48X3FQG9EH"
-};
+import { environment } from "src/environments/environment.development";
 
 const routes: Routes = [
   // Lazy-loaded
@@ -37,7 +27,7 @@ const routes: Routes = [
 export const AppConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(
-      provideFirebaseApp(() => initializeApp(FIREBASE)),
+      provideFirebaseApp(() => initializeApp(environment.firebase)),
       provideFirestore(() => getFirestore()),
       provideAuth(() => getAuth()),
       BrowserModule,
