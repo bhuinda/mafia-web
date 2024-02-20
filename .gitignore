@@ -3,6 +3,9 @@
 # Angular environment files
 src/environments
 
+# Angular misc files
+misc/
+
 # Compiled output
 /dist
 /tmp
