@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Subscription } from 'rxjs';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -10,11 +10,11 @@ import { NgIf } from '@angular/common';
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.css'],
     standalone: true,
-    imports: [NgIf, LoginComponent, RegisterComponent]
+    imports: [NgIf, SignInComponent, SignUpComponent]
 })
 export class AuthComponent implements OnInit, OnDestroy {
   // Note: consider changing login/register/logout to signin/signup/signout
-  auth = inject(AuthService);
+  // auth = inject(AuthService);
 
   userSubscription: Subscription;
   user: any;
@@ -34,27 +34,27 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.logoutSubscription = this.auth.logout().subscribe({
-      next: () => {
-        this.logoutFailed = false;
-      },
-      error: (error) => {
-        this.logoutFailed = true;
-        console.log(error);
-      }
-    });
+    // this.logoutSubscription = this.auth.logout().subscribe({
+    //   next: () => {
+    //     this.logoutFailed = false;
+    //   },
+    //   error: (error) => {
+    //     this.logoutFailed = true;
+    //     console.log(error);
+    //   }
+    // });
   }
 
   ngOnInit(): void {
-    this.userSubscription = this.auth.user.subscribe((user) => {
-      this.user = user;
-    });
+    // this.userSubscription = this.auth.user.subscribe((user) => {
+    //   this.user = user;
+    // });
   }
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-    if (this.logoutSubscription) {
-      this.logoutSubscription.unsubscribe();
-    }
+  //   this.userSubscription.unsubscribe();
+  //   if (this.logoutSubscription) {
+  //     this.logoutSubscription.unsubscribe();
+  //   }
   }
 }

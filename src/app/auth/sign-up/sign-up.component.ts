@@ -7,8 +7,8 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-register',
-    templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css'],
+    templateUrl: './sign-up.component.html',
+    styleUrls: ['./sign-up.component.css'],
     standalone: true,
     imports: [
         NgIf,
@@ -16,8 +16,8 @@ import { NgIf } from '@angular/common';
         ReactiveFormsModule,
     ],
 })
-export class RegisterComponent implements OnDestroy {
-  auth = inject(AuthService);
+export class SignUpComponent implements OnDestroy {
+  // auth = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
 
@@ -36,26 +36,26 @@ export class RegisterComponent implements OnDestroy {
       return;
     }
 
-    this.registrationSubscription = this.auth.register(email, password).subscribe({
-      next: () => {
-        this.registrationFailed = false;
-        this.formSubmitted = false;
+    // this.registrationSubscription = this.auth.register(email, password).subscribe({
+    //   next: () => {
+    //     this.registrationFailed = false;
+    //     this.formSubmitted = false;
 
-        this.router.navigateByUrl('/home');
-      },
-      error: (error) => {
-        console.log(error);
-        this.formSubmitted = true;
+    //     this.router.navigateByUrl('/home');
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //     this.formSubmitted = true;
 
-        if (error.code === 'auth/email-already-in-use') {
-          this.registrationFailed = false;
-          this.registrationFailedDuplicateEmail = true;
-        } else {
-          this.registrationFailed = true;
-          this.registrationFailedDuplicateEmail = false;
-        }
-      }
-    });
+    //     if (error.code === 'auth/email-already-in-use') {
+    //       this.registrationFailed = false;
+    //       this.registrationFailedDuplicateEmail = true;
+    //     } else {
+    //       this.registrationFailed = true;
+    //       this.registrationFailedDuplicateEmail = false;
+    //     }
+    //   }
+    // });
   }
 
   ngOnDestroy(): void {

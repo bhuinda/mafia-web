@@ -31,7 +31,7 @@ main {
   justify-content: center;
 }
 
-.logout button {
+.sign-out button {
   font-size: 10rem;
   color: white;
   background-color: black;
@@ -39,7 +39,7 @@ main {
   padding: 2rem;
   width: 100%;
 }
-.logout button:hover {
+.sign-out button:hover {
   color: yellow;
   cursor: pointer;
 }

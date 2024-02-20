@@ -17,7 +17,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
-  auth = inject(AuthService);
+  // auth = inject(AuthService);
 
   userSubscription: Subscription;
   user: any;
@@ -35,12 +35,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userSubscription = this.auth.user.subscribe((user) => {
-      this.user = user;
-    });
+    // this.userSubscription = this.auth.user.subscribe((user) => {
+    //   this.user = user;
+    // });
   }
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
+    // this.userSubscription.unsubscribe();
   }
 }

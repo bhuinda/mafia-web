@@ -7,8 +7,8 @@ import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['./sign-in.component.css'],
     standalone: true,
     imports: [
         NgIf,
@@ -16,8 +16,8 @@ import { NgIf } from '@angular/common';
         ReactiveFormsModule,
     ],
 })
-export class LoginComponent implements OnDestroy {
-  auth = inject(AuthService);
+export class SignInComponent implements OnDestroy {
+  // auth = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
 
@@ -35,19 +35,19 @@ export class LoginComponent implements OnDestroy {
       return;
     }
 
-    this.loginSubscription = this.auth.login(email, password).subscribe({
-      next: () => {
-        this.loginFailed = false;
-        this.formSubmitted = false;
+    // this.loginSubscription = this.auth.login(email, password).subscribe({
+    //   next: () => {
+    //     this.loginFailed = false;
+    //     this.formSubmitted = false;
 
-        this.router.navigateByUrl('/home');
-      },
-      error: (error) => {
-        console.log(error);
-        this.loginFailed = true;
-        this.formSubmitted = true;
-      }
-    });
+    //     this.router.navigateByUrl('/home');
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //     this.loginFailed = true;
+    //     this.formSubmitted = true;
+    //   }
+    // });
   }
 
   ngOnDestroy(): void {

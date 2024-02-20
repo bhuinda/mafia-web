@@ -24,7 +24,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
   @ViewChild('commandInput') commandInput: ElementRef;
 
   router = inject(Router);
-  auth = inject(AuthService);
+  // auth = inject(AuthService);
   settings = inject(SettingsService);
 
   terminalModeSubscription: Subscription;
@@ -148,16 +148,16 @@ export class TerminalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userSubscription = this.auth.user.subscribe(user => {
-      this.user = user;
-    });
+    // this.userSubscription = this.auth.user.subscribe(user => {
+    //   this.user = user;
+    // });
     this.terminalModeSubscription = this.settings.terminalMode$.subscribe(mode => {
       this.terminalMode = mode;
     });
   }
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
+    // this.userSubscription.unsubscribe();
     this.terminalModeSubscription.unsubscribe();
   }
 }
