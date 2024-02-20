@@ -1,8 +1,8 @@
-import { ApplicationConfig, importProvidersFrom } from "@angular/core";
-import { Routes, provideRouter } from "@angular/router";
-import { AuthComponent } from "./auth/auth.component";
-import { BrowserModule } from "@angular/platform-browser";
+import { importProvidersFrom, ApplicationConfig,  } from "@angular/core";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideRouter, Routes,  } from "@angular/router";
+import { BrowserModule } from "@angular/platform-browser";
+import { AuthComponent } from "./auth/auth.component";
 import { environment } from "src/environments/environment.development";
 
 const routes: Routes = [

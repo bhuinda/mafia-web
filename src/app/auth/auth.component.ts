@@ -13,7 +13,6 @@ import { NgIf } from '@angular/common';
     imports: [NgIf, SignInComponent, SignUpComponent]
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  // Note: consider changing login/register/logout to signin/signup/signout
   // auth = inject(AuthService);
 
   userSubscription: Subscription;
