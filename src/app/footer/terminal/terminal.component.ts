@@ -26,7 +26,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
   router = inject(Router);
   // private auth = inject(AuthService);
   settingsService = inject(SettingsService);
-  settingsSubscription: Subscription[] = [];
+  settingsSubscription: Subscription;
   settings: Settings = {};
 
   // User
@@ -160,6 +160,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // this.userSubscription.unsubscribe();
-    this.settingsService.unsubscribe(this.settingsSubscription);
+    this.settingsSubscription.unsubscribe;
   }
 }

@@ -61,22 +61,21 @@ export class SettingsService {
   // === HELPER METHODS FOR SUBSCRIPTION === //
 
   /**
-  * Subscribes to a selectable array of settings and executes a callback function upon emitted value changes.
-  * To update local settings, the most elegant solution is to use the callback: (key, value) => { this.settings[key] = value }. Ensure that this.settings is defined.
-  * Unsubscribe using: this.settingsService.unsubscribe(this.settings) in the ngDestroy lifecycle hook.
+  * Subscribes to one or more settings and executes a callback upon emitted value changes.
+  * As a single Subscription object, this implementation doesn't allow for the targeting of individual subscriptions.
+  * Recommended boilerplate is to define "settingsSubscription: Subscription" and "settings: Settings = {}" as properties with the callback, (key, value) => { this.settings[key] = value }.
   *
   * @param {string[]} keys - Select settings to subscribe to here (see defaultSettings for a list of valid keys).
   * @param {(key: string, value: Setting) => void} callback - Emits any change made to a subscription with its corresponding key-value pair.
   */
-  public subscribe(keys: string[], callback: (key: string, value: Setting) => void): Subscription[] {
-    return keys.map(key => {
+  public subscribe(keys: string[], callback: (key: string, value: Setting) => void): Subscription {
+    const subs = new Subscription();
+    keys.forEach(key => {
       const obs = this.observables[key];
-      if (obs) { return obs.subscribe(value => callback(key, value)); }
-      else { console.error(`No observable found on key: ${key}`); return null; }
-    }).filter(sub => sub != null);
-  }
+      if (obs) { subs.add(obs.subscribe(value => callback(key, value))); }
+      else { console.error(`No observable found on key: ${key}`); }
+    });
 
-  public unsubscribe(subs: Subscription[]): void {
-    subs.forEach(sub => sub.unsubscribe());
+    return subs;
   }
 }

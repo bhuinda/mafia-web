@@ -15,7 +15,7 @@ import { NgClass } from '@angular/common';
 })
 export class AppComponent implements OnInit, OnDestroy {
   settingsService = inject(SettingsService);
-  settingsSubscription: Subscription[] = [];
+  settingsSubscription: Subscription;
   settings: Settings = {};
 
   ngOnInit(): void {
@@ -25,6 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.settingsService.unsubscribe(this.settingsSubscription);
+    this.settingsSubscription.unsubscribe;
   }
 }
