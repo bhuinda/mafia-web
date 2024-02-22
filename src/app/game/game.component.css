@@ -1,5 +1,4 @@
 main {
-  display: flex;
   height: 100%;
   padding: 2rem;
   color: white;
@@ -30,7 +29,7 @@ h1 {
 
 .column {
   /* Figure out what's wrong here */
-  height: 40%;
+  min-height: 200px;
   display: flex;
   flex-direction: column;
 }
