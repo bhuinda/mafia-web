@@ -26,10 +26,12 @@ export class TerminalComponent implements OnInit, OnDestroy {
   router = inject(Router);
   // auth = inject(AuthService);
   settings = inject(SettingsService);
+  settingsSubscription: Subscription[];
 
-  terminalModeSubscription: Subscription;
+  // Settings
   terminalMode: boolean;
 
+  // User
   userSubscription: Subscription;
   user: any;
 
@@ -81,7 +83,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
       action: () => {
         this.placeholderText = 'Witness!';
 
-        this.settings.switchSetting('secretMode');
+        this.settings.updateSetting('secretMode');
       }
     }
 
@@ -151,13 +153,13 @@ export class TerminalComponent implements OnInit, OnDestroy {
     // this.userSubscription = this.auth.user.subscribe(user => {
     //   this.user = user;
     // });
-    this.terminalModeSubscription = this.settings.terminalMode$.subscribe(mode => {
-      this.terminalMode = mode;
+    this.settingsSubscription = this.settings.subscribe(['terminalMode'], (key, value) => {
+      this[key] = value;
     });
   }
 
   ngOnDestroy(): void {
     // this.userSubscription.unsubscribe();
-    this.terminalModeSubscription.unsubscribe();
+    this.settings.unsubscribe(this.settingsSubscription);
   }
 }

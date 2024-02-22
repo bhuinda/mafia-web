@@ -12,21 +12,22 @@ import { NgClass } from '@angular/common';
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   settings = inject(SettingsService);
+  settingsSubscription: Subscription[];
 
-  terminalModeSubscription: Subscription;
+  // Settings
   terminalMode: boolean;
 
   switchTerminalMode() {
-    this.settings.switchSetting('terminalMode');
+    this.settings.updateSetting('terminalMode');
   }
 
   ngOnInit(): void {
-    this.terminalModeSubscription = this.settings.terminalMode$.subscribe(mode => {
-      this.terminalMode = mode;
+    this.settingsSubscription = this.settings.subscribe(['terminalMode'], (key, value) => {
+      this[key] = value;
     });
   }
 
   ngOnDestroy(): void {
-    this.terminalModeSubscription.unsubscribe();
+    this.settings.unsubscribe(this.settingsSubscription);
   }
 }

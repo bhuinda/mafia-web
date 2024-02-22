@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { SettingsService } from '../shared/services/settings.service';
 import { TerminalComponent } from './terminal/terminal.component';
 import { NgIf } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-footer',
@@ -13,17 +13,18 @@ import { NgIf } from '@angular/common';
 })
 export class FooterComponent implements OnInit, OnDestroy {
   settings = inject(SettingsService);
+  settingsSubscription: Subscription[];
 
-  terminalModeSubscription: Subscription;
+  // Settings
   terminalMode: boolean;
 
   ngOnInit(): void {
-    this.terminalModeSubscription = this.settings.terminalMode$.subscribe(mode => {
-      this.terminalMode = mode;
+    this.settingsSubscription = this.settings.subscribe(['terminalMode'], (key, value) => {
+      this[key] = value;
     });
   }
 
   ngOnDestroy(): void {
-    this.terminalModeSubscription.unsubscribe();
+    this.settings.unsubscribe(this.settingsSubscription);
   }
 }

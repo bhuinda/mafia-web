@@ -15,19 +15,20 @@ import { NgClass } from '@angular/common';
 })
 export class AppComponent implements OnInit, OnDestroy {
   settings = inject(SettingsService);
+  settingsSubscription: Subscription[];
 
-  secretModeSubscription: Subscription;
+  // Settings
   secretMode: boolean;
 
   title = 'hi';
 
   ngOnInit(): void {
-    this.secretModeSubscription = this.settings.secretMode$.subscribe(mode => {
-        this.secretMode = mode;
+    this.settingsSubscription = this.settings.subscribe(['secretMode'], (key, value) => {
+      this[key] = value;
     });
   }
 
   ngOnDestroy(): void {
-    this.secretModeSubscription.unsubscribe();
+    this.settings.unsubscribe(this.settingsSubscription);
   }
 }
