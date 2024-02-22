@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { SettingsService } from '../shared/services/settings.service';
+import { Settings, SettingsService } from '../shared/services/settings.service';
 import { TerminalComponent } from './terminal/terminal.component';
-import { NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -9,22 +8,20 @@ import { Subscription } from 'rxjs';
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.css'],
     standalone: true,
-    imports: [NgIf, TerminalComponent]
+    imports: [TerminalComponent]
 })
 export class FooterComponent implements OnInit, OnDestroy {
-  settings = inject(SettingsService);
-  settingsSubscription: Subscription[];
-
-  // Settings
-  terminalMode: boolean;
+  settingsService = inject(SettingsService);
+  settingsSubscription: Subscription[] = [];
+  settings: Settings = {};
 
   ngOnInit(): void {
-    this.settingsSubscription = this.settings.subscribe(['terminalMode'], (key, value) => {
-      this[key] = value;
+    this.settingsSubscription = this.settingsService.subscribe(['terminalMode'], (key, value) => {
+      this.settings[key] = value;
     });
   }
 
   ngOnDestroy(): void {
-    this.settings.unsubscribe(this.settingsSubscription);
+    this.settingsService.unsubscribe(this.settingsSubscription);
   }
 }

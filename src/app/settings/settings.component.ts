@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { SettingsService } from '../shared/services/settings.service';
+import { Settings, SettingsService } from '../shared/services/settings.service';
 import { Subscription } from 'rxjs';
 import { NgClass } from '@angular/common';
 
@@ -11,23 +11,21 @@ import { NgClass } from '@angular/common';
     imports: [NgClass]
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-  settings = inject(SettingsService);
-  settingsSubscription: Subscription[];
-
-  // Settings
-  terminalMode: boolean;
+  private settingsService = inject(SettingsService);
+  private settingsSubscription: Subscription[] = [];
+  public settings: Settings = {};
 
   switchTerminalMode() {
-    this.settings.updateSetting('terminalMode');
+    this.settingsService.updateSetting('terminalMode');
   }
 
   ngOnInit(): void {
-    this.settingsSubscription = this.settings.subscribe(['terminalMode'], (key, value) => {
-      this[key] = value;
+    this.settingsSubscription = this.settingsService.subscribe(['terminalMode'], (key, value) => {
+      this.settings[key] = value;
     });
-  }
+  };
 
   ngOnDestroy(): void {
-    this.settings.unsubscribe(this.settingsSubscription);
+    this.settingsService.unsubscribe(this.settingsSubscription);
   }
 }

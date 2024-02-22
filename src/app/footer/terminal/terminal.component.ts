@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 import { Subscription } from 'rxjs';
-import { SettingsService } from '../../shared/services/settings.service';
+import { Settings, SettingsService } from '../../shared/services/settings.service';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
@@ -14,22 +14,20 @@ interface Command {
 type ArgumentPackage = string[] | null;
 
 @Component({
-    selector: 'app-terminal',
+    selector: 'terminal',
     templateUrl: './terminal.component.html',
     styleUrls: ['./terminal.component.css'],
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule]
+    imports: [ReactiveFormsModule]
 })
 export class TerminalComponent implements OnInit, OnDestroy {
   @ViewChild('commandInput') commandInput: ElementRef;
 
   router = inject(Router);
-  // auth = inject(AuthService);
-  settings = inject(SettingsService);
-  settingsSubscription: Subscription[];
-
-  // Settings
-  terminalMode: boolean;
+  // private auth = inject(AuthService);
+  settingsService = inject(SettingsService);
+  settingsSubscription: Subscription[] = [];
+  settings: Settings = {};
 
   // User
   userSubscription: Subscription;
@@ -41,7 +39,9 @@ export class TerminalComponent implements OnInit, OnDestroy {
   commandForm = new FormGroup({
     command: new FormControl('')
   });
-  commandList: { [name: string]: Command } = {
+
+  // === COMMANDS === //
+  readonly commandList: { [name: string]: Command } = {
 
     '/help': {
       action: () => { this.placeholderText = `Available commands: ${Object.keys(this.commandList)
@@ -83,7 +83,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
       action: () => {
         this.placeholderText = 'Witness!';
 
-        this.settings.updateSetting('secretMode');
+        this.settingsService.updateSetting('secretMode');
       }
     }
 
@@ -153,13 +153,13 @@ export class TerminalComponent implements OnInit, OnDestroy {
     // this.userSubscription = this.auth.user.subscribe(user => {
     //   this.user = user;
     // });
-    this.settingsSubscription = this.settings.subscribe(['terminalMode'], (key, value) => {
-      this[key] = value;
+    this.settingsSubscription = this.settingsService.subscribe(['terminalMode'], (key, value) => {
+      this.settings[key] = value;
     });
   }
 
   ngOnDestroy(): void {
     // this.userSubscription.unsubscribe();
-    this.settings.unsubscribe(this.settingsSubscription);
+    this.settingsService.unsubscribe(this.settingsSubscription);
   }
 }

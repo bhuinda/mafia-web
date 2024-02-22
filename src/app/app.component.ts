@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { SettingsService } from './shared/services/settings.service';
+import { Settings, SettingsService } from './shared/services/settings.service';
 import { Subscription } from 'rxjs';
 import { FooterComponent } from './footer/footer.component';
 import { RouterOutlet } from '@angular/router';
@@ -14,21 +14,17 @@ import { NgClass } from '@angular/common';
     imports: [NgClass, HeaderComponent, RouterOutlet, FooterComponent]
 })
 export class AppComponent implements OnInit, OnDestroy {
-  settings = inject(SettingsService);
-  settingsSubscription: Subscription[];
-
-  // Settings
-  secretMode: boolean;
-
-  title = 'hi';
+  settingsService = inject(SettingsService);
+  settingsSubscription: Subscription[] = [];
+  settings: Settings = {};
 
   ngOnInit(): void {
-    this.settingsSubscription = this.settings.subscribe(['secretMode'], (key, value) => {
-      this[key] = value;
+    this.settingsSubscription = this.settingsService.subscribe(['secretMode'], (key, value) => {
+      this.settings[key] = value;
     });
   }
 
   ngOnDestroy(): void {
-    this.settings.unsubscribe(this.settingsSubscription);
+    this.settingsService.unsubscribe(this.settingsSubscription);
   }
 }

@@ -1,14 +1,16 @@
 <div class="footer-wrapper">
 
-  <div *ngIf="!terminalMode" class="optional-container"></div>
-  <div *ngIf="!terminalMode" class="credits-container">
-    <footer>
-      <p>[made by bhuinda]</p>
-    </footer>
-  </div>
-
-  <div *ngIf="terminalMode" class="terminal-container">
-    <app-terminal></app-terminal>
-  </div>
+  @if (settings['terminalMode']) {
+    <div class="terminal-container">
+      <terminal/>
+    </div> }
+  @else {
+    <div class="optional-container"></div>
+    <div class="credits-container">
+      <footer>
+        <p>[made by bhuinda]</p>
+      </footer>
+    </div>
+  }
 
 </div>
