@@ -65,7 +65,7 @@ p, h1, h2, h3, h4, h5, h6 {
 /*** Scrollbar styling ***/
 
 ::-webkit-scrollbar {
-  width: 1.5em;
+  width: 15px;
 }
 
 ::-webkit-scrollbar-track {
@@ -73,12 +73,12 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track-piece {
-  border-left: 5px solid;
+  /* border-left: 5px solid; */
   background: black;
 }
 
 ::-webkit-scrollbar-thumb {
-  border-left: 5px solid;
+  /* border-left: 5px solid; */
   background: gray;
 }
 

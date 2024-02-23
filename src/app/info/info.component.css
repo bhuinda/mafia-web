@@ -57,5 +57,14 @@ a:hover {
   /* Future fix needed for consistency; height is only approximate */
 }
 
+.content-wrapper {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
 @media screen and (max-width: 768px) {
 }
+
+/* Add media query to compensate for incompatibility
+between "display: flex" and "overflow-y: auto" on <main>? */
