@@ -5,6 +5,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { NgClass } from '@angular/common';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -18,9 +19,15 @@ export class AppComponent implements OnInit, OnDestroy {
   settingsSubscription: Subscription;
   settings: Settings = {};
 
+  auth = inject(AuthService);
+
   ngOnInit(): void {
     this.settingsSubscription = this.settingsService.subscribe(['secretMode'], (key, value) => {
       this.settings[key] = value;
+    });
+
+    this.auth.getUsers().subscribe((users: any) => {
+      console.log(users);
     });
   }
 

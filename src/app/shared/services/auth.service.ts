@@ -1,71 +1,38 @@
-import { Injectable, inject } from "@angular/core";
-import { BehaviorSubject, catchError, from, throwError } from "rxjs";
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // private auth = inject(Auth);
-  // private userSubject = new BehaviorSubject<any>(null);
+  private http = inject(HttpClient);
+  private baseURL = 'http://localhost:3000';
 
-  // constructor() {
-  //   onAuthStateChanged(this.auth, (user) => {
-  //     if (user) {
-  //       this.userSubject.next(user);
-  //     } else {
-  //       this.userSubject.next(null);
-  //     }
-  //   });
-  // }
+  constructor() { }
 
-  // // Auth section
+  // Fetch all users
+  getUsers(): Observable<any> {
+    return this.http.get(`${this.baseURL}/users`);
+  }
 
-  // register(email: string, password: string) {
-  //   return from(createUserWithEmailAndPassword(this.auth, email, password))
-  //     .pipe(
-  //       catchError(error => {
-  //         return throwError(() => error);
-  //       })
-  //     );
-  // }
+  // Fetch a single user by id
+  getUser(id: number): Observable<any> {
+    return this.http.get(`${this.baseURL}/users/${id}`);
+  }
 
-  // login(email: string, password: string) {
-  //   return from(signInWithEmailAndPassword(this.auth, email, password))
-  //     .pipe(
-  //       catchError(error => {
-  //         return throwError(() => error);
-  //       })
-  //     );
-  // }
+  // Create a new user
+  createUser(user: any): Observable<any> {
+    return this.http.post(`${this.baseURL}/users`, user);
+  }
 
-  // logout() {
-  //   return from(signOut(this.auth))
-  //     .pipe(
-  //       catchError(error => {
-  //         return throwError(() => error);
-  //       })
-  //     );
-  // }
+  // Update a user
+  updateUser(id: number, user: any): Observable<any> {
+    return this.http.put(`${this.baseURL}/users/${id}`, user);
+  }
 
-  // // User section
-
-  // get user() {
-  //   return this.userSubject.asObservable();
-  // }
-
-  // updateDisplayName(input: string) {
-  //   const user = this.auth.currentUser;
-  //   const newDisplayName = input.split('@')[0];
-
-  //   if (user) {
-  //     return from(updateProfile(user, { displayName: newDisplayName }))
-  //       .pipe(
-  //         catchError(error => {
-  //           return throwError(() => error);
-  //         })
-  //       );
-  //   } else {
-  //     return throwError(() => new Error('No user is currently logged in.'));
-  //   }
-  // }
+  // Delete a user
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.baseURL}/users/${id}`);
+  }
 }
