@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { Settings, SettingsService } from './shared/services/settings.service';
+import { Settings, SettingsService } from '@services/settings';
 import { Subscription } from 'rxjs';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 import { NgClass } from '@angular/common';
-import { AuthService } from './shared/services/auth.service';
+import { AuthService } from '@services/auth';
 
 @Component({
     selector: 'app-root',

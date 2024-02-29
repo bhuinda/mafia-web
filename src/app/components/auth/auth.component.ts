@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '@services/auth';
 import { Subscription } from 'rxjs';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';

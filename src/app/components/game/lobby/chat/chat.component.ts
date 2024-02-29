@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { ChatService } from '../../../shared/services/chat.service';
+import { ChatService } from '@services/chat';
 import { FormsModule } from '@angular/forms';
 import { NgFor, DatePipe } from '@angular/common';
 

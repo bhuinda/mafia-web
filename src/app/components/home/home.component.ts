@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '@services/auth';
 import { Subscription } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
