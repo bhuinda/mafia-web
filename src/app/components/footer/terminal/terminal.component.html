@@ -1,6 +1,8 @@
 <div class="terminal" (click)="focusInput()">
   <form [formGroup]="commandForm" (ngSubmit)="onSubmit()">
-    <label for="command">[<span id="user-and-domain">{{ this.user ? this.user.displayName : 'anonymous' }}</span>&#64;mafia4web ~] $</label>
+    <label for="command">
+      [<span id="user-and-domain">@if (user$ | async){{{(user$ | async).username}}} @else {{{'anonymous'}}}</span>&#64;mafia4web ~] $
+    </label>
     <input #commandInput
            id="command"
            formControlName="command"

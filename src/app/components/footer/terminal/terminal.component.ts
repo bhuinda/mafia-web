@@ -2,8 +2,11 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@an
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Settings, SettingsService } from '@services/settings';
+import { UserService } from '@services/user';
+import { User } from '@models/user';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
@@ -18,20 +21,35 @@ type ArgumentPackage = string[] | null;
     templateUrl: './terminal.component.html',
     styleUrls: ['./terminal.component.css'],
     standalone: true,
-    imports: [ReactiveFormsModule]
+    imports: [ReactiveFormsModule, AsyncPipe, NgIf]
 })
 export class TerminalComponent implements OnInit, OnDestroy {
   @ViewChild('commandInput') commandInput: ElementRef;
 
   router = inject(Router);
-  // private auth = inject(AuthService);
+  auth = inject(AuthService);
+
+  userService = inject(UserService);
+  user$: Observable<User>;
+
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
   settings: Settings = {};
 
-  // User
-  userSubscription: Subscription;
-  user: any;
+  // === LIFE CYCLE HOOKS === //
+
+  ngOnInit(): void {
+    this.user$ = this.userService.user$;
+    this.settingsSubscription = this.settingsService.subscribe(['terminalMode'], (key, value) => {
+      this.settings[key] = value;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.settingsSubscription.unsubscribe;
+  }
+
+  // === TERMINAL === //
 
   placeholderDefault = 'Please enter a command. Try /help for a list of all available commands.';
   placeholderText = this.placeholderDefault;
@@ -147,19 +165,5 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
   focusInput() {
     this.commandInput.nativeElement.focus();
-  }
-
-  ngOnInit(): void {
-    // this.userSubscription = this.auth.user.subscribe(user => {
-    //   this.user = user;
-    // });
-    this.settingsSubscription = this.settingsService.subscribe(['terminalMode'], (key, value) => {
-      this.settings[key] = value;
-    });
-  }
-
-  ngOnDestroy(): void {
-    // this.userSubscription.unsubscribe();
-    this.settingsSubscription.unsubscribe;
   }
 }

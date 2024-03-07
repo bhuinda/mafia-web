@@ -10,8 +10,12 @@ export class UserService {
   private http = inject(HttpClient);
   private url = environment.apiUrl;
 
+  public user$ = new BehaviorSubject<any>(null);
+
   getCurrentUser(): Observable<any> {
-    return this.http.get(`${this.url}/users/me`);
+    return this.http.get(`${this.url}/users/me`).pipe(
+      tap((user: any) => this.user$.next(user))
+    );
   }
 
   // Fetch all users

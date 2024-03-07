@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { environment } from '@environments/environment';
+import { UserService } from './user';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { environment } from '@environments/environment';
 export class AuthService {
   private http = inject(HttpClient);
   private url = environment.apiUrl;
+  private userService = inject(UserService);
 
   public status$ = new BehaviorSubject<boolean>(false);
 
@@ -31,6 +33,7 @@ export class AuthService {
 
   signOut(): void {
     this.destroyToken();
+    this.userService.user$.next(null); // for terminal
     this.status$.next(false);
   }
 
@@ -47,7 +50,8 @@ export class AuthService {
     return this.http.get(`${this.url}/validate_token`)
       .pipe(
         tap((response: any) => {
-          this.status$.next(response.valid)
+          this.status$.next(response.valid);
+          this.userService.getCurrentUser().subscribe(); // memory leak potential
         }),
         catchError(error => {
           console.error(error);
