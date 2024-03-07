@@ -17,7 +17,7 @@ import { NgIf } from '@angular/common';
     ],
 })
 export class SignInComponent implements OnDestroy {
-  // auth = inject(AuthService);
+  auth = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
 
@@ -35,19 +35,18 @@ export class SignInComponent implements OnDestroy {
       return;
     }
 
-    // this.loginSubscription = this.auth.login(email, password).subscribe({
-    //   next: () => {
-    //     this.loginFailed = false;
-    //     this.formSubmitted = false;
-
-    //     this.router.navigateByUrl('/home');
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //     this.loginFailed = true;
-    //     this.formSubmitted = true;
-    //   }
-    // });
+    this.loginSubscription = this.auth.signIn(email, password).subscribe({
+      next: () => {
+        this.loginFailed = false;
+        this.formSubmitted = false;
+        this.router.navigateByUrl('/home');
+      },
+      error: (error) => {
+        console.log(error);
+        this.loginFailed = true;
+        this.formSubmitted = true;
+      }
+    });
   }
 
   ngOnDestroy(): void {

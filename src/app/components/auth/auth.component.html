@@ -1,28 +1,25 @@
 <main>
-  <ng-container *ngIf="user; else noCurrentUser">
 
-    <div class="warning" *ngIf="logoutFailed">Logout attempt failed; please try again.</div>
+  @if (auth.status$ | async) {
+
     <div class="sign-out">
       <button (click)="onLogout()">Logout :(</button>
     </div>
 
-  </ng-container>
+  }
 
-  <ng-template #noCurrentUser>
+  @else {
 
     <div class="form-container">
-      <app-login *ngIf="authMode == 'login'"></app-login>
-      <app-register *ngIf="authMode == 'register'"></app-register>
+      @if (authMode == 'login') { <app-login/> }
+      @if (authMode == 'register') { <app-register/> }
     </div>
 
     <div class="button-container">
-      <button *ngIf="authMode == 'login'"
-              (click)="switchAuthMode('register')"
-      >(Click here to register.)</button>
-      <button *ngIf="authMode == 'register'"
-              (click)="switchAuthMode('login')"
-      >(Click here to login.)</button>
+      @if (authMode == 'login') { <button (click)="switchAuthMode('register')"></button> }
+      @if (authMode == 'register') { <button (click)="switchAuthMode('login')"></button> }
     </div>
 
-  </ng-template>
+  }
+
 </main>

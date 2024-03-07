@@ -12,22 +12,22 @@ import { NgIf } from '@angular/common';
     imports: [NgIf, RouterLink],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  // auth = inject(AuthService);
+  auth = inject(AuthService);
 
-  userSubscription: Subscription;
-  user: any;
+  statusSubscription: Subscription;
+  status: any;
 
   now = new Date();
   date: string;
 
   ngOnInit(): void {
-    // this.userSubscription = this.auth.user.subscribe((user) => {
-    //   this.user = user;
-    // });
+    this.statusSubscription = this.auth.status$.subscribe((status) => {
+      this.status = status;
+    });
     this.date = (this.now.getMonth() + 1) + '/' + this.now.getDate();
   }
 
   ngOnDestroy(): void {
-    // this.userSubscription.unsubscribe();
+    this.statusSubscription.unsubscribe();
   }
 }

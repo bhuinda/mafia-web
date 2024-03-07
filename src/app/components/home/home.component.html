@@ -8,14 +8,14 @@
       <!-- Dummy of app-home-stats -->
       <div id="overview">
         <div class="container">
-          <div class="login-prompt" *ngIf="user == null">
+          <div class="login-prompt" *ngIf="!status">
             <p>[<a routerLink="/auth" style="color: lime; text-decoration: none">LOGIN</a>] to see your stats.</p>
           </div>
-          <div *ngIf="user != null">
+          <div *ngIf="status">
             <p>Logged in! (Stats)</p>
             <p>[<a routerLink="/auth" style="color: lime; text-decoration: none">LOGOUT</a>]</p>
           </div>
-          <!-- <div class="stats-card" *ngIf="user != null"></div> -->
+          <!-- <div class="stats-card" *ngIf="status != null"></div> -->
         </div>
       </div>
     </div>

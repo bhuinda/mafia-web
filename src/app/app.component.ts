@@ -15,23 +15,22 @@ import { AuthService } from '@services/auth';
     imports: [NgClass, HeaderComponent, RouterOutlet, FooterComponent]
 })
 export class AppComponent implements OnInit, OnDestroy {
+  auth = inject(AuthService);
+
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
   settings: Settings = {};
-
-  auth = inject(AuthService);
 
   ngOnInit(): void {
     this.settingsSubscription = this.settingsService.subscribe(['secretMode'], (key, value) => {
       this.settings[key] = value;
     });
 
-    this.auth.getUsers().subscribe((users: any) => {
-      console.log(users);
-    });
+    // Validate token on app start
+    this.auth.validateToken().subscribe();
   }
 
   ngOnDestroy(): void {
-    this.settingsSubscription.unsubscribe;
+    this.settingsSubscription.unsubscribe();
   }
 }
