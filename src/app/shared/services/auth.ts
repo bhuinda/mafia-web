@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, first, map, of, tap } from 'rxjs';
 import { environment } from '@environments/environment';
 import { UserService } from './user';
 
@@ -26,7 +26,7 @@ export class AuthService {
       .pipe(
         tap((response: any) => {
           localStorage.setItem('token', response.token);
-          this.status$.next(true);
+          this.validateToken().pipe(first()).subscribe();
         })
       );
   }

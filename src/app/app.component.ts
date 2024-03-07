@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Settings, SettingsService } from '@services/settings';
-import { Subscription } from 'rxjs';
+import { Subscription, first } from 'rxjs';
 import { FooterComponent } from './components/footer/footer.component';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     // Validate token on app start
-    this.auth.validateToken().subscribe();
+    this.auth.validateToken().pipe(first()).subscribe();
   }
 
   ngOnDestroy(): void {

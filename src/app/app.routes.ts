@@ -11,5 +11,5 @@ export const routes: Routes = [
   { path: 'settings', loadChildren: () => import('./components/settings/settings.routes') },
   // Eager-loaded
   { path: 'auth', component: AuthComponent },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' }
 ]

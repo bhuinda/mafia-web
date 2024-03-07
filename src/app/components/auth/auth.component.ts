@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-auth',
@@ -12,9 +13,17 @@ import { AsyncPipe, NgIf } from '@angular/common';
     standalone: true,
     imports: [NgIf, SignInComponent, SignUpComponent, AsyncPipe]
 })
-export class AuthComponent implements OnInit, OnDestroy {
+export class AuthComponent {
+  router = inject(Router);
   auth = inject(AuthService);
   authMode = 'login';
+
+  rerouteError: string;
+
+  constructor() {
+    const navigation = this.router.getCurrentNavigation();
+    this.rerouteError = navigation.extras.state?.['error'].toUpperCase() || '';
+  }
 
   switchAuthMode(mode: string) {
     if (mode == 'register') {
@@ -27,15 +36,5 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.auth.signOut();
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-  //   this.userSubscription.unsubscribe();
-  //   if (this.logoutSubscription) {
-  //     this.logoutSubscription.unsubscribe();
-  //   }
   }
 }

@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, NavigationExtras, Router } from '@angular/router';
 import { AuthService } from '@app/shared/services/auth';
 import { tap } from 'rxjs';
 
@@ -10,8 +10,13 @@ export const authGuard: CanActivateFn = (route, state) => {
   return authService.status$.pipe(
     tap(isValid => {
       if (!isValid) {
-        router.navigate(['/auth']);
+        const navigationExtras: NavigationExtras = {
+          state: { error: `Unauthorized access. Sign in?` }
+        };
+        router.navigate(['/auth'], navigationExtras);
       }
     })
   );
 };
+
+// TO-DO: Add a workaround so that whenever AuthComponent is redirected to while already on the /auth route, the new error message is displayed.
