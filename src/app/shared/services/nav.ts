@@ -19,15 +19,18 @@ export class NavService {
   }
 
   public back(): boolean {
-    const secondToLastHistoryItem = this.history.at(-2);
-    if (secondToLastHistoryItem) {
-      // Check if last history item was a failed navigation attempt; if so, remove it to prevent infinite nav loop
-      if (!secondToLastHistoryItem.success) { this.history.splice(-2, 2); }
-
-      this.history.splice(-2, 2);
-      this.router.navigate([secondToLastHistoryItem.route])
+    const lastRoute = this.history.at(-2);
+    if (lastRoute) {
+      if (lastRoute.success) {
+        this.history.splice(-2, 2);
+        this.router.navigate([lastRoute.route]);
+        return true;
+      } else { // If the last route was not successful, remove it and try again (using recursion)
+        this.history.splice(-2, 2);
+        return this.back();
+      }
     }
 
-    return !!secondToLastHistoryItem;
+    return !!lastRoute;
   }
 }
