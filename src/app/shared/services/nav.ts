@@ -23,7 +23,8 @@ export class NavService {
 
     let successCount = 0;
     for (let i = 0; i < reversedHistory.length; i++) {
-      if (reversedHistory[i].success) { successCount++;
+      if (reversedHistory[i].success) {
+        successCount++;
         if (successCount === 2) {
           this.router.navigate([reversedHistory[i].route]);
           this.history = reversedHistory.slice(i + 1).reverse();

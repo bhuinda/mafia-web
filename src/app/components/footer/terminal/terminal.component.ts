@@ -15,7 +15,7 @@ interface Command {
   action: (args?: any) => void;
 }
 
-type ArgumentPackage = string[] | null;
+type Argument = string[] | null;
 
 @Component({
     selector: 'terminal',
@@ -63,7 +63,7 @@ export class TerminalComponent implements OnInit {
 
     '/nav': {
       arguments: ['home', 'info', 'game', 'profile', 'settings'],
-      action: (args: ArgumentPackage) => {
+      action: (args: Argument) => {
         if (!args) {
           this.placeholderText = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`;
           return;
@@ -110,7 +110,7 @@ export class TerminalComponent implements OnInit {
     '/bhuinda',
   ];
 
-  parseCommand(input: string): { name: string, args: ArgumentPackage } {
+  parseCommand(input: string): { name: string, args: Argument } {
     const commandParts = input.split(' ');
 
     if (commandParts.length === 1) { return { name: commandParts[0], args: null }; }
