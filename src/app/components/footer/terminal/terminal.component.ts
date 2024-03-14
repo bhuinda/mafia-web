@@ -7,6 +7,7 @@ import { Settings, SettingsService } from '@services/settings';
 import { UserService } from '@services/user';
 import { User } from '@models/user';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { NavService } from '@app/shared/services/nav';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
@@ -23,30 +24,22 @@ type ArgumentPackage = string[] | null;
     standalone: true,
     imports: [ReactiveFormsModule, AsyncPipe, NgIf]
 })
-export class TerminalComponent implements OnInit, OnDestroy {
+export class TerminalComponent implements OnInit {
   @ViewChild('commandInput') commandInput: ElementRef;
 
   router = inject(Router);
+  nav = inject(NavService);
   auth = inject(AuthService);
 
   userService = inject(UserService);
   user$: Observable<User>;
 
   settingsService = inject(SettingsService);
-  settingsSubscription: Subscription;
-  settings: Settings = {};
 
   // === LIFE CYCLE HOOKS === //
 
   ngOnInit(): void {
     this.user$ = this.userService.user$;
-    this.settingsSubscription = this.settingsService.subscribe(['terminalMode'], (key, value) => {
-      this.settings[key] = value;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.settingsSubscription.unsubscribe;
   }
 
   // === TERMINAL === //
@@ -81,13 +74,20 @@ export class TerminalComponent implements OnInit, OnDestroy {
           return;
         }
 
-        if (this.router.url == `/${args[0]}`) {
+        if (this.router.url === `/${args[0]}`) {
           this.placeholderText = `You are already on this page.`;
           return;
         }
 
         this.placeholderText = this.placeholderDefault;
         this.router.navigateByUrl(`/${args[0]}`);
+      }
+    },
+
+    '/back': {
+      action: () => {
+        if (this.nav.back()) { this.placeholderText = this.placeholderDefault; }
+        else { this.placeholderText = 'No navigation history left!'; }
       }
     },
 
@@ -113,8 +113,8 @@ export class TerminalComponent implements OnInit, OnDestroy {
   parseCommand(input: string): { name: string, args: ArgumentPackage } {
     const commandParts = input.split(' ');
 
-    if (commandParts.length == 1) return { name: commandParts[0], args: null };
-    else return { name: commandParts[0], args: commandParts.slice(1) };
+    if (commandParts.length === 1) { return { name: commandParts[0], args: null }; }
+    else { return { name: commandParts[0], args: commandParts.slice(1) }; }
   }
 
   handleCommand(input: string) {

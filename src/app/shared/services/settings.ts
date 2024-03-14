@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 type Setting = number | boolean;
-export type Settings = { [key: string]: Setting };
+export interface Settings {
+  [key: string]: Setting
+};
 
 // Declare settings and their defaults here
 const defaultSettings: Settings = {
@@ -26,7 +28,7 @@ export class SettingsService {
   }
 
   public updateSetting(key: string, value?: number): void {
-    if (value == undefined) { this.switchSetting(key); }
+    if (value === undefined) { this.switchSetting(key); }
     else { this.adjustSetting(key, value); }
   }
 
@@ -47,18 +49,16 @@ export class SettingsService {
     const localValue = localStorage.getItem(key);
 
     // If no local value stored yet, return the default value
-    if (localValue == null) { return defaultSettings[key]; }
+    if (localValue === null) { return defaultSettings[key]; }
 
     // If the string value is a number, return a number; else return a boolean
     if (!isNaN(Number(localValue))) { return Number(localValue); }
-    else { return localValue == 'true'; }
+    else { return localValue === 'true'; }
   }
 
   private setLocalSetting(key: string, value: Setting): void {
     localStorage.setItem(key, value.toString());
   }
-
-  // === HELPER METHODS FOR SUBSCRIPTION === //
 
   /**
   * Subscribes to one or more settings and executes a callback upon emitted value changes.

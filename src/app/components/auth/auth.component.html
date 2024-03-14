@@ -13,13 +13,13 @@
   @else {
 
     <div class="form-container">
-      @if (authMode == 'login') { <app-login/> }
-      @if (authMode == 'register') { <app-register/> }
+      @if (authMode === 'login') { <app-login/> }
+      @if (authMode === 'register') { <app-register/> }
     </div>
 
     <div class="button-container">
-      @if (authMode == 'login') { <button (click)="switchAuthMode('register')"></button> }
-      @if (authMode == 'register') { <button (click)="switchAuthMode('login')"></button> }
+      @if (authMode === 'login') { <button (click)="switchAuthMode('register')"></button> }
+      @if (authMode === 'register') { <button (click)="switchAuthMode('login')"></button> }
     </div>
 
   }

@@ -13,6 +13,7 @@ import { NgClass } from '@angular/common';
 export class SettingsComponent implements OnInit, OnDestroy {
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
+  settingsList: string[] = ['terminalMode']
   settings: Settings = {};
 
   switchTerminalMode() {
@@ -20,9 +21,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.settingsSubscription = this.settingsService.subscribe(['terminalMode'], (key, value) => {
-      this.settings[key] = value;
-    });
+    this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => { this.settings[key] = value; });
   }
 
   ngOnDestroy(): void {

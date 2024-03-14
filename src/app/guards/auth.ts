@@ -1,19 +1,18 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, NavigationExtras, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '@app/shared/services/auth';
+import { NavService } from '@app/shared/services/nav';
 import { tap } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
+  const auth = inject(AuthService);
+  const nav = inject(NavService);
   const router = inject(Router);
 
-  return authService.status$.pipe(
+  return auth.status$.pipe(
     tap(isValid => {
       if (!isValid) {
-        const navigationExtras: NavigationExtras = {
-          state: { error: `Unauthorized access. Sign in?` }
-        };
-        router.navigate(['/auth'], navigationExtras);
+        router.navigate(['/auth']);
       }
     })
   );

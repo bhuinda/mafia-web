@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '@services/auth';
-import { Subscription } from 'rxjs';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AsyncPipe, NgIf } from '@angular/common';
@@ -26,12 +25,8 @@ export class AuthComponent {
   }
 
   switchAuthMode(mode: string) {
-    if (mode == 'register') {
-      this.authMode = 'register';
-    }
-    else {
-      this.authMode = 'login';
-    }
+    if (mode === 'register') { this.authMode = 'register'; }
+    else { this.authMode = 'login'; }
   }
 
   onLogout() {
