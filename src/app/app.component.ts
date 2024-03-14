@@ -28,6 +28,14 @@ export class AppComponent implements OnInit, OnDestroy {
   settings: Settings = {};
 
   ngOnInit(): void {
+    /*
+      On app load, redirect to auth to show welcome screen.
+      Could be improved by checking against auth.
+      ALSO, potential bug: if user somehow navs to another page without refreshing, the view will be... broken. Will fix later.
+    */
+    this.router.navigate(['/auth']);
+    this.settingsService.updateSetting('firstTime', true);
+
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd || event instanceof NavigationError || event instanceof NavigationCancel)
     ).subscribe(event => {

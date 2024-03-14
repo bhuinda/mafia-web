@@ -3,6 +3,7 @@ import { AuthService } from '@services/auth';
 import { Subscription } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Settings, SettingsService } from '@app/shared/services/settings';
 
 @Component({
     selector: 'app-header',
@@ -17,10 +18,20 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
-  // auth = inject(AuthService);
-
-  userSubscription: Subscription;
   user: any;
+
+  settingsService = inject(SettingsService);
+  settingsSubscription: Subscription;
+  settingsList: string[] = ['firstTime'];
+  settings: Settings = {};
+
+  ngOnInit(): void {
+    this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => { this.settings[key] = value; });
+  }
+
+  ngOnDestroy(): void {
+    this.settingsSubscription.unsubscribe();
+  }
 
   getSelectorHTML(page: string): string {
     return `
@@ -32,15 +43,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onBurgerClick(): void {
 
-  }
-
-  ngOnInit(): void {
-    // this.userSubscription = this.auth.user.subscribe((user) => {
-    //   this.user = user;
-    // });
-  }
-
-  ngOnDestroy(): void {
-    // this.userSubscription.unsubscribe();
   }
 }

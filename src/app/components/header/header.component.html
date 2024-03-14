@@ -1,93 +1,93 @@
-<div class="header-wrapper">
-  <header>
+@if (!settings['firstTime']) {
 
-    <div id="banner">
-      <img src="../assets/images/banner.jpg" alt="Banner">
-    </div>
+  <div class="header-wrapper">
+    <header>
 
-    <nav>
-      <a routerLink="home"
-         routerLinkActive="active"
-         [innerHTML]="getSelectorHTML('home')"
-         draggable="false">
-      </a>
-      <a routerLink="info"
-         routerLinkActive="active"
-        [innerHTML]="getSelectorHTML('info')"
-        draggable="false">
-      </a>
-      <a routerLink="game"
-         routerLinkActive="active"
-         [innerHTML]="getSelectorHTML('game')"
-         draggable="false">
-      </a>
-      <a routerLink="profile"
-        routerLinkActive="active"
-        [innerHTML]="getSelectorHTML('profile')"
-        draggable="false">
-      </a>
-      <a routerLink="settings"
-        routerLinkActive="active"
-        [innerHTML]="getSelectorHTML('settings')"
-        draggable="false">
-      </a>
+      <nav>
+        <a routerLink="home"
+           routerLinkActive="active"
+           [innerHTML]="getSelectorHTML('home')"
+           draggable="false">
+        </a>
+        <a routerLink="info"
+           routerLinkActive="active"
+          [innerHTML]="getSelectorHTML('info')"
+          draggable="false">
+        </a>
+        <a routerLink="game"
+           routerLinkActive="active"
+           [innerHTML]="getSelectorHTML('game')"
+           draggable="false">
+        </a>
+        <a routerLink="profile"
+          routerLinkActive="active"
+          [innerHTML]="getSelectorHTML('profile')"
+          draggable="false">
+        </a>
+        <a routerLink="settings"
+          routerLinkActive="active"
+          [innerHTML]="getSelectorHTML('settings')"
+          draggable="false">
+        </a>
 
-      <div class="profile-container">
+        <div class="profile-container">
 
-        <div *ngIf="user" class="signed-in">
-          <div class="info-container">
+          <div *ngIf="user" class="signed-in">
+            <div class="info-container">
 
-            <div class="welcome">
-              <p>WELCOME, {{(user ? 'User' : 'Anonymous').toUpperCase()}}.</p>
-            </div>
-            <div id="profile-level">
+              <div class="welcome">
+                <p>WELCOME, {{(user ? 'User' : 'Anonymous').toUpperCase()}}.</p>
+              </div>
+              <div id="profile-level">
 
-              <span id="experience-level">LVL.0</span>
-              <div id="experience-bar">
-                <div id="experience-progress"></div>
+                <span id="experience-level">LVL.0</span>
+                <div id="experience-bar">
+                  <div id="experience-progress"></div>
+                </div>
+
               </div>
 
             </div>
+            <div class="icon-container">
+              <a id="profile-icon" routerLink="profile"></a>
+            </div>
+          </div>
 
+          <div *ngIf="!user" class="signed-out">
+            <p>Sign in to see info.</p>
           </div>
-          <div class="icon-container">
-            <a id="profile-icon" routerLink="profile"></a>
-          </div>
+
         </div>
 
-        <div *ngIf="!user" class="signed-out">
-          <p>Sign in to see info.</p>
-        </div>
+      </nav>
+    </header>
 
+    <div class="hamburger-container">
+      <button id="hamburger-dropdown" (click)="onBurgerClick()"><p>☰</p></button>
+      <div class="hamburger">
+        <a routerLink="home"
+          routerLinkActive="active"
+          [innerHTML]="getSelectorHTML('home')"
+          draggable="false">
+        </a>
+        <a routerLink="info"
+          routerLinkActive="active"
+          [innerHTML]="getSelectorHTML('info')"
+          draggable="false">
+        </a>
+        <a routerLink="game"
+          routerLinkActive="active"
+          [innerHTML]="getSelectorHTML('game')"
+          draggable="false">
+        </a>
+        <a routerLink="profile"
+          routerLinkActive="active"
+          [innerHTML]="getSelectorHTML('profile')"
+          draggable="false">
+        </a>
       </div>
-
-    </nav>
-  </header>
-
-  <div class="hamburger-container">
-    <button id="hamburger-dropdown" (click)="onBurgerClick()"><p>☰</p></button>
-    <div class="hamburger">
-      <a routerLink="home"
-        routerLinkActive="active"
-        [innerHTML]="getSelectorHTML('home')"
-        draggable="false">
-      </a>
-      <a routerLink="info"
-        routerLinkActive="active"
-        [innerHTML]="getSelectorHTML('info')"
-        draggable="false">
-      </a>
-      <a routerLink="game"
-        routerLinkActive="active"
-        [innerHTML]="getSelectorHTML('game')"
-        draggable="false">
-      </a>
-      <a routerLink="profile"
-        routerLinkActive="active"
-        [innerHTML]="getSelectorHTML('profile')"
-        draggable="false">
-      </a>
     </div>
+
   </div>
 
-</div>
+}

@@ -73,7 +73,7 @@ a:first-child {
 #profile-icon {
   height: 100%;
   margin-left: 70%;
-  background-image: url('../../assets/images/pfp.png');
+  /* background-image: url('../../assets/images/pfp.png'); */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: right;

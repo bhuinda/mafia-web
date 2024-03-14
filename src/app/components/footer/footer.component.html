@@ -1,18 +1,22 @@
-<div class="footer-wrapper">
+@if (!settings['firstTime']) {
 
-  @if (settings['terminalMode']) {
-    <div class="terminal-container">
-      <terminal/>
-    </div>
-  }
+  <div class="footer-wrapper">
 
-  @else {
-    <div class="optional-container"></div>
-    <div class="credits-container">
-      <footer>
-        <p>[made by bhuinda]</p>
-      </footer>
-    </div>
-  }
+    @if (settings['terminalMode']) {
+      <div class="terminal-container">
+        <terminal/>
+      </div>
+    }
 
-</div>
+    @else {
+      <div class="optional-container"></div>
+      <div class="credits-container">
+        <footer>
+          <p>[made by bhuinda]</p>
+        </footer>
+      </div>
+    }
+
+  </div>
+
+}

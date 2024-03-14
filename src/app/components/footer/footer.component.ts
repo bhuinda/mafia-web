@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class FooterComponent implements OnInit, OnDestroy {
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
-  settingsList: string[] = ['terminalMode'];
+  settingsList: string[] = ['firstTime', 'terminalMode'];
   settings: Settings = {};
 
   ngOnInit(): void {
@@ -21,6 +21,6 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.settingsSubscription.unsubscribe;
+    this.settingsSubscription.unsubscribe();
   }
 }

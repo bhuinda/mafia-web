@@ -9,7 +9,8 @@ export interface Settings {
 // Declare settings and their defaults here
 const defaultSettings: Settings = {
     terminalMode: true,
-    secretMode: false
+    secretMode: false,
+    firstTime: false
 }
 
 @Injectable({
@@ -17,7 +18,7 @@ const defaultSettings: Settings = {
 })
 export class SettingsService {
   private settings: { [key: string]: BehaviorSubject<Setting> } = {};
-  private observables: { [key: string]: Observable<Setting> } = {};
+  public observables: { [key: string]: Observable<Setting> } = {};
 
   constructor() {
     // Sets settings to their default values or their localStorage values
@@ -27,14 +28,14 @@ export class SettingsService {
     }
   }
 
-  public updateSetting(key: string, value?: number): void {
-    if (value === undefined) { this.switchSetting(key); }
-    else { this.adjustSetting(key, value); }
+  public updateSetting(key: string, value?: number | boolean): void {
+    if (value === undefined || typeof value === 'boolean') { this.switchSetting(key, value as boolean); }
+    else { this.adjustSetting(key, value as number); }
   }
 
   // "switch" => BOOLEAN settings
-  private switchSetting(key: string): void {
-    const switchedValue = !this.settings[key].getValue();
+  private switchSetting(key: string, value?: boolean): void {
+    const switchedValue = value !== undefined ? value : !this.settings[key].getValue();
     this.setLocalSetting(key, switchedValue);
     this.settings[key].next(switchedValue);
   }

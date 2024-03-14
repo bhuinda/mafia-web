@@ -1,4 +1,4 @@
-<main>
+<main [ngClass]="{'first-time-border': settings['firstTime']}">
 
   @if (cancelledRoute) {
     <div class="error-container">
@@ -7,14 +7,17 @@
   }
 
   @if (auth.status$ | async) {
-
     <div class="sign-out">
       <button (click)="onLogout()">Logout :(</button>
     </div>
-
   }
 
   @else {
+    @if (settings['firstTime']) {
+      <div class="welcome-container">
+        WELCOME TO MAFIA4WEB.
+      </div>
+    }
 
     <div class="form-container">
       @if (authMode === 'login') { <app-login/> }
@@ -22,10 +25,12 @@
     </div>
 
     <div class="button-container">
-      @if (authMode === 'login') { <button (click)="switchAuthMode('register')"></button> }
-      @if (authMode === 'register') { <button (click)="switchAuthMode('login')"></button> }
+      @if (authMode === 'login') { <button (click)="switchAuthMode('register')">SIGN UP?</button> }
+      @if (authMode === 'register') { <button (click)="switchAuthMode('login')">SIGN IN?</button> }
+      @if (settings['firstTime']) {
+        <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button>
+      }
     </div>
-
   }
 
 </main>
