@@ -24,10 +24,9 @@ export class NavService {
       if (lastRoute.success) {
         this.history.splice(-2, 2);
         this.router.navigate([lastRoute.route]);
-        return true;
       } else { // If the last route was not successful, remove it and try again (using recursion)
         this.history.splice(-2, 2);
-        return this.back();
+        this.back();
       }
     }
 
