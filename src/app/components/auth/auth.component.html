@@ -1,6 +1,10 @@
 <main>
 
-  <p>{{ rerouteError }}</p>
+  @if (routeCancelled) {
+    <div class="error-container">
+      UNAUTHORIZED ACCESS TO {{ routeCancelled.toUpperCase() }}. SIGN IN?
+    </div>
+  }
 
   @if (auth.status$ | async) {
 
