@@ -1,6 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
-import { subscribeOnce } from '../helpers/subscribeOnce';
 import { Router } from '@angular/router';
 
 interface HistoryItem {
@@ -21,9 +19,15 @@ export class NavService {
   }
 
   public back(): boolean {
-    const lastHistoryItem = this.history.pop();
-    if (lastHistoryItem) { this.router.navigate([lastHistoryItem.route]); }
+    const secondToLastHistoryItem = this.history.at(-2);
+    if (secondToLastHistoryItem) {
+      // Check if last history item was a failed navigation attempt; if so, remove it to prevent infinite nav loop
+      if (!secondToLastHistoryItem.success) { this.history.splice(-2, 2); }
 
-    return !!lastHistoryItem;
+      this.history.splice(-2, 2);
+      this.router.navigate([secondToLastHistoryItem.route])
+    }
+
+    return !!secondToLastHistoryItem;
   }
 }
