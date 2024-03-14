@@ -12,7 +12,6 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
   return authService.status$.pipe(
     tap(isValid => {
       if (isValid) {
-        nav.history.push({ route: state.url, success: false });
         router.navigate(['/auth']);
       }
     })

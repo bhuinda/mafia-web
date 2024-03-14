@@ -21,22 +21,25 @@ export class AuthComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
 
   authMode: string = 'login';
-  routeCancelled: string = '';
+  cancelledRoute: string = '';
 
   ngOnInit(): void {
+    this.setCancelledRoute('init');
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationCancel)
-    ).subscribe(() => this.setNavigationError());
+    ).subscribe(() => this.setCancelledRoute());
   }
 
   ngOnDestroy(): void {
     this.routerSubscription.unsubscribe();
   }
 
-  setNavigationError(): void {
-    const secondToLastHistoryItem = this.nav.history.at(-2);
-    if (secondToLastHistoryItem) { this.routeCancelled = !secondToLastHistoryItem.success ? secondToLastHistoryItem.route : null; }
-    else { this.routeCancelled = null; }
+  setCancelledRoute(arg?: string) {
+    const index = arg === 'init' ? -2 : -1;
+    const historyItem = this.nav.history.at(index);
+    if (historyItem) {
+      this.cancelledRoute = !historyItem.success ? historyItem.route : null;
+    }
   }
 
   switchAuthMode(mode: string) {

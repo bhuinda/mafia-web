@@ -31,8 +31,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd || event instanceof NavigationError || event instanceof NavigationCancel)
     ).subscribe(event => {
-      if (event instanceof NavigationEnd) { this.nav.addToHistory(event.urlAfterRedirects, true); }
-      else { this.nav.addToHistory(this.router.url, false); }
+      if (event instanceof NavigationEnd) {
+        this.nav.addToHistory(event.urlAfterRedirects, true);
+      } else if (event instanceof NavigationError || event instanceof NavigationCancel) {
+        this.nav.addToHistory(event.url, false);
+      }
       console.log('nav', this.nav.history)
     });
 

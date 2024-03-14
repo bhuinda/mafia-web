@@ -19,17 +19,18 @@ export class NavService {
   }
 
   public back(): boolean {
-    const lastRoute = this.history.at(-2);
-    if (lastRoute) {
-      if (lastRoute.success) {
-        this.history.splice(-2, 2);
-        this.router.navigate([lastRoute.route]);
-      } else { // If the last route was not successful, remove it and try again (using recursion)
-        this.history.splice(-2, 2);
-        this.back();
+    const reversedHistory = [...this.history].reverse();
+
+    let successCount = 0;
+    for (let i = 0; i < reversedHistory.length; i++) {
+      if (reversedHistory[i].success) { successCount++;
+        if (successCount === 2) {
+          this.router.navigate([reversedHistory[i].route]);
+          this.history = reversedHistory.slice(i + 1).reverse();
+          return true;
+        }
       }
     }
-
-    return !!lastRoute;
+    return false;
   }
 }

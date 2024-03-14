@@ -1,8 +1,8 @@
 <main>
 
-  @if (routeCancelled) {
+  @if (cancelledRoute) {
     <div class="error-container">
-      UNAUTHORIZED ACCESS TO {{ routeCancelled.toUpperCase() }}. SIGN IN?
+      UNAUTHORIZED ACCESS TO {{ cancelledRoute.toUpperCase() }}. SIGN IN?
     </div>
   }
 
