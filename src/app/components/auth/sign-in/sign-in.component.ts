@@ -1,9 +1,10 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, first } from 'rxjs';
 import { AuthService } from '@services/auth';
 import { NgIf } from '@angular/common';
+import { subscribeOnce } from '@app/shared/helpers/subscribeOnce';
 
 @Component({
     selector: 'app-login',
@@ -16,7 +17,7 @@ import { NgIf } from '@angular/common';
         ReactiveFormsModule,
     ],
 })
-export class SignInComponent implements OnDestroy {
+export class SignInComponent {
   auth = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
@@ -35,7 +36,7 @@ export class SignInComponent implements OnDestroy {
       return;
     }
 
-    this.loginSubscription = this.auth.signIn(email, password).subscribe({
+    subscribeOnce(this.auth.signIn(email, password), {
       next: () => {
         this.loginFailed = false;
         this.formSubmitted = false;
@@ -47,11 +48,5 @@ export class SignInComponent implements OnDestroy {
         this.formSubmitted = true;
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.loginSubscription) {
-      this.loginSubscription.unsubscribe();
-    }
   }
 }

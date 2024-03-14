@@ -25,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
+  settingsList: string[] = ['secretMode'];
   settings: Settings = {};
 
   ngOnInit(): void {
@@ -39,17 +40,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd || event instanceof NavigationError || event instanceof NavigationCancel)
     ).subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.nav.addToHistory(event.urlAfterRedirects, true);
-      } else if (event instanceof NavigationError || event instanceof NavigationCancel) {
-        this.nav.addToHistory(event.url, false);
-      }
-      console.log('nav', this.nav.history)
+      if (event instanceof NavigationEnd) { this.nav.addToHistory(event.urlAfterRedirects, true); }
+      else if (event instanceof NavigationError || event instanceof NavigationCancel) { this.nav.addToHistory(event.url, false); }
     });
 
-    this.settingsSubscription = this.settingsService.subscribe(['secretMode'], (key, value) => {
-      this.settings[key] = value;
-    });
+    this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
 
     // Validate token on app start
     subscribeOnce(this.auth.validateToken());

@@ -21,7 +21,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => { this.settings[key] = value; });
+    this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
   }
 
   ngOnDestroy(): void {

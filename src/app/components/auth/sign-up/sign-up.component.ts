@@ -16,8 +16,10 @@ import { NgIf } from '@angular/common';
         ReactiveFormsModule,
     ],
 })
-export class SignUpComponent implements OnDestroy {
-  // auth = inject(AuthService);
+export class SignUpComponent {
+  // TO-DO: Add "success!" message after successful registration to AuthComponent
+
+  auth = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
 
@@ -56,11 +58,5 @@ export class SignUpComponent implements OnDestroy {
     //     }
     //   }
     // });
-  }
-
-  ngOnDestroy(): void {
-    if (this.registrationSubscription) {
-      this.registrationSubscription.unsubscribe();
-    }
   }
 }

@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   settings: Settings = {};
 
   ngOnInit(): void {
-    this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => { this.settings[key] = value; });
+    this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
   }
 
   ngOnDestroy(): void {

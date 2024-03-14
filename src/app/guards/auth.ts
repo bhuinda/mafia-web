@@ -6,7 +6,6 @@ import { tap } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
-  const nav = inject(NavService);
   const router = inject(Router);
 
   return auth.status$.pipe(
