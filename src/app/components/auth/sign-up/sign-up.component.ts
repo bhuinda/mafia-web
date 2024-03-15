@@ -8,7 +8,7 @@ import { NgIf } from '@angular/common';
 @Component({
     selector: 'app-register',
     templateUrl: './sign-up.component.html',
-    styleUrls: ['./sign-up.component.css'],
+    styleUrls: ['./sign-up.component.scss'],
     standalone: true,
     imports: [
         NgIf,

@@ -5,7 +5,7 @@ import { NgIf, NgStyle } from '@angular/common';
 @Component({
     selector: 'app-game',
     templateUrl: './game.component.html',
-    styleUrls: ['./game.component.css'],
+    styleUrls: ['./game.component.scss'],
     standalone: true,
     imports: [NgIf, RouterLink, NgStyle, RouterOutlet]
 })

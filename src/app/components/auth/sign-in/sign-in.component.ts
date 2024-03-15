@@ -9,7 +9,7 @@ import { subscribeOnce } from '@app/shared/helpers/subscribeOnce';
 @Component({
     selector: 'app-login',
     templateUrl: './sign-in.component.html',
-    styleUrls: ['./sign-in.component.css'],
+    styleUrls: ['./sign-in.component.scss'],
     standalone: true,
     imports: [
         NgIf,

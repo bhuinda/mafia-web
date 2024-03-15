@@ -6,7 +6,7 @@ import { NgFor, DatePipe } from '@angular/common';
 @Component({
     selector: 'app-chat',
     templateUrl: './chat.component.html',
-    styleUrls: ['./chat.component.css'],
+    styleUrls: ['./chat.component.scss'],
     standalone: true,
     imports: [NgFor, FormsModule, DatePipe]
 })

@@ -20,7 +20,7 @@ type Argument = string[] | null;
 @Component({
     selector: 'terminal',
     templateUrl: './terminal.component.html',
-    styleUrls: ['./terminal.component.css'],
+    styleUrls: ['./terminal.component.scss'],
     standalone: true,
     imports: [ReactiveFormsModule, AsyncPipe, NgIf]
 })

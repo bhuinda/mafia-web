@@ -11,7 +11,7 @@ import { Settings, SettingsService } from '@app/shared/services/settings';
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
-    styleUrls: ['./auth.component.css'],
+    styleUrls: ['./auth.component.scss'],
     standalone: true,
     imports: [NgIf, SignInComponent, SignUpComponent, AsyncPipe, NgClass]
 })

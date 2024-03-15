@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 @Component({
     selector: 'app-lobby',
     templateUrl: './lobby.component.html',
-    styleUrls: ['./lobby.component.css'],
+    styleUrls: ['./lobby.component.scss'],
     standalone: true,
     imports: [RouterLink, ChatComponent]
 })

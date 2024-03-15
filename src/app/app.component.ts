@@ -12,7 +12,7 @@ import { NavService } from './shared/services/nav';
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
-    styleUrls: ['app.component.css'],
+    styleUrls: ['app.component.scss'],
     standalone: true,
     imports: [NgClass, HeaderComponent, RouterOutlet, FooterComponent]
 })

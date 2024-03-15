@@ -6,7 +6,7 @@ import { NgClass } from '@angular/common';
 @Component({
     selector: 'app-settings',
     templateUrl: './settings.component.html',
-    styleUrls: ['./settings.component.css'],
+    styleUrls: ['./settings.component.scss'],
     standalone: true,
     imports: [NgClass]
 })
