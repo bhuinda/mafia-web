@@ -16,8 +16,20 @@ main {
   border-right: 5px solid;
 }
 
-.welcome-container {
-  font-size: 2rem;
+.welcome-cursive {
+  display: inline;
+  font-size: 1.2rem;
+  line-height: 2;
+  letter-spacing: 6px;
+  font-family: 'Cursive';
+}
+
+.welcome-regular {
+  display: inline;
+  font-size: 5rem;
+  line-height: 0.8;
+  font-family: 'Regular';
+  color: red;
 }
 
 .button-container {

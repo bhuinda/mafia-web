@@ -1,39 +1,20 @@
 import { Injectable, inject } from '@angular/core';
+import { environment as env } from '@environments/environment.development'; // fix later
+import Pusher from 'pusher-js';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  // private readonly firestore = inject(Firestore);
-  // private chat$ = collectionData(collection(this.firestore, 'chat')) as Observable<any>;
+  pusher: any;
+  channel: any;
 
-  // get chat() {
-  //   return this.chat$;
-  // }
+  listen(userID: number) {
+    this.pusher = new Pusher(env.pusher.key, { cluster: env.pusher.cluster });
+    this.channel = this.pusher.subscribe(userID.toString());
 
-  // getMessages() {
-  //   return collectionData(collection(this.firestore, 'chat'));
-  // }
-
-  // sendMessage(text: string) {
-  //   addDoc(collection(this.firestore, 'chat'), {
-  //     timestamp: new Date().toISOString(),
-  //     user: 'Dummy',
-  //     text: text,
-  //   });
-  // }
-
-  // // TO-DO: Change deleteMessages() to use cloud functions to incur less read/write costs on Firebase
-  // deleteMessages() {
-  //   getDocs(collection(this.firestore, 'chat'))
-  //     .then((data) => {
-  //       data.forEach((doc) => {
-  //         deleteDoc(doc.ref);
-  //         });
-  //       }
-  //     );
-  // };
+  }
 }
 
 // TO-DO: Refactor so multiple chat instances can be created; currently, every method refers to the same chat object

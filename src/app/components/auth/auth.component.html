@@ -13,11 +13,9 @@
   }
 
   @else {
-    @if (settings['firstTime']) {
-      <div class="welcome-container">
-        WELCOME TO MAFIA4WEB.
-      </div>
-    }
+    @if (settings['firstTime']) { <p class="welcome-cursive">Welcome to</p> }
+
+    <p class="welcome-regular">MAFIA4WEB</p>
 
     <div class="form-container">
       @if (authMode === 'login') { <app-login/> }

@@ -48,13 +48,18 @@ p, h1, h2, h3, h4, h5, h6 {
 /* My CSS */
 
 @font-face {
-  font-family: 'VT323';
+  font-family: 'Regular';
   src: url('assets/fonts/vt323/VT323-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Cursive';
+  src: url('assets/fonts/pixelscript/pf-pixelscript-pro.ttf');
 }
 
 * {
   font-size: 16px;
-  font-family: 'VT323';
+  font-family: 'Regular';
   overflow: hidden;
 }
 
@@ -66,7 +71,8 @@ body {
   background-image: url('assets/images/rose.png');
   background-repeat: repeat;
   background-size: 270px;
-  background-position: -50px;
+  background-position: -90px -20px;
+  /* Later on: make custom background with smaller, non-repeating patterns? */
 }
 
 /*** Scrollbar styling ***/
