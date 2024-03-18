@@ -18,18 +18,21 @@ export class NavService {
     this.history.push({ route, success });
   }
 
+  /**
+  * Navigate to the last successful, non-redundant page view.
+  */
   public back(): boolean {
     const reversedHistory = [...this.history].reverse();
-
-    let successCount = 0;
-    for (let i = 0; i < reversedHistory.length; i++) {
+    for (let i = 1; i < reversedHistory.length; i++) {
+      // Guard 1: If the 2nd to last route is the current route, ignore it
+      if (reversedHistory[i].route === this.router.url) {
+        continue;
+      }
+      // Guard 2: If the 2nd to last route was successful, nav to it
       if (reversedHistory[i].success) {
-        successCount++;
-        if (successCount === 2) {
-          this.router.navigate([reversedHistory[i].route]);
-          this.history = reversedHistory.slice(i + 1).reverse();
-          return true;
-        }
+        this.history = reversedHistory.slice(i + 1).reverse();
+        this.router.navigate([reversedHistory[i].route]);
+        return true;
       }
     }
     return false;

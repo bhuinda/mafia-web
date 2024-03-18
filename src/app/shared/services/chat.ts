@@ -13,8 +13,5 @@ export class ChatService {
   listen(userID: number) {
     this.pusher = new Pusher(env.pusher.key, { cluster: env.pusher.cluster });
     this.channel = this.pusher.subscribe(userID.toString());
-
   }
 }
-
-// TO-DO: Refactor so multiple chat instances can be created; currently, every method refers to the same chat object
