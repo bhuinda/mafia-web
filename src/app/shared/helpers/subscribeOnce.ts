@@ -9,7 +9,7 @@ interface Callbacks<T> {
 
 export function subscribeOnce<T>(
   observable: Observable<T>,
-  callbacks: Callbacks<T> = {}
+  callbacks?: Callbacks<T>
 ): void {
   observable.pipe(first()).subscribe(callbacks);
 }
