@@ -3,6 +3,10 @@
   flex-direction: column;
   height: 100vh;
   padding: 6rem 6rem 6rem 6rem;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 }
 
 .wrapper {

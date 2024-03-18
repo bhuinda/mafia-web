@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AuthService } from '@services/auth';
 import { Subscription } from 'rxjs';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Settings, SettingsService } from '@app/shared/services/settings';
 
@@ -13,11 +13,13 @@ import { Settings, SettingsService } from '@app/shared/services/settings';
     imports: [
         RouterLink,
         RouterLinkActive,
-        NgIf,
+        NgClass
     ],
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
+  dropdownOpen = false;
+
   user: any;
 
   settingsService = inject(SettingsService);
@@ -33,15 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.settingsSubscription.unsubscribe();
   }
 
-  getSelectorHTML(page: string): string {
-    return `
-      <div class="selector">
-        [<span class="highlight">${page.toUpperCase()}</span>]
-      </div>
-    `;
-  }
-
   onBurgerClick(): void {
-
+    this.dropdownOpen = !this.dropdownOpen;
   }
 }

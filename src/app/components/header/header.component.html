@@ -1,92 +1,82 @@
 @if (!settings['firstTime']) {
 
   <div class="header-wrapper">
+
     <header>
 
       <nav>
-        <a routerLink="home"
-           routerLinkActive="active"
-           [innerHTML]="getSelectorHTML('home')"
-           draggable="false">
-        </a>
-        <a routerLink="info"
-           routerLinkActive="active"
-          [innerHTML]="getSelectorHTML('info')"
-          draggable="false">
-        </a>
-        <a routerLink="game"
-           routerLinkActive="active"
-           [innerHTML]="getSelectorHTML('game')"
-           draggable="false">
-        </a>
-        <a routerLink="profile"
-          routerLinkActive="active"
-          [innerHTML]="getSelectorHTML('profile')"
-          draggable="false">
-        </a>
-        <a routerLink="settings"
-          routerLinkActive="active"
-          [innerHTML]="getSelectorHTML('settings')"
-          draggable="false">
-        </a>
 
-        <div class="profile-container">
-
-          <div *ngIf="user" class="signed-in">
-            <div class="info-container">
-
-              <div class="welcome">
-                <p>WELCOME, {{(user ? 'User' : 'Anonymous').toUpperCase()}}.</p>
-              </div>
-              <div id="profile-level">
-
-                <span id="experience-level">LVL.0</span>
-                <div id="experience-bar">
-                  <div id="experience-progress"></div>
-                </div>
-
-              </div>
-
-            </div>
-            <div class="icon-container">
-              <a id="profile-icon" routerLink="profile"></a>
-            </div>
+        <a routerLink="home" routerLinkActive="active" draggable="false">
+          <div class="selector">
+            [<span class="highlight">HOME</span>]
           </div>
-
-          <div *ngIf="!user" class="signed-out">
-            <p>Sign in to see info.</p>
+        </a>
+        <a routerLink="info" routerLinkActive="active" draggable="false">
+          <div class="selector">
+            [<span class="highlight">INFO</span>]
           </div>
-
-        </div>
+        </a>
+        <a routerLink="game" routerLinkActive="active" draggable="false">
+          <div class="selector">
+            [<span class="highlight">GAME</span>]
+          </div>
+        </a>
+        <a routerLink="profile" routerLinkActive="active" draggable="false">
+          <div class="selector">
+            [<span class="highlight">PROFILE</span>]
+          </div>
+        </a>
+        <a routerLink="settings" routerLinkActive="active" draggable="false">
+          <div class="selector">
+            [<span class="highlight">SETTINGS</span>]
+          </div>
+        </a>
 
       </nav>
-    </header>
 
-    <div class="hamburger-container">
-      <button id="hamburger-dropdown" (click)="onBurgerClick()"><p>☰</p></button>
-      <div class="hamburger">
-        <a routerLink="home"
-          routerLinkActive="active"
-          [innerHTML]="getSelectorHTML('home')"
-          draggable="false">
-        </a>
-        <a routerLink="info"
-          routerLinkActive="active"
-          [innerHTML]="getSelectorHTML('info')"
-          draggable="false">
-        </a>
-        <a routerLink="game"
-          routerLinkActive="active"
-          [innerHTML]="getSelectorHTML('game')"
-          draggable="false">
-        </a>
-        <a routerLink="profile"
-          routerLinkActive="active"
-          [innerHTML]="getSelectorHTML('profile')"
-          draggable="false">
-        </a>
+      <div class="hamburger-menu ">
+
+        <button class="hamburger-icon" (click)="onBurgerClick()" [ngClass]="{'show-dropdown': dropdownOpen}">
+
+          <div></div>
+          <div></div>
+          <div></div>
+
+        </button>
+
+        <nav class="dropdown-menu" [ngClass]="{'show-dropdown': dropdownOpen}">
+
+          <a routerLink="home" routerLinkActive="active" draggable="false">
+            <div class="selector">
+              [<span class="highlight">HOME</span>]
+            </div>
+          </a>
+          <a routerLink="info" routerLinkActive="active" draggable="false">
+            <div class="selector">
+              [<span class="highlight">INFO</span>]
+            </div>
+          </a>
+          <a routerLink="game" routerLinkActive="active" draggable="false">
+            <div class="selector">
+              [<span class="highlight">GAME</span>]
+            </div>
+          </a>
+          <a routerLink="profile" routerLinkActive="active" draggable="false">
+            <div class="selector">
+              [<span class="highlight">PROFILE</span>]
+            </div>
+          </a>
+          <a routerLink="settings" routerLinkActive="active" draggable="false">
+            <div class="selector">
+              [<span class="highlight">SETTINGS</span>]
+            </div>
+          </a>
+
+        </nav>
+
       </div>
-    </div>
+
+    </header>
 
   </div>
 
