@@ -16,7 +16,6 @@ import { Settings, SettingsService } from '@app/shared/services/settings';
     imports: [NgIf, SignInComponent, SignUpComponent, AsyncPipe, NgClass]
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  auth = inject(AuthService);
   nav = inject(NavService);
 
   router = inject(Router);
@@ -27,7 +26,9 @@ export class AuthComponent implements OnInit, OnDestroy {
   settingsList: string[] = ['firstTime', 'terminalMode'];
   settings: Settings = {};
 
+  auth = inject(AuthService);
   authMode: string = 'signIn';
+
   cancelledRoute: string = '';
 
   ngOnInit(): void {
@@ -36,12 +37,12 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationCancel)
     ).subscribe(() => this.setCancelledRoute());
-
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
   }
 
   ngOnDestroy(): void {
     this.routerSubscription.unsubscribe();
+    this.settingsSubscription.unsubscribe();
   }
 
   disableFirstTime(): void {
