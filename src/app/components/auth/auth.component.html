@@ -18,12 +18,11 @@
     @if (settings['firstTime']) {
       <p class="welcome-cursive">Welcome to</p>
     }
-
       <p class="welcome-regular">MAFIA4WEB</p>
 
       <div class="form-container">
-        @if (authMode === 'login') { <app-login/> }
-        @if (authMode === 'register') { <app-register/> }
+        @if (authMode === 'login') { <sign-in/> }
+        @if (authMode === 'register') { <sign-up/> }
       </div>
 
       <div class="button-container">

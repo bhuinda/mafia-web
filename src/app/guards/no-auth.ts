@@ -4,10 +4,10 @@ import { AuthService } from '@app/shared/services/auth';
 import { tap } from 'rxjs';
 
 export const noAuthGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
+  const auth = inject(AuthService);
   const router = inject(Router);
 
-  return authService.status$.pipe(
+  return auth.status$.pipe(
     tap(isValid => {
       if (isValid) {
         router.navigate(['/auth']);

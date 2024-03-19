@@ -6,7 +6,7 @@ import { AuthService } from '@services/auth';
 import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-register',
+    selector: 'sign-up',
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.scss'],
     standalone: true,

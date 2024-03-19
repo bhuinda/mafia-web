@@ -7,7 +7,7 @@ import { NgClass } from '@angular/common';
 import { subscribeOnce } from '@app/shared/helpers/subscribeOnce';
 
 @Component({
-    selector: 'app-login',
+    selector: 'sign-in',
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss'],
     standalone: true,
