@@ -62,12 +62,11 @@ export class SettingsService {
   }
 
   /**
-  * Subscribes to one or more settings and executes a callback upon emitted value changes.
-  * As a single Subscription object, this implementation doesn't allow for the targeting of individual subscriptions.
-  * Recommended boilerplate is to define "settingsSubscription: Subscription" and "settings: Settings = {}" as properties with the callback, (key, value) => { this.settings[key] = value }.
+  * Subscribes to 1..n settings as a single Subscription object.
+  * Define "settingsSubscription: Subscription" and "settings: Settings = {}" as properties with the callback "(key, value) => this.settings[key] = value".
   *
-  * @param {string[]} keys - Select settings to subscribe to here (see defaultSettings for a list of valid keys).
-  * @param {(key: string, value: Setting) => void} callback - Emits any change made to a subscription with its corresponding key-value pair.
+  * @param {string[]} keys - List setting keys here (see SettingsService.defaultSettings).
+  * @param {(key: string, value: Setting) => void} callback - Value changes are sent back as key-value pairs.
   */
   public subscribe(keys: string[], callback: (key: string, value: Setting) => void): Subscription {
     const subs = new Subscription();
@@ -76,7 +75,6 @@ export class SettingsService {
       if (obs) { subs.add(obs.subscribe(value => callback(key, value))); }
       else { console.error(`No observable found on key: ${key}`); }
     });
-
     return subs;
   }
 }
