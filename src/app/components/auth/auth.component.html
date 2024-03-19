@@ -13,22 +13,28 @@
   }
 
   @else {
-    @if (settings['firstTime']) { <p class="welcome-cursive">Welcome to</p> }
+    <section>
 
-    <p class="welcome-regular">MAFIA4WEB</p>
+    @if (settings['firstTime']) {
+      <p class="welcome-cursive">Welcome to</p>
+    }
 
-    <div class="form-container">
-      @if (authMode === 'login') { <app-login/> }
-      @if (authMode === 'register') { <app-register/> }
-    </div>
+      <p class="welcome-regular">MAFIA4WEB</p>
 
-    <div class="button-container">
-      @if (authMode === 'login') { <button (click)="switchAuthMode('register')">SIGN UP?</button> }
-      @if (authMode === 'register') { <button (click)="switchAuthMode('login')">SIGN IN?</button> }
-      @if (settings['firstTime']) {
-        <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button>
-      }
-    </div>
+      <div class="form-container">
+        @if (authMode === 'login') { <app-login/> }
+        @if (authMode === 'register') { <app-register/> }
+      </div>
+
+      <div class="button-container">
+        @if (authMode === 'login') { <button (click)="switchAuthMode('register')">SIGN UP?</button> }
+        @if (authMode === 'register') { <button (click)="switchAuthMode('login')">SIGN IN?</button> }
+        @if (settings['firstTime']) {
+          <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button>
+        }
+      </div>
+
+    </section>
   }
 
 </main>
