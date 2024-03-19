@@ -1,9 +1,9 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, first } from 'rxjs';
 import { AuthService } from '@services/auth';
-import { NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { subscribeOnce } from '@app/shared/helpers/subscribeOnce';
 
 @Component({
@@ -12,9 +12,9 @@ import { subscribeOnce } from '@app/shared/helpers/subscribeOnce';
     styleUrls: ['./sign-in.component.scss'],
     standalone: true,
     imports: [
-        NgIf,
         FormsModule,
         ReactiveFormsModule,
+        NgClass
     ],
 })
 export class SignInComponent {
@@ -29,6 +29,22 @@ export class SignInComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
+
+  formErrors = [
+    {
+      control: 'email',
+      message: 'Email must be valid.'
+    },
+    {
+      control: 'password',
+      message: 'Password must be at least 6 characters long.'
+    }
+  ];
+
+  loginError = {
+    control: 'loginFailed',
+    message: 'Login attempt failed; email/password is incorrect.'
+  };
 
   onSubmit(email: string, password: string): void {
     if (this.form.invalid) {

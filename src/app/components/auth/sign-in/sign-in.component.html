@@ -1,19 +1,17 @@
 <section>
 
-  <div *ngIf="formSubmitted" id="validation-container">
-    <h1>Validation</h1>
-      <ul>
-
-        <li class="warning" *ngIf="form.controls.email.invalid">* Email must be valid.</li>
-        <li class="warning resolved" *ngIf="!form.controls.email.invalid">* Valid email required.</li>
-
-        <li class="warning" *ngIf="form.controls.password.invalid">* Password must be at least 6 characters long.</li>
-        <li class="warning resolved" *ngIf="!form.controls.password.invalid">* Password must be at least 6 characters long.</li>
-
-        <li class="warning" *ngIf="loginFailed">* Login attempt failed; email/password is incorrect.</li>
-
-      </ul>
-    </div>
+@if (formSubmitted) {
+  <div id="validation-container">
+    Validation
+    <ol>
+      @for (error of formErrors; track $index) {
+        <li class="error" [ngClass]="{'resolved': !form.controls[error.control].invalid}">
+          {{ error.message }}
+        </li>
+      }
+    </ol>
+  </div>
+}
 
   <form id="form-container" [formGroup]="form" (ngSubmit)="onSubmit(form.value.email, form.value.password)">
     <div class="email">
