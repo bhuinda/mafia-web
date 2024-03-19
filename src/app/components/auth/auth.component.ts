@@ -54,7 +54,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     const index = arg === 'init' ? -2 : -1;
     const historyItem = this.nav.history.at(index);
     if (historyItem) {
-      this.cancelledRoute = !historyItem.success ? historyItem.route : null;
+      if (!historyItem.success) {
+        this.cancelledRoute = historyItem.route;
+        this.nav.history.splice(index, 1); // Remove the cancelled route from history. THIS IS THE PROBLEM CODE IF YOU'RE READING THIS. IT'S TECHNICALLY A BUGFIX, BUT IT MIGHT BECOME A BUG. I'M SORRY, FUTURE ME.
+      } else { this.cancelledRoute = null; }
     }
   }
 

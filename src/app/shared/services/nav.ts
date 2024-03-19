@@ -24,11 +24,11 @@ export class NavService {
   public back(): boolean {
     const reversedHistory = [...this.history].reverse();
     for (let i = 1; i < reversedHistory.length; i++) {
-      // Guard 1: If the 2nd to last route is the current route, ignore it
+      // Guard 1: If the compared route is the current route, ignore it
       if (reversedHistory[i].route === this.router.url) {
         continue;
       }
-      // Guard 2: If the 2nd to last route was successful, nav to it
+      // Guard 2: If the compared route was successful, nav to it
       if (reversedHistory[i].success) {
         this.history = reversedHistory.slice(i + 1).reverse();
         this.router.navigate([reversedHistory[i].route]);
