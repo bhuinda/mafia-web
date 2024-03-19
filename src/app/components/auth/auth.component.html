@@ -1,4 +1,4 @@
-<main [ngClass]="{'first-time-border': settings['firstTime']}">
+<main>
 
   @if (cancelledRoute) {
     <div class="error-container">
@@ -21,16 +21,14 @@
       <p class="welcome-regular">MAFIA4WEB</p>
 
       <div class="form-container">
-        @if (authMode === 'login') { <sign-in/> }
-        @if (authMode === 'register') { <sign-up/> }
+        @if (authMode === 'signIn') { <sign-in/> }
+        @if (authMode === 'signUp') { <sign-up/> }
       </div>
 
       <div class="button-container">
-        @if (authMode === 'login') { <button (click)="switchAuthMode('register')">SIGN UP?</button> }
-        @if (authMode === 'register') { <button (click)="switchAuthMode('login')">SIGN IN?</button> }
-        @if (settings['firstTime']) {
-          <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button>
-        }
+        @if (authMode === 'signIn') { <button (click)="switchAuthMode('signUp')">SIGN UP?</button> }
+        @if (authMode === 'signUp') { <button (click)="switchAuthMode('signIn')">SIGN IN?</button> }
+        @if (settings['firstTime']) { <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button> }
       </div>
 
     </section>

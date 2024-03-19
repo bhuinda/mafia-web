@@ -1,0 +1,31 @@
+<nav [ngClass]="{'show': visible}">
+
+  <button (click)="closeModal()">⬇⬇⬇</button>
+  <a routerLink="home" routerLinkActive="active" draggable="false" (click)="closeModal()">
+    <div class="selector">
+      [<span class="highlight">HOME</span>]
+    </div>
+  </a>
+  <a routerLink="info" routerLinkActive="active" draggable="false" (click)="closeModal()">
+    <div class="selector">
+      [<span class="highlight">INFO</span>]
+    </div>
+  </a>
+  <a routerLink="game" routerLinkActive="active" draggable="false" (click)="closeModal()">
+    <div class="selector">
+      [<span class="highlight">GAME</span>]
+    </div>
+  </a>
+  <a routerLink="profile" routerLinkActive="active" draggable="false" (click)="closeModal()">
+    <div class="selector">
+      [<span class="highlight">PROFILE</span>]
+    </div>
+  </a>
+  <a routerLink="settings" routerLinkActive="active" draggable="false" (click)="closeModal()">
+    <div class="selector">
+      [<span class="highlight">SETTINGS</span>]
+    </div>
+  </a>
+
+</nav>
+

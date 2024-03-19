@@ -1,0 +1,60 @@
+@use '../../../../assets/styles/header.scss' as *;
+
+body {
+  user-select: none;
+}
+
+button {
+  all: unset;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  background-color: gray;
+  text-align: center;
+  border-bottom: 5px solid;
+
+  &:hover {
+    background-color: lightgray;
+  }
+}
+
+nav {
+  display: none;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100%;
+  width: 100%;
+
+  & a {
+    @include links;
+    border-left: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 5px solid;
+
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    & .selector,
+      .selector span {
+      font-size: 5rem;
+    }
+  }
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: black;
+  border: 5px solid;
+}

@@ -1,26 +1,28 @@
 <section>
 
-@if (formSubmitted) {
-  <div id="form-validations-container">
+  @if (formSubmitted) {
+    <div id="form-validations-container">
 
-    <h1>Validations</h1>
-    <ol>
-    @for (error of formErrors; track $index) {
-      <li class="error" [ngClass]="{'resolved': !form.controls[error.control].invalid}">
-        {{ error.message }}
-      </li>
-    }
-    </ol>
+      <h1>Validations</h1>
+      <ol>
+        @for (error of formErrors; track $index) {
+          <li class="error" [ngClass]="{'resolved': !form.controls[error.control].invalid}">
+            {{ error.message }}
+          </li>
+        }
+      </ol>
 
-  @if (signUpFailed) {
-    <div id="auth-failed">
-      <p>{{signUpError.header.toUpperCase()}}: {{signUpError.message}}</p>
+      @if (signUpFailed) {
+        <div id="auth-failed">
+          <p>{{signUpError.header.toUpperCase()}}: {{signUpError.message}}</p>
+        </div>
+      }
+
     </div>
   }
-  </div>
-}
 
   <form id="form-container" [formGroup]="form" (ngSubmit)="onSubmit(form.value.email, form.value.password)">
+
     <div class="email">
       <input type="email" placeholder="Email" formControlName="email">
     </div>
@@ -28,6 +30,7 @@
       <input type="password" placeholder="Password" formControlName="password">
     </div>
     <button type="submit">SIGN UP</button>
+
   </form>
 
 </section>

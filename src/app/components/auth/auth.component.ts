@@ -27,7 +27,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   settingsList: string[] = ['firstTime', 'terminalMode'];
   settings: Settings = {};
 
-  authMode: string = 'login';
+  authMode: string = 'signIn';
   cancelledRoute: string = '';
 
   ngOnInit(): void {
@@ -58,8 +58,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   switchAuthMode(mode: string) {
-    if (mode === 'register') { this.authMode = 'register'; }
-    else { this.authMode = 'login'; }
+    if (mode === 'signUp') { this.authMode = 'signUp'; }
+    else { this.authMode = 'signIn'; }
   }
 
   onLogout() {

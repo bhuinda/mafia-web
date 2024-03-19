@@ -1,17 +1,19 @@
-.container {
+.app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   padding: 6rem 6rem 6rem 6rem;
 
   @media (max-width: 768px) {
-    padding: 0;
+    padding: 3rem 3rem 3rem 3rem;
   }
 }
 
-.wrapper {
+.content-wrapper {
   flex: 1;
   background-color: black;
+  color: white;
+  border: 5px solid;
 }
 
 .secret {

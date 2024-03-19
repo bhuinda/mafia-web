@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth';
-import { Observable, Subscription } from 'rxjs';
-import { Settings, SettingsService } from '@services/settings';
+import { Observable } from 'rxjs';
+import { SettingsService } from '@services/settings';
 import { UserService } from '@services/user';
 import { User } from '@models/user';
 import { AsyncPipe, NgIf } from '@angular/common';
@@ -44,8 +44,8 @@ export class TerminalComponent implements OnInit {
 
   // === TERMINAL === //
 
-  placeholderDefault = 'Please enter a command. Try /help for a list of all available commands.';
-  placeholderText = this.placeholderDefault;
+  placeholderDefault: string = 'Awaiting response.';
+  placeholderText: string = this.placeholderDefault;
 
   commandForm = new FormGroup({
     command: new FormControl('')

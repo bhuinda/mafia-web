@@ -1,24 +1,20 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { AuthService } from '@services/auth';
 import { Subscription } from 'rxjs';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Settings, SettingsService } from '@app/shared/services/settings';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
-    imports: [
-        RouterLink,
-        RouterLinkActive,
-        NgClass
-    ],
+    imports: [RouterLink, RouterLinkActive, NgClass, DropdownComponent]
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
-  dropdownOpen = false;
+  dropdownActive = false;
 
   user: any;
 
@@ -35,7 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.settingsSubscription.unsubscribe();
   }
 
-  onBurgerClick(): void {
-    this.dropdownOpen = !this.dropdownOpen;
+  enableDropdown(): void {
+    this.dropdownActive = true;
   }
 }

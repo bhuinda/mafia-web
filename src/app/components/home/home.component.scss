@@ -5,53 +5,51 @@
   margin-bottom: 1rem;
 }
 
-#scroll-text {
-  font-size: 2rem;
-  color: yellow;
-  text-align: right;
+// #scroll-text {
+//   font-size: 2rem;
+//   color: yellow;
+//   text-align: right;
+//   z-index: -1;
 
-  /* animation properties */
-  -moz-transform: translateX(-100%);
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
+//   /* animation properties */
+//   -moz-transform: translateX(-100%);
+//   -webkit-transform: translateX(-100%);
+//   transform: translateX(-100%);
 
-  -moz-animation: my-animation 10s linear infinite;
-  -webkit-animation: my-animation 10s linear infinite;
-  animation: my-animation 10s linear infinite;
-}
+//   -moz-animation: my-animation 10s linear infinite;
+//   -webkit-animation: my-animation 10s linear infinite;
+//   animation: my-animation 10s linear infinite;
+// }
 
-/* for Firefox */
-@-moz-keyframes my-animation {
-  from { -moz-transform: translateX(-100%); }
-  to { -moz-transform: translateX(70%); } /* Adjusted value */
-}
+// /* for Firefox */
+// @-moz-keyframes my-animation {
+//   from { -moz-transform: translateX(-100%); }
+//   to { -moz-transform: translateX(70%); } /* Adjusted value */
+// }
 
-/* for Chrome */
-@-webkit-keyframes my-animation {
-  from { -webkit-transform: translateX(-100%); }
-  to { -webkit-transform: translateX(70%); } /* Adjusted value */
-}
+// /* for Chrome */
+// @-webkit-keyframes my-animation {
+//   from { -webkit-transform: translateX(-100%); }
+//   to { -webkit-transform: translateX(70%); } /* Adjusted value */
+// }
 
-@keyframes my-animation {
-  from {
-    -moz-transform: translateX(-100%);
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
-  }
-  to {
-    -moz-transform: translateX(70%); /* Adjusted value */
-    -webkit-transform: translateX(70%); /* Adjusted value */
-    transform: translateX(70%); /* Adjusted value */
-  }
-}
+// @keyframes my-animation {
+//   from {
+//     -moz-transform: translateX(-100%);
+//     -webkit-transform: translateX(-100%);
+//     transform: translateX(-100%);
+//   }
+//   to {
+//     -moz-transform: translateX(70%); /* Adjusted value */
+//     -webkit-transform: translateX(70%); /* Adjusted value */
+//     transform: translateX(70%); /* Adjusted value */
+//   }
+// }
 
 main {
   height: 100%;
   padding: 2rem;
   overflow-y: auto;
-  color: white;
-  border-left: 5px solid;
-  border-right: 5px solid;
 }
 
 p, span, a {

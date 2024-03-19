@@ -1,7 +1,9 @@
-<div class="container" [ngClass]="{'secret': settings['secretMode']}">
+<div class="app-container" [ngClass]="{'secret': settings['secretMode']}">
+
   <app-header/>
-  <div class="wrapper">
+  <div class="content-wrapper">
     <router-outlet/>
   </div>
   <app-footer/>
+
 </div>

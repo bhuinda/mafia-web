@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription, first } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from '@services/auth';
 import { NgClass } from '@angular/common';
 import { subscribeOnce } from '@app/shared/helpers/subscribeOnce';
