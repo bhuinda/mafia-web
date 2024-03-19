@@ -1,58 +1,13 @@
+@use '../../../../assets/styles/auth.scss' as *;
+
 section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  @include section;
+}
+
+#form-validations-container {
+  @include form-validations;
 }
 
 #form-container {
-  padding-top: 2rem;
-  width: 100%;
-}
-
-#form-container input {
-  outline: none;
-  font-size: 2rem;
-  width: 100%;
-}
-
-#form-container button {
-  font-size: 3rem;
-  color: white;
-  background-color: black;
-  border: 5px solid;
-  width: 100%;
-}
-
-#form-container button:hover {
-  color: yellow;
-  cursor: pointer;
-}
-
-#validation-container h1 {
-  font-size: 2rem;
-}
-
-ul {
-  padding: 0;
-  margin: 0;
-}
-
-.warning {
-  font-size: 1.5rem;
-  color: red;
-}
-
-.resolved {
-  color: green;
-}
-
-.warning > span {
-  font-size: 2rem;
-}
-
-@media screen and (max-width: 768px) {
-  #form-container input {
-    /* useless rn */
-    margin-right: 0;
-  }
+  @include form;
 }

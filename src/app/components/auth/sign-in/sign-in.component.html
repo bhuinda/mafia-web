@@ -1,15 +1,22 @@
 <section>
 
 @if (formSubmitted) {
-  <div id="validation-container">
-    Validation
+  <div id="form-validations-container">
+
+    <h1>Validations</h1>
     <ol>
-      @for (error of formErrors; track $index) {
-        <li class="error" [ngClass]="{'resolved': !form.controls[error.control].invalid}">
-          {{ error.message }}
-        </li>
-      }
+    @for (error of formErrors; track $index) {
+      <li class="error" [ngClass]="{'resolved': !form.controls[error.control].invalid}">
+        {{ error.message }}
+      </li>
+    }
     </ol>
+
+  @if (signInFailed) {
+    <div id="auth-failed">
+      <p>{{signInError.header.toUpperCase()}}: {{signInError.message}}</p>
+    </div>
+  }
   </div>
 }
 

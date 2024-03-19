@@ -1,51 +1,13 @@
+@use '../../../../assets/styles/auth.scss' as *;
+
 section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  @include section;
 }
 
-#validation-container {
-  font-size: 2rem;
-
-  ol {
-    padding: 0;
-    margin: 0;
-
-    .error {
-      color: red;
-      font-size: 1.5rem;
-
-      & span {
-        font-size: 2rem;
-      }
-
-      &.resolved {
-        color: green;
-      }
-    }
-  }
+#form-validations-container {
+  @include form-validations;
 }
 
 #form-container {
-  padding-top: 2rem;
-  width: 100%;
-
-  & input {
-    outline: none;
-    font-size: 2rem;
-    width: 100%;
-  }
-
-  & button {
-    font-size: 3rem;
-    color: white;
-    background-color: black;
-    border: 5px solid;
-    width: 100%;
-
-    &:hover {
-      color: yellow;
-      cursor: pointer;
-    }
-  }
+  @include form;
 }

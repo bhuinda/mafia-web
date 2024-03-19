@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '@services/auth';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-register',
@@ -11,9 +11,9 @@ import { NgIf } from '@angular/common';
     styleUrls: ['./sign-up.component.scss'],
     standalone: true,
     imports: [
-        NgIf,
         FormsModule,
         ReactiveFormsModule,
+        NgClass
     ],
 })
 export class SignUpComponent {
@@ -23,14 +23,28 @@ export class SignUpComponent {
   router = inject(Router);
   fb = inject(FormBuilder);
 
-  registrationSubscription: Subscription;
-  registrationFailed = false;
-  registrationFailedDuplicateEmail = false;
-  formSubmitted = false;
+  signUpSubscription: Subscription;
+  signUpFailed: boolean = false;
+  signUpError = {
+    header: 'signUpFailed',
+    message: 'Sign up attempt failed; email/password is incorrect.'
+  };
+
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
+  formSubmitted: boolean = false;
+  formErrors = [
+    {
+      control: 'email',
+      message: 'Email must be valid.'
+    },
+    {
+      control: 'password',
+      message: 'Password must be at least 6 characters long.'
+    }
+  ];
 
   onSubmit(email: string, password: string) {
     if (this.form.invalid) {

@@ -22,14 +22,18 @@ export class SignInComponent {
   router = inject(Router);
   fb = inject(FormBuilder);
 
-  loginSubscription: Subscription;
-  loginFailed = false;
-  formSubmitted = false;
+  signInSubscription: Subscription;
+  signInFailed = false;
+  signInError = {
+    header: 'Sign in attempt failed',
+    message: 'Email/password is incorrect.'
+  };
+
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
-
+  formSubmitted = false;
   formErrors = [
     {
       control: 'email',
@@ -41,11 +45,6 @@ export class SignInComponent {
     }
   ];
 
-  loginError = {
-    control: 'loginFailed',
-    message: 'Login attempt failed; email/password is incorrect.'
-  };
-
   onSubmit(email: string, password: string): void {
     if (this.form.invalid) {
       this.formSubmitted = true;
@@ -54,13 +53,13 @@ export class SignInComponent {
 
     subscribeOnce(this.auth.signIn(email, password), {
       next: () => {
-        this.loginFailed = false;
+        this.signInFailed = false;
         this.formSubmitted = false;
         this.router.navigateByUrl('/home');
       },
       error: (error) => {
         console.log(error);
-        this.loginFailed = true;
+        this.signInFailed = true;
         this.formSubmitted = true;
       }
     });

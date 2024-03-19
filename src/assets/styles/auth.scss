@@ -1,0 +1,54 @@
+@mixin section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin form-validations {
+  h1 {
+    font-size: 3rem;
+  }
+
+  ol {
+    padding: 0;
+    margin: 0;
+
+    .error {
+      color: red;
+      font-size: 1.5rem;
+
+      &.resolved {
+        color: green;
+      }
+    }
+  }
+
+  & #auth-failed > p {
+    color: red;
+    font-size: 2rem;
+  }
+}
+
+@mixin form {
+  padding-top: 2rem;
+  width: 100%;
+
+  & input {
+    outline: none;
+    font-size: 2rem;
+    width: 100%;
+  }
+
+  & button {
+    font-size: 3rem;
+    color: white;
+    background-color: black;
+    border: 5px solid;
+    width: 100%;
+
+    &:hover {
+      color: yellow;
+      cursor: pointer;
+    }
+  }
+}

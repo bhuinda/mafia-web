@@ -1,20 +1,24 @@
 <section>
 
-  <div *ngIf="formSubmitted" id="validation-container">
-    <h1>Validation</h1>
-      <ul>
+@if (formSubmitted) {
+  <div id="form-validations-container">
 
-        <li class="warning" *ngIf="form.controls.email.invalid">* Email must be valid.</li>
-        <li class="warning resolved" *ngIf="!form.controls.email.invalid">* Valid email required.</li>
+    <h1>Validations</h1>
+    <ol>
+    @for (error of formErrors; track $index) {
+      <li class="error" [ngClass]="{'resolved': !form.controls[error.control].invalid}">
+        {{ error.message }}
+      </li>
+    }
+    </ol>
 
-        <li class="warning" *ngIf="form.controls.password.invalid">* Password must be at least 6 characters long.</li>
-        <li class="warning resolved" *ngIf="!form.controls.password.invalid">* Password must be at least 6 characters long.</li>
-
-        <li class="warning" *ngIf="registrationFailed">* Registration attempt failed; please try again.</li>
-        <li class="warning" *ngIf="registrationFailedDuplicateEmail">* Email is already in use. Try a different email.</li>
-
-      </ul>
+  @if (signUpFailed) {
+    <div id="auth-failed">
+      <p>{{signUpError.header.toUpperCase()}}: {{signUpError.message}}</p>
     </div>
+  }
+  </div>
+}
 
   <form id="form-container" [formGroup]="form" (ngSubmit)="onSubmit(form.value.email, form.value.password)">
     <div class="email">
