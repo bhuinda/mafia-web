@@ -1,5 +1,6 @@
 <main>
 
+  <section>
   @if (cancelledRoute) {
     <div class="error-container">
       UNAUTHORIZED ACCESS TO {{ cancelledRoute.toUpperCase() }}. SIGN IN?
@@ -13,7 +14,6 @@
   }
 
   @else {
-    <section>
 
     @if (settings['firstTime']) {
       <p class="welcome-cursive">Welcome to</p>
@@ -31,7 +31,7 @@
         @if (settings['firstTime']) { <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button> }
       </div>
 
-    </section>
   }
+  </section>
 
 </main>

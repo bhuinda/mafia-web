@@ -15,6 +15,10 @@ main {
   }
 }
 
+section {
+  overflow-y: auto;
+}
+
 .welcome-cursive {
   display: inline;
   font-size: 1.2rem;
