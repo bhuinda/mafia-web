@@ -10,7 +10,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   return auth.status$.pipe(
     tap(isValid => {
       if (!isValid) {
-        router.navigate(['/auth']);
+        router.navigate(['/auth'], { state: { redirectedFromGuard: true } });
       }
     })
   );

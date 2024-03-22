@@ -32,8 +32,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   cancelledRoute: string = '';
 
   ngOnInit(): void {
-    this.setCancelledRoute('init');
+    // Initialize with cancelled route, only if redirected from AuthGuard
+    if (history.state?.redirectedFromGuard) { this.setCancelledRoute('init'); }
 
+    /* If already on AuthComponent after an auth-based nav cancellation,
+    update cancelledRoute */
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationCancel)
     ).subscribe(() => this.setCancelledRoute());
@@ -51,14 +54,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   setCancelledRoute(arg?: string) {
+    // This jankiness is to accommodate how nav.history works
     const index = arg === 'init' ? -2 : -1;
     const historyItem = this.nav.history.at(index);
-    if (historyItem) {
-      if (!historyItem.success) {
-        this.cancelledRoute = historyItem.route;
-        this.nav.history.splice(index, 1); // Remove the cancelled route from history. THIS IS THE PROBLEM CODE IF YOU'RE READING THIS. IT'S TECHNICALLY A BUGFIX, BUT IT MIGHT BECOME A BUG. I'M SORRY, FUTURE ME.
-      } else { this.cancelledRoute = null; }
-    }
+    this.cancelledRoute = historyItem && !historyItem.success ? historyItem.route : null;
   }
 
   switchAuthMode(mode: string) {
