@@ -1,3 +1,7 @@
+@mixin no-highlight {
+  user-select: none;
+}
+
 $primary-color: #c00000;
 $secondary-color: #ff9a00;
 $tertiary-color: #d0de21;
@@ -5,5 +9,3 @@ $tertiary-color: #d0de21;
 $font-regular: 'Regular';
 $font-cursive: 'Cursive';
 
-$app-background: url('assets/images/rose.png');
-$app-background-size: 270px;

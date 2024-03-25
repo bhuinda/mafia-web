@@ -1,4 +1,4 @@
-@import '../../../assets/styles/variables.scss';
+@use '../../../assets/styles/app.scss' as *;
 
 main {
   display: flex;
@@ -10,8 +10,9 @@ main {
   padding: 2rem;
   color: white;
 
-  & p {
+  & p, button {
     display: block;
+    // @include no-highlight;
   }
 }
 

@@ -1,7 +1,12 @@
+@use '../../../../assets/styles/app.scss' as *;
 @use '../../../../assets/styles/auth.scss' as *;
 
 section {
   @include section;
+
+  // & button, form {
+  //   @include no-highlight;
+  // }
 }
 
 #form-validations-container {
