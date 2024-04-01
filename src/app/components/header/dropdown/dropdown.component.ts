@@ -17,11 +17,11 @@ export class DropdownComponent {
   @Output() closed = new EventEmitter<void>();
 
   closeModal(arg?: string) {
+    // Explicitly wait for navigation to end before closing the dropdown, averting desynced visuals
     if (arg === 'wait') {
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd || event instanceof NavigationCancel),
-        first()
-        ).subscribe(() => {
+        first()).subscribe(() => {
           this.visible = false;
           this.closed.emit();
         });

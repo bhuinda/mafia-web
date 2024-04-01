@@ -16,8 +16,6 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 export class HeaderComponent implements OnInit, OnDestroy {
   dropdownActive = false;
 
-  user: any;
-
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
   settingsList: string[] = ['firstTime'];

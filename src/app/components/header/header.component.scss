@@ -12,7 +12,7 @@ header {
   border-bottom: 0px solid;
   width: 100%;
 
-  & button {
+  button {
     all: unset;
     display: none;
     cursor: pointer;
@@ -35,7 +35,7 @@ nav {
   justify-content: space-evenly;
   background-color: white;
 
-  & a {
+  a {
     @include links;
 
     @media (max-width: 768px) {
