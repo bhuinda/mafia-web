@@ -4,19 +4,19 @@ p, span {
 
 .terminal {
   padding: 0.5rem;
-}
 
-.terminal form {
-  display: flex;
-}
+  form {
+    display: flex;
 
-.terminal > form > input {
-  flex: 1;
-}
+    input,
+    label {
+      font-size: 1.5rem;
+    }
 
-.terminal > form > input,
-.terminal > form > label {
-  font-size: 1.5rem;
+    input {
+      flex: 1;
+    }
+  }
 }
 
 #user-and-domain {

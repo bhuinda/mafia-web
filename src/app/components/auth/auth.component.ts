@@ -35,8 +35,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     // Initialize with cancelled route, only if redirected from AuthGuard
     if (history.state?.redirectedFromGuard) { this.setCancelledRoute('init'); }
 
-    /* If already on AuthComponent after an auth-based nav cancellation,
-    update cancelledRoute */
+    // If already on AuthComponent after an auth-based nav cancellation, update cancelledRoute
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationCancel)
     ).subscribe(() => this.setCancelledRoute());

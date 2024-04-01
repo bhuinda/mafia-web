@@ -44,8 +44,8 @@ export class TerminalComponent implements OnInit {
 
   // === TERMINAL === //
 
-  placeholderDefault: string = 'Awaiting response.';
-  placeholderText: string = this.placeholderDefault;
+  placeholderTextDefault: string = 'Awaiting response.';
+  placeholderText: string = this.placeholderTextDefault;
 
   commandForm = new FormGroup({
     command: new FormControl('')
@@ -55,7 +55,8 @@ export class TerminalComponent implements OnInit {
   readonly commandList: { [name: string]: Command } = {
 
     '/help': {
-      action: () => { this.placeholderText = `Available commands: ${Object.keys(this.commandList)
+      action: () => {
+        this.placeholderText = `Available commands: ${Object.keys(this.commandList)
         .filter(command => !this.commandListSecrets.includes(command)) // Filter could be removed if secret & admin commands are moved to separate instance
         .join(', ')}`;
       }
@@ -79,14 +80,14 @@ export class TerminalComponent implements OnInit {
           return;
         }
 
-        this.placeholderText = this.placeholderDefault;
+        this.placeholderText = this.placeholderTextDefault;
         this.router.navigateByUrl(`/${args[0]}`);
       }
     },
 
     '/back': {
       action: () => {
-        if (this.nav.back()) { this.placeholderText = this.placeholderDefault; }
+        if (this.nav.back()) { this.placeholderText = this.placeholderTextDefault; }
         else { this.placeholderText = 'No navigation history left!'; }
       }
     },
@@ -124,7 +125,7 @@ export class TerminalComponent implements OnInit {
     const commandArgs = parsedCommand['args'];
     const command = this.commandList[commandName];
 
-    // Check if command is hidden -- added to circumvent revealing extra info about hidden com.s in other guards
+    // Check if command is hidden -- added to circumvent revealing extra info about hidden commands in other guards
     if (this.commandListSecrets.includes(commandName)) {
       if (!command.arguments && commandArgs) {
         this.placeholderText = `Command "${commandName + ' ' + commandArgs}" not found.`;
@@ -156,7 +157,7 @@ export class TerminalComponent implements OnInit {
 
     // May need to change this to work with other prefixes
     if (!command.startsWith('/')) {
-      this.placeholderText = this.placeholderDefault;
+      this.placeholderText = this.placeholderTextDefault;
       return;
     }
 
