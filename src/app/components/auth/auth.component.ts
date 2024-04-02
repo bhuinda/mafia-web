@@ -55,7 +55,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   setCancelledRoute(arg?: string) {
     // This jankiness is to accommodate how nav.history works
     const index = arg === 'init' ? -2 : -1;
-    const historyItem = this.nav.history.at(index);
+    const historyItem = this.nav.getHistory().at(index);
     this.cancelledRoute = historyItem && !historyItem.success ? historyItem.route : null;
   }
 

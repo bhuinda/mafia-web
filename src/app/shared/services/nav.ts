@@ -12,15 +12,19 @@ interface HistoryItem {
 export class NavService {
   private router = inject(Router);
 
-  public history: HistoryItem[] = [];
+  private history: HistoryItem[] = [];
+
+  public getHistory(): HistoryItem[] {
+    return this.history;
+  }
 
   public addToHistory(route: string, success: boolean): void {
     this.history.push({ route, success });
   }
 
   /**
-  * Navigate to the last successful, non-redundant page view.
-  */
+   * Navigate to the last successful, non-redundant page view.
+   */
   public back(): boolean {
     const reversedHistory = [...this.history].reverse();
     for (let i = 1; i < reversedHistory.length; i++) {

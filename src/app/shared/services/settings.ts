@@ -31,10 +31,6 @@ const settingsConfig: SettingsConfig = {
   },
   firstTime: {
     value: false
-  },
-  volume: {
-    value: 50,
-    range: [0, 100]
   }
 };
 
@@ -51,6 +47,23 @@ export class SettingsService {
       this.settings[key] = new BehaviorSubject<SettingValue>(this.getLocalSetting(key));
       this.observables[key] = this.settings[key].asObservable();
     }
+  }
+
+  /**
+   * Subscribes to 1..n settings as a single Subscription object.
+   * Define "settingsSubscription: Subscription" and "settings: Settings = {}" as properties with the callback "(key, value) => this.settings[key] = value".
+   *
+   * @param keys - List setting keys here (see SettingsService.settingsConfig).
+   * @param callback - Value changes are sent back as key-value pairs.
+   */
+  public subscribe(keys: string[], callback: (key: string, value: SettingValue) => void): Subscription {
+    const subs = new Subscription();
+    keys.forEach(key => {
+      const obs = this.observables[key];
+      if (obs) { subs.add(obs.subscribe(value => callback(key, value))); }
+      else { console.error(`No observable found on key: ${key}`); }
+    });
+    return subs;
   }
 
   /**
@@ -75,6 +88,8 @@ export class SettingsService {
   private updateNumberSetting(key: string, value: number): void {
     const setting = settingsConfig[key] as NumberSetting;
     const [min, max] = setting.range;
+
+    // Check if value is outside of configured range
     if (value < min || value > max) {
         console.error(`Setting ${key} failed to update. Value must be within the range ${min} to ${max}.`);
         return;
@@ -96,22 +111,5 @@ export class SettingsService {
     // If the string value is a number, return a number; else return a boolean based on string comparison
     const numberValue = Number(localValue);
     return !isNaN(numberValue) ? numberValue : localValue === 'true';
-  }
-
-  /**
-   * Subscribes to 1..n settings as a single Subscription object.
-   * Define "settingsSubscription: Subscription" and "settings: Settings = {}" as properties with the callback "(key, value) => this.settings[key] = value".
-   *
-   * @param keys - List setting keys here (see SettingsService.settingsConfig).
-   * @param callback - Value changes are sent back as key-value pairs.
-   */
-  public subscribe(keys: string[], callback: (key: string, value: SettingValue) => void): Subscription {
-    const subs = new Subscription();
-    keys.forEach(key => {
-      const obs = this.observables[key];
-      if (obs) { subs.add(obs.subscribe(value => callback(key, value))); }
-      else { console.error(`No observable found on key: ${key}`); }
-    });
-    return subs;
   }
 }
