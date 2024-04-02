@@ -36,86 +36,68 @@ export class TerminalComponent implements OnInit {
 
   settingsService = inject(SettingsService);
 
-  // === LIFE CYCLE HOOKS === //
+  promptDefault: string = 'Awaiting response.';
+  prompt: string = this.promptDefault;
 
   ngOnInit(): void {
     this.user$ = this.userService.user$;
   }
 
-  // === TERMINAL === //
-
-  placeholderTextDefault: string = 'Awaiting response.';
-  placeholderText: string = this.placeholderTextDefault;
-
-  commandForm = new FormGroup({
-    command: new FormControl('')
-  });
-
-  // === COMMANDS === //
-  readonly commandList: { [name: string]: Command } = {
-
+  commandForm = new FormGroup({ command: new FormControl('') });
+  commandList: { [name: string]: Command } = {
     '/help': {
       action: () => {
-        this.placeholderText = `Available commands: ${Object.keys(this.commandList)
+        this.prompt = `Available commands: ${Object.keys(this.commandList)
         .filter(command => !this.commandListSecrets.includes(command)) // Filter could be removed if secret & admin commands are moved to separate instance
         .join(', ')}`;
       }
     },
-
     '/nav': {
       arguments: ['home', 'info', 'game', 'profile', 'settings'],
       action: (args: Argument) => {
         if (!args) {
-          this.placeholderText = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`;
+          this.prompt = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`;
           return;
         }
 
         if (!this.commandList['/nav'].arguments.includes(args[0])) {
-          this.placeholderText = `Argument "${args.join(' ')}" not found. Try "/nav".`;
+          this.prompt = `Argument "${args.join(' ')}" not found. Try "/nav".`;
           return;
         }
 
         if (this.router.url === `/${args[0]}`) {
-          this.placeholderText = `You are already on this page.`;
+          this.prompt = `You are already on this page.`;
           return;
         }
 
-        this.placeholderText = this.placeholderTextDefault;
+        this.prompt = this.promptDefault;
         this.router.navigateByUrl(`/${args[0]}`);
       }
     },
-
     '/back': {
       action: () => {
-        if (this.nav.back()) { this.placeholderText = this.placeholderTextDefault; }
-        else { this.placeholderText = 'No navigation history left!'; }
+        if (this.nav.back()) { this.prompt = this.promptDefault; }
+        else { this.prompt = 'No navigation history left!'; }
       }
     },
-
     '/credits': {
       action: () => {
-        this.placeholderText = 'CREDIT: DarkRevenant | MADE BY: bhuinda';
+        this.prompt = 'CREDIT: DarkRevenant | MADE BY: bhuinda';
       }
     },
-
     '/bhuinda': {
       action: () => {
-        this.placeholderText = 'Witness!';
-
+        this.prompt = 'Witness!';
         this.settingsService.updateSetting('secretMode');
       }
     }
 
   };
-  commandListSecrets = [
-    '/bhuinda',
-  ];
+  commandListSecrets = ['/bhuinda'];
 
   parseCommand(input: string): { name: string, args: Argument } {
     const commandParts = input.split(' ');
-
-    if (commandParts.length === 1) { return { name: commandParts[0], args: null }; }
-    else { return { name: commandParts[0], args: commandParts.slice(1) }; }
+    return { name: commandParts[0], args: commandParts.slice(1) };
   }
 
   handleCommand(input: string) {
@@ -128,7 +110,7 @@ export class TerminalComponent implements OnInit {
     // Check if command is hidden -- added to circumvent revealing extra info about hidden commands in other guards
     if (this.commandListSecrets.includes(commandName)) {
       if (!command.arguments && commandArgs) {
-        this.placeholderText = `Command "${commandName + ' ' + commandArgs}" not found.`;
+        this.prompt = `Command "${commandName + ' ' + commandArgs}" not found.`;
         return;
       }
 
@@ -138,13 +120,13 @@ export class TerminalComponent implements OnInit {
 
     // Check if command exists
     if (!command) {
-      this.placeholderText = `Command "${commandName + (commandArgs ? (' ' + commandArgs) : '')}" not found.`;
+      this.prompt = `Command "${commandName + (commandArgs ? (' ' + commandArgs) : '')}" not found.`;
       return;
     }
 
     // Check if command accepts arguments
     if (!command.arguments && commandArgs) {
-      this.placeholderText = `Argument(s) not accepted. Try "${commandName}".`;
+      this.prompt = `Argument(s) not accepted. Try "${commandName}".`;
       return;
     }
 
@@ -157,7 +139,7 @@ export class TerminalComponent implements OnInit {
 
     // May need to change this to work with other prefixes
     if (!command.startsWith('/')) {
-      this.placeholderText = this.placeholderTextDefault;
+      this.prompt = this.promptDefault;
       return;
     }
 
