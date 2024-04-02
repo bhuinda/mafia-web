@@ -1,74 +1,111 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
-type Setting = number | boolean;
-export interface Settings {
-  [key: string]: Setting
+type Setting = BooleanSetting | NumberSetting;
+type SettingValue = number | boolean;
+
+interface BooleanSetting {
+  value: boolean;
+}
+
+interface NumberSetting {
+  value: number;
+  range: [number, number];
 };
 
-// Declare settings and their defaults here
-const defaultSettings: Settings = {
-    terminalMode: true,
-    secretMode: false,
-    firstTime: false
+interface SettingsConfig {
+  [key: string]: Setting;
+};
+
+export interface Settings {
+  [key: string]: SettingValue;
 }
+
+// Declare settings and their defaults here
+const settingsConfig: SettingsConfig = {
+  terminalMode: {
+    value: true
+  },
+  secretMode: {
+    value: false
+  },
+  firstTime: {
+    value: false
+  },
+  volume: {
+    value: 50,
+    range: [0, 100]
+  }
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  private settings: { [key: string]: BehaviorSubject<Setting> } = {};
-  public observables: { [key: string]: Observable<Setting> } = {};
+  private settings: { [key: string]: BehaviorSubject<SettingValue> } = {};
+  public observables: { [key: string]: Observable<SettingValue> } = {};
 
   constructor() {
     // Sets settings to their default values or their localStorage values
-    for (const key in defaultSettings) {
-      this.settings[key] = new BehaviorSubject<Setting>(this.getLocalSetting(key));
+    for (const key in settingsConfig) {
+      this.settings[key] = new BehaviorSubject<SettingValue>(this.getLocalSetting(key));
       this.observables[key] = this.settings[key].asObservable();
     }
   }
 
-  public updateSetting(key: string, value?: number | boolean): void {
-    if (value === undefined || typeof value === 'boolean') { this.switchSetting(key, value as boolean); }
-    else { this.adjustSetting(key, value as number); }
+  /**
+   * Type-agnostic method to update any setting.
+   *
+   * @param key - Setting key to update (see SettingsService.settingsConfig).
+   * @param value - Leave undefined to toggle a boolean setting; else set to desired value.
+   */
+  public updateSetting(key: string, value?: SettingValue): void {
+    if (typeof value === 'undefined' || typeof value === 'boolean') { this.updateBooleanSetting(key, value as boolean); }
+    else if (typeof value === 'number') { this.updateNumberSetting(key, value as number); }
+    else { console.error(`Setting ${key} failed to update. Invalid type for value: ${typeof value}`); }
   }
 
-  // "switch" => BOOLEAN settings
-  private switchSetting(key: string, value?: boolean): void {
+  private updateBooleanSetting(key: string, value?: boolean): void {
+    // If value is undefined, set by toggle; else set by value
     const switchedValue = value !== undefined ? value : !this.settings[key].getValue();
     this.setLocalSetting(key, switchedValue);
     this.settings[key].next(switchedValue);
   }
 
-  // "adjust" => NUMBER RANGE settings
-  private adjustSetting(key: string, value: number): void {
+  private updateNumberSetting(key: string, value: number): void {
+    const setting = settingsConfig[key] as NumberSetting;
+    const [min, max] = setting.range;
+    if (value < min || value > max) {
+        console.error(`Setting ${key} failed to update. Value must be within the range ${min} to ${max}.`);
+        return;
+    }
     this.setLocalSetting(key, value);
     this.settings[key].next(value);
   }
 
-  private getLocalSetting(key: string): Setting {
-    const localValue = localStorage.getItem(key);
-
-    // If no local value stored yet, return the default value
-    if (localValue === null) { return defaultSettings[key]; }
-
-    // If the string value is a number, return a number; else return a boolean
-    if (!isNaN(Number(localValue))) { return Number(localValue); }
-    else { return localValue === 'true'; }
-  }
-
-  private setLocalSetting(key: string, value: Setting): void {
+  private setLocalSetting(key: string, value: SettingValue): void {
     localStorage.setItem(key, value.toString());
   }
 
+  private getLocalSetting(key: string): SettingValue {
+    const localValue = localStorage.getItem(key);
+
+    // If no local value stored yet, return the default value
+    if (localValue === null) { return settingsConfig[key].value; }
+
+    // If the string value is a number, return a number; else return a boolean based on string comparison
+    const numberValue = Number(localValue);
+    return !isNaN(numberValue) ? numberValue : localValue === 'true';
+  }
+
   /**
-  * Subscribes to 1..n settings as a single Subscription object.
-  * Define "settingsSubscription: Subscription" and "settings: Settings = {}" as properties with the callback "(key, value) => this.settings[key] = value".
-  *
-  * @param {string[]} keys - List setting keys here (see SettingsService.defaultSettings).
-  * @param {(key: string, value: Setting) => void} callback - Value changes are sent back as key-value pairs.
-  */
-  public subscribe(keys: string[], callback: (key: string, value: Setting) => void): Subscription {
+   * Subscribes to 1..n settings as a single Subscription object.
+   * Define "settingsSubscription: Subscription" and "settings: Settings = {}" as properties with the callback "(key, value) => this.settings[key] = value".
+   *
+   * @param keys - List setting keys here (see SettingsService.settingsConfig).
+   * @param callback - Value changes are sent back as key-value pairs.
+   */
+  public subscribe(keys: string[], callback: (key: string, value: SettingValue) => void): Subscription {
     const subs = new Subscription();
     keys.forEach(key => {
       const obs = this.observables[key];
