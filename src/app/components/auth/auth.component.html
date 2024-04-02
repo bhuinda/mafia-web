@@ -1,37 +1,37 @@
 <main>
 
   <section>
-  @if (cancelledRoute) {
-    <div class="error-container">
-      UNAUTHORIZED ACCESS TO {{ cancelledRoute.toUpperCase() }}. SIGN IN?
-    </div>
-  }
 
-  @if (auth.status$ | async) {
-    <div class="sign-out">
-      <button (click)="onLogout()">Logout :(</button>
-    </div>
-  }
-
-  @else {
-
-    @if (settings['firstTime']) {
-      <p class="welcome-cursive">Welcome to</p>
+    @if (cancelledRoute) {
+      <div class="error-container">
+        UNAUTHORIZED ACCESS TO {{ cancelledRoute.toUpperCase() }}. SIGN IN?
+      </div>
     }
-      <p class="welcome-regular">MAFIA4WEB</p>
 
-      <div class="form-container">
-        @if (authMode === 'signIn') { <sign-in/> }
-        @if (authMode === 'signUp') { <sign-up/> }
+    @if (auth.status$ | async) {
+      <div class="sign-out">
+        <button (click)="onLogout()">Sign out :(</button>
       </div>
+    } @else {
 
-      <div class="button-container">
-        @if (authMode === 'signIn') { <button (click)="switchAuthMode('signUp')">SIGN UP?</button> }
-        @if (authMode === 'signUp') { <button (click)="switchAuthMode('signIn')">SIGN IN?</button> }
-        @if (settings['firstTime']) { <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button> }
-      </div>
+      @if (settings['firstTime']) {
+        <p class="welcome-cursive">Welcome to</p>
+      }
+        <p class="welcome-regular">MAFIA4WEB</p>
 
-  }
+        <div class="form-container">
+          @if (authMode === 'signIn') { <sign-in/> }
+          @if (authMode === 'signUp') { <sign-up/> }
+        </div>
+
+        <div class="button-container">
+          @if (authMode === 'signIn') { <button (click)="switchAuthMode('signUp')">SIGN UP?</button> }
+          @if (authMode === 'signUp') { <button (click)="switchAuthMode('signIn')">SIGN IN?</button> }
+          @if (settings['firstTime']) { <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button> }
+        </div>
+
+    }
+
   </section>
 
 </main>
