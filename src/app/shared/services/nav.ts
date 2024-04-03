@@ -23,7 +23,7 @@ export class NavService {
   }
 
   /**
-   * Navigate to the last successful, non-redundant page view.
+   * Navigate to the last successful, non-redundant page view. If no such page exists, return false.
    */
   public back(): boolean {
     const reversedHistory = [...this.history].reverse();
