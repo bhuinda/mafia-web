@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
-type Setting = BooleanSetting | NumberSetting;
+type Setting = NumberSetting | BooleanSetting;
 type SettingValue = number | boolean;
 
 interface BooleanSetting {
-  value: boolean;
+  value: boolean
 }
 
 interface NumberSetting {
   value: number;
-  range: [number, number];
-};
-
-interface SettingsConfig {
-  [key: string]: Setting;
+  range: [number, number]
 };
 
 export interface Settings {
-  [key: string]: SettingValue;
-}
+  [key: string]: SettingValue
+};
+
+interface SettingsConfig {
+  [key: string]: Setting
+};
 
 // Declare settings and their defaults here
 const settingsConfig: SettingsConfig = {
@@ -73,27 +73,36 @@ export class SettingsService {
    * @param value - Leave undefined to toggle a boolean setting; else set to desired value.
    */
   public updateSetting(key: string, value?: SettingValue): void {
+    const error = `Setting ${key} failed to update.`;
+    // 1. Check if key exists
+    if (!this.settings[key]) {
+      console.error(error + "Key was not found.");
+      return;
+    }
+
+    // 2. Decide which update method to call; if value is not of type SettingValue, throw an error
     if (typeof value === 'undefined' || typeof value === 'boolean') { this.updateBooleanSetting(key, value as boolean); }
-    else if (typeof value === 'number') { this.updateNumberSetting(key, value as number); }
-    else { console.error(`Setting ${key} failed to update. Invalid type for value: ${typeof value}`); }
+    else if (typeof value === 'number') { this.updateNumberSetting(key, value as number, error); }
+    else { console.error(error + `Value ${value} is of invalid type ${typeof value}.`); }
   }
 
   private updateBooleanSetting(key: string, value?: boolean): void {
     // If value is undefined, set by toggle; else set by value
     const switchedValue = value !== undefined ? value : !this.settings[key].getValue();
+
     this.setLocalSetting(key, switchedValue);
     this.settings[key].next(switchedValue);
   }
 
-  private updateNumberSetting(key: string, value: number): void {
+  private updateNumberSetting(key: string, value: number, error: string): void {
     const setting = settingsConfig[key] as NumberSetting;
     const [min, max] = setting.range;
-
     // Check if value is outside of configured range
     if (value < min || value > max) {
-        console.error(`Setting ${key} failed to update. Value must be within the range ${min} to ${max}.`);
+        console.error(error + `Value ${value} was outside of acceptable range ${min} to ${max}.`);
         return;
     }
+
     this.setLocalSetting(key, value);
     this.settings[key].next(value);
   }
