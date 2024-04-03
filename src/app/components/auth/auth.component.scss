@@ -66,11 +66,9 @@ section {
   border: 5px solid;
   padding: 2rem;
   width: 100%;
-}
-.sign-out button:hover {
-  color: yellow;
-  cursor: pointer;
-}
 
-@media screen and (max-width: 768px) {
+  &:hover {
+    color: yellow;
+    cursor: pointer;
+  }
 }
