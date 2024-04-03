@@ -11,7 +11,7 @@ import { NavService } from '@app/shared/services/nav';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
-  arguments?: any[];
+  arguments?: string[];
   action: (args?: any) => void;
 }
 
@@ -45,6 +45,10 @@ export class TerminalComponent implements OnInit {
 
   commandForm = new FormGroup({ command: new FormControl('') });
   commandList: { [name: string]: Command } = {
+
+    // === UTILITY === //
+
+    // Show available, non-secret commands
     '/help': {
       action: () => {
         this.prompt = `Available commands: ${Object.keys(this.commandList)
@@ -52,6 +56,8 @@ export class TerminalComponent implements OnInit {
         .join(', ')}`;
       }
     },
+
+    // Navigate between main pages
     '/nav': {
       arguments: ['home', 'info', 'game', 'profile', 'settings'],
       action: (args: Argument) => {
@@ -74,17 +80,37 @@ export class TerminalComponent implements OnInit {
         this.router.navigateByUrl(`/${args[0]}`);
       }
     },
+
+    // Navigate backward in history
     '/back': {
       action: () => {
         if (this.nav.back()) { this.prompt = this.promptDefault; }
         else { this.prompt = 'No navigation history left!'; }
       }
     },
+
+    // === DEBUGGING === //
+
+    // Clear local storage
+    '/clear-ls': {
+      action: () => {
+        localStorage.clear();
+        window.location.reload();
+      }
+    },
+
+    // === MISC === //
+
+    // Show website credits
     '/credits': {
       action: () => {
         this.prompt = 'CREDIT: DarkRevenant | MADE BY: bhuinda';
       }
     },
+
+    // === SECRETS === //
+
+    // Toggle rainbow mode
     '/bhuinda': {
       action: () => {
         this.prompt = 'Witness!';
@@ -97,7 +123,8 @@ export class TerminalComponent implements OnInit {
 
   parseCommand(input: string): { name: string, args: Argument } {
     const commandParts = input.split(' ');
-    return { name: commandParts[0], args: commandParts.slice(1) };
+    const args = commandParts.slice(1);
+    return { name: commandParts[0], args: args.length > 0 ? args : null };
   }
 
   handleCommand(input: string) {
@@ -109,12 +136,8 @@ export class TerminalComponent implements OnInit {
 
     // Check if command is hidden -- added to circumvent revealing extra info about hidden commands in other guards
     if (this.commandListSecrets.includes(commandName)) {
-      if (!command.arguments && commandArgs) {
-        this.prompt = `Command "${commandName + ' ' + commandArgs}" not found.`;
-        return;
-      }
-
-      command.action(commandArgs);
+      if (commandArgs) { command.action(commandArgs); }
+      else { command.action(); }
       return;
     }
 

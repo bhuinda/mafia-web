@@ -23,13 +23,12 @@ export class AuthService {
     const payload = JSON.stringify({ email, password });
     const headers = { 'Content-Type': 'application/json' };
 
-    return this.http.post(`${this.url}/login`, payload, {headers})
-      .pipe(
-        tap((response: any) => {
-          localStorage.setItem('token', response.token);
-          subscribeOnce(this.validateToken());
-        })
-      );
+    return this.http.post(`${this.url}/login`, payload, {headers}).pipe(
+      tap((response: any) => {
+        localStorage.setItem('token', response.token);
+        subscribeOnce(this.validateToken());
+      })
+    );
   }
 
   signOut(): void {
@@ -48,16 +47,15 @@ export class AuthService {
   }
 
   validateToken(): Observable<boolean> {
-    return this.http.get(`${this.url}/validate_token`)
-      .pipe(
-        tap((response: any) => {
-          this.status$.next(response.valid);
-          subscribeOnce(this.userService.getCurrentUser());
-        }),
-        catchError(error => {
-          console.error(error);
-          return of(false);
-        })
-      );
+    return this.http.get(`${this.url}/validate_token`).pipe(
+      tap((response: any) => {
+        this.status$.next(response.valid);
+        subscribeOnce(this.userService.getCurrentUser());
+      }),
+      catchError(error => {
+        console.error(error);
+        return of(false);
+      })
+    );
   }
 }
