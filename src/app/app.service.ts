@@ -26,9 +26,7 @@ export class AppService {
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
 
     // 2. Check if app was opened for the first time
-    if (this.settings['firstTime']) {
-      this.router.navigate(['/auth']);
-    }
+    if (this.settings['firstTime']) { this.router.navigate(['/auth']); }
 
     // 3. Initialize navigation history manager
     this.routerSubscription = this.router.events.pipe(
@@ -38,7 +36,7 @@ export class AppService {
       else if (event instanceof NavigationError || event instanceof NavigationCancel) { this.nav.addToHistory(event.url, false); }
     });
 
-    // 4. Validate user token
+    // 4. Attempt to validate user token
     subscribeOnce(this.auth.validateToken());
   }
 }

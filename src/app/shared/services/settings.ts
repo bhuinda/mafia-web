@@ -61,11 +61,14 @@ export class SettingsService {
    */
   public subscribe(keys: string[], callback: (key: string, value: SettingValue) => void): Subscription {
     const subs = new Subscription();
+
     keys.forEach(key => {
       const obs = this.observables[key];
+
       if (obs) { subs.add(obs.subscribe(value => callback(key, value))); }
       else { console.error(`No observable found on key: ${key}`); }
     });
+
     return subs;
   }
 
@@ -77,6 +80,7 @@ export class SettingsService {
    */
   public updateSetting(key: string, value?: SettingValue): void {
     const error = `Setting ${key} failed to update.`;
+
     // 1. Check if key exists
     if (!this.settings[key]) {
       console.error(`${error} Key was not found.`);
@@ -100,6 +104,7 @@ export class SettingsService {
   private updateNumberSetting(key: string, value: number, error: string): void {
     const setting = settingsConfig[key] as NumberSetting;
     const [min, max] = setting.range;
+
     // Check if value is outside of configured range
     if (value < min || value > max) {
         console.error(`${error} Value ${value} was outside of acceptable range ${min} to ${max}.`);

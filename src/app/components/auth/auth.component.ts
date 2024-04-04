@@ -32,6 +32,12 @@ export class AuthComponent implements OnInit, OnDestroy {
   cancelledRoute: string = '';
 
   ngOnInit(): void {
+    // Check if redirected from the command /clear-ls; reload to reinit app if so
+    if (history.state?.redirectedFromClearMemory) {
+      history.replaceState({}, '');
+      window.location.reload();
+    }
+
     // Initialize with cancelled route, only if redirected from AuthGuard
     if (history.state?.redirectedFromGuard) { this.setCancelledRoute('init'); }
 
