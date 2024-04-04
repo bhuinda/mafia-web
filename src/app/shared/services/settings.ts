@@ -23,16 +23,16 @@ interface SettingsConfig {
 
 // DECLARE SETTINGS AND DEFAULTS HERE
 const settingsConfig: SettingsConfig = {
+  // On very first app load, sets website to "first time" mode and shows welcome screen
+  firstTime: {
+    value: true
+  },
   // Toggles whether terminal displays or not
   terminalMode: {
     value: true
   },
   // Toggles rainbow mode
   secretMode: {
-    value: false
-  },
-  // On very first app load, sets website to "first time" mode and shows welcome screen
-  firstTime: {
     value: false
   }
 };
