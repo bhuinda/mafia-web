@@ -23,10 +23,11 @@ export class NavService {
   }
 
   /**
-   * Navigate to the last successful, non-redundant page view. If no such page exists, return false.
+   * Navigate to the last successful, non-redundant view; return true. If no such view exists, return false.
    */
   public back(): boolean {
     const reversedHistory = [...this.history].reverse();
+
     for (let i = 1; i < reversedHistory.length; i++) {
       // Guard 1: If the compared route is the current route, ignore it
       if (reversedHistory[i].route === this.router.url) {
@@ -39,6 +40,7 @@ export class NavService {
         return true;
       }
     }
+
     return false;
   }
 }

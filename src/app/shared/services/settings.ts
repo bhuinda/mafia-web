@@ -61,16 +61,16 @@ export class SettingsService {
    * @param callback - Value changes are sent back as key-value pairs.
    */
   public subscribe(keys: string[], callback: (key: string, value: SettingValue) => void): Subscription {
-    const subscription = new Subscription();
+    const sub = new Subscription();
 
     keys.forEach(key => {
-      const observable = this.settings[key];
+      const obs = this.settings[key];
 
-      if (observable) { subscription.add(observable.subscribe(value => callback(key, value))); }
+      if (obs) { sub.add(obs.subscribe(value => callback(key, value))); }
       else { console.error(`No observable found on key: ${key}`); }
     });
 
-    return subscription;
+    return sub;
   }
 
   /**
