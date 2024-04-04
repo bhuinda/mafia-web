@@ -79,14 +79,14 @@ export class SettingsService {
     const error = `Setting ${key} failed to update.`;
     // 1. Check if key exists
     if (!this.settings[key]) {
-      console.error(error + "Key was not found.");
+      console.error(`${error} Key was not found.`);
       return;
     }
 
     // 2. Decide which update method to call; if value is not of type SettingValue, throw an error
     if (typeof value === 'undefined' || typeof value === 'boolean') { this.updateBooleanSetting(key, value as boolean); }
     else if (typeof value === 'number') { this.updateNumberSetting(key, value as number, error); }
-    else { console.error(error + `Value ${value} is of invalid type ${typeof value}.`); }
+    else { console.error(`${error} Value ${value} is of invalid type ${typeof value}.`); }
   }
 
   private updateBooleanSetting(key: string, value?: boolean): void {
@@ -102,7 +102,7 @@ export class SettingsService {
     const [min, max] = setting.range;
     // Check if value is outside of configured range
     if (value < min || value > max) {
-        console.error(error + `Value ${value} was outside of acceptable range ${min} to ${max}.`);
+        console.error(`${error} Value ${value} was outside of acceptable range ${min} to ${max}.`);
         return;
     }
 
