@@ -1,3 +1,5 @@
+@use '../../../assets/styles/app.scss' as *;
+
 main {
   flex-direction: column;
   justify-content: center;
@@ -12,9 +14,6 @@ main {
 
 .construction {
   font-size: 3rem;
-  color: yellow;
+  color: $color-secondary;
   white-space: nowrap;
-}
-
-@media screen and (max-width: 768px) {
 }

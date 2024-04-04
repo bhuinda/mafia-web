@@ -1,7 +1,9 @@
+@use '../../../../../assets/styles/app.scss' as *;
+
 .chatbox {
   display: flex;
   flex-direction: column;
-  color: yellow;
+  color: $color-secondary;
   border: 3px solid;
 }
 
@@ -19,7 +21,7 @@
 
 #username {
   font-size: 2rem;
-  color: lime;
+  color: $color-tertiary;
 }
 
 #text {
@@ -44,7 +46,7 @@ button {
   margin-left: 0.5rem;
   padding: 10px;
   font-size: 16px;
-  background: lime;
+  background: $color-tertiary;
   color: white;
   border: none;
   cursor: pointer;

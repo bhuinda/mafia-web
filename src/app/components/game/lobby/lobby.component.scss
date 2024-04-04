@@ -1,3 +1,5 @@
+@use '../../../../assets/styles/app.scss' as *;
+
 main {
   display: flex;
   flex-direction: column;
@@ -6,21 +8,18 @@ main {
 }
 
 .box {
-  color: yellow;
+  color: $color-secondary;
   border: 3px dashed;
 }
 
 .row {
   display: flex;
   flex-direction: row;
-}
+  padding: 10px;
 
-.box .row {
-  padding: 10px; /* adjust as needed */
-}
-
-.row .column {
-  flex: 1;
+  .column {
+    flex: 1;
+  }
 }
 
 .config {
@@ -37,8 +36,9 @@ main {
   text-align: center;
   font-size: 1.5em;
   text-decoration: none;
-}
 
-.start:hover {
-  background-color: gray;
+  &:hover {
+    cursor: pointer;
+    background-color: gray;
+  }
 }

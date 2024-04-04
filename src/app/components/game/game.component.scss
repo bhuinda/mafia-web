@@ -1,3 +1,5 @@
+@use '../../../assets/styles/app.scss' as *;
+
 main {
   height: 100%;
   padding: 2rem;
@@ -30,7 +32,7 @@ h1 {
 
 .lobby-finder {
   flex: 1;
-  color: yellow;
+  color: $color-secondary;
   border: 3px dashed;
 }
 
@@ -49,7 +51,7 @@ nav a {
   flex: 1;
   text-decoration: none;
   text-align: center;
-  color: yellow;
+  color: $color-secondary;
   border: 3px solid;
   margin: 1rem;
 }

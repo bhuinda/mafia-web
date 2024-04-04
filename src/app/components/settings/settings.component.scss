@@ -1,3 +1,5 @@
+@use '../../../assets/styles/app.scss' as *;
+
 main {
   flex-direction: column;
   height: 100%;
@@ -26,15 +28,15 @@ p, span {
   background-color: black;
   border: 5px solid;
   font-size: 3rem;
-}
 
-.setting-button:hover {
-  background-color: gray;
-  cursor: pointer;
+  &:hover {
+    background-color: gray;
+    cursor: pointer;
+  }
 }
 
 .toggle-box {
-  color: yellow;
+  color: $color-secondary;
   border-top: 5px solid;
   border-bottom: 5px solid;
   border-right: 5px solid;
@@ -49,7 +51,4 @@ p, span {
 
 .toggled-off {
   background-color: maroon;
-}
-
-@media screen and (max-width: 768px) {
 }

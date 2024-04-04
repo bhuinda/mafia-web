@@ -1,3 +1,5 @@
+@use 'app.scss' as *;
+
 @mixin section {
   width: 100%;
   display: flex;

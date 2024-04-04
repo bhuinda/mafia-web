@@ -1,50 +1,4 @@
-#scroll-container {
-  border: 3px solid black;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-
-// #scroll-text {
-//   font-size: 2rem;
-//   color: yellow;
-//   text-align: right;
-//   z-index: -1;
-
-//   /* animation properties */
-//   -moz-transform: translateX(-100%);
-//   -webkit-transform: translateX(-100%);
-//   transform: translateX(-100%);
-
-//   -moz-animation: my-animation 10s linear infinite;
-//   -webkit-animation: my-animation 10s linear infinite;
-//   animation: my-animation 10s linear infinite;
-// }
-
-// /* for Firefox */
-// @-moz-keyframes my-animation {
-//   from { -moz-transform: translateX(-100%); }
-//   to { -moz-transform: translateX(70%); } /* Adjusted value */
-// }
-
-// /* for Chrome */
-// @-webkit-keyframes my-animation {
-//   from { -webkit-transform: translateX(-100%); }
-//   to { -webkit-transform: translateX(70%); } /* Adjusted value */
-// }
-
-// @keyframes my-animation {
-//   from {
-//     -moz-transform: translateX(-100%);
-//     -webkit-transform: translateX(-100%);
-//     transform: translateX(-100%);
-//   }
-//   to {
-//     -moz-transform: translateX(70%); /* Adjusted value */
-//     -webkit-transform: translateX(70%); /* Adjusted value */
-//     transform: translateX(70%); /* Adjusted value */
-//   }
-// }
+@use '../../../assets/styles/app.scss' as *;
 
 main {
   height: 100%;
@@ -59,7 +13,7 @@ p, span, a {
 }
 
 h1 {
-  color: yellow;
+  color: $color-secondary;
   font-size: 3rem;
   font-weight: normal;
   text-align: left;
@@ -70,24 +24,12 @@ h1 {
   flex-direction: column;
 }
 
-/* .row-divider {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  background-color: black;
-}
-
-.row-divider hr {
-  background-color: white;
-  height: 5px;
-} */
-
 .row-1, .row-2 {
   display: flex;
-}
 
-.row-1 > *,
-.row-2 > * {
-  flex: 1;
+  * {
+    flex: 1;
+  }
 }
 
 .row-1 {
@@ -100,38 +42,48 @@ h1 {
 
 #overview {
   margin-left: 1rem;
-  color: yellow;
-  border: 3px dashed;
 }
 
-#lobby-finder p {
-  color: white;
+#lobby-finder {
+  p {
+    color: white;
+    text-align: left;
+  }
+
+  .container {
+    padding: 30px;
+  }
 }
 
-#overview .container,
-#lobby-finder .container,
-#global-chat .container {
-  padding: 30px;
+#overview,
+#global-chat {
+  .container {
+    padding: 30px;
+  }
+}
+
+#global-chat {
+  p {
+    text-align: left;
+  }
 }
 
 .login-prompt {
   text-align: center;
 }
 
-.row-2 .row {
-  align-self: flex-start;
-  display: flex;
-  margin-left: 1rem;
-  color: yellow;
-  border: 3px dashed;
-}
+.row-2 {
+  .row {
+    align-self: flex-start;
+    display: flex;
+    margin-left: 1rem;
+    color: $color-secondary;
+    border: 3px dashed;
 
-.row-2 .row > div {
-  width: 100%;
-}
-
-#lobby-finder p, #global-chat p {
-  text-align: left;
+    div {
+      width: 100%;
+    }
+  }
 }
 
 .chat-box {
@@ -140,10 +92,10 @@ h1 {
   padding: 1rem;
   padding-bottom: 165%;
   border: 2px solid;
-}
 
-.chat-box p {
-  color: yellow;
+  p {
+    color: $color-secondary;
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -151,10 +103,13 @@ h1 {
     text-align: left;
   }
 
-  .row-2 .row {
-    align-self: flex-start;
+  .row-2 {
+    .row {
+      align-self: flex-start;
+    }
   }
 }
 
 @media screen and (max-width: 768px) {
+  // Add your styles for screens smaller than 768px here
 }
