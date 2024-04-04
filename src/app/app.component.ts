@@ -22,6 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
   settingsList: string[] = ['secretMode'];
   settings: Settings = {};
 
+  bgImageIsLoaded: boolean = false;
+
   ngOnInit(): void {
     this.appService.init();
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);

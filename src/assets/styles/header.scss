@@ -16,11 +16,11 @@
   }
 
   &:hover > .selector {
-    color: $color-primary;
+    color: $color-secondary;
   }
 
   &.active > .selector > .highlight {
-    color: $color-primary;
+    color: $color-secondary;
   }
 
   &:not(.active):hover > .selector > .highlight {

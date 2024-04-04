@@ -48,15 +48,6 @@ p, h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-// APP BACKGROUND
-body {
-  background-image: url('assets/images/rose.png');
-  background-position: -90px -20px;
-  background-size: 270px;
-  background-repeat: repeat;
-  /* Later on: make custom background with smaller, non-repeating patterns? */
-}
-
 /*** Scrollbar styling ***/
 
 ::-webkit-scrollbar {
