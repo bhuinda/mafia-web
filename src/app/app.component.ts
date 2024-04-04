@@ -17,12 +17,13 @@ import { AppService } from './app.service';
 export class AppComponent implements OnInit, OnDestroy {
   appService = inject(AppService);
 
+  settings: Settings = {};
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
-  settingsList: string[] = ['secretMode'];
-  settings: Settings = {};
-
-  bgImageIsLoaded: boolean = false;
+  settingsList: string[] = [
+    'secretMode',
+    'backgroundMode'
+  ];
 
   ngOnInit(): void {
     this.appService.init();

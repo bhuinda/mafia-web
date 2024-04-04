@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth';
 import { SettingsService } from '@services/settings';
-import { NavService } from '@app/shared/services/nav';
+import { NavService } from '@services/nav';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {

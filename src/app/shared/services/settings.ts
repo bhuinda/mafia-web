@@ -31,6 +31,10 @@ const settingsConfig: SettingsConfig = {
   terminalMode: {
     value: true
   },
+  // Toggles background mode
+  backgroundMode: {
+    value: true
+  },
   // Toggles rainbow mode
   secretMode: {
     value: false
@@ -42,34 +46,31 @@ const settingsConfig: SettingsConfig = {
 })
 export class SettingsService {
   private settings: { [key: string]: BehaviorSubject<SettingValue> } = {};
-  public observables: { [key: string]: Observable<SettingValue> } = {};
 
   constructor() {
     // Sets settings to their default values or their localStorage values
     for (const key in settingsConfig) {
       this.settings[key] = new BehaviorSubject<SettingValue>(this.getLocalSetting(key));
-      this.observables[key] = this.settings[key].asObservable();
     }
   }
 
   /**
    * Subscribes to 1..n settings as a single Subscription object.
-   * Define "settingsSubscription: Subscription" and "settings: Settings = {}" as properties with the callback "(key, value) => this.settings[key] = value".
    *
    * @param keys - List setting keys here (see SettingsService.settingsConfig).
    * @param callback - Value changes are sent back as key-value pairs.
    */
   public subscribe(keys: string[], callback: (key: string, value: SettingValue) => void): Subscription {
-    const subs = new Subscription();
+    const subscription = new Subscription();
 
     keys.forEach(key => {
-      const obs = this.observables[key];
+      const observable = this.settings[key];
 
-      if (obs) { subs.add(obs.subscribe(value => callback(key, value))); }
+      if (observable) { subscription.add(observable.subscribe(value => callback(key, value))); }
       else { console.error(`No observable found on key: ${key}`); }
     });
 
-    return subs;
+    return subscription;
   }
 
   /**

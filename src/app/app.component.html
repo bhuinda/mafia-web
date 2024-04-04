@@ -1,4 +1,4 @@
-<div class="app-container" [ngClass]="{'secret': settings['secretMode']}">
+<div class="app-container" [ngClass]="{'secret': settings['secretMode'], 'no-padding': !settings['backgroundMode']}">
 
   <app-header/>
   <div class="content-wrapper">

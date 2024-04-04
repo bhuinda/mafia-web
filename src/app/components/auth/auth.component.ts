@@ -4,9 +4,9 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Router, NavigationCancel } from '@angular/router';
-import { NavService } from '@app/shared/services/nav';
+import { NavService } from '@services/nav';
 import { Subscription, filter } from 'rxjs';
-import { Settings, SettingsService } from '@app/shared/services/settings';
+import { Settings, SettingsService } from '@services/settings';
 
 @Component({
     selector: 'app-auth',
@@ -21,10 +21,13 @@ export class AuthComponent implements OnInit, OnDestroy {
   router = inject(Router);
   routerSubscription: Subscription;
 
+  settings: Settings = {};
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
-  settingsList: string[] = ['firstTime', 'terminalMode'];
-  settings: Settings = {};
+  settingsList: string[] = [
+    'firstTime',
+    'terminalMode'
+  ];
 
   auth = inject(AuthService);
   authMode: string = 'signIn';
@@ -32,7 +35,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   cancelledRoute: string = '';
 
   ngOnInit(): void {
-    // Check if redirected from the command /clear-ls; reload to reinit app if so
+    // Check if redirected from the command /cmem; reload to reinit app if so
     if (history.state?.redirectedFromClearMemory) {
       history.replaceState({}, '');
       window.location.reload();
@@ -58,19 +61,19 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.router.navigate(['/home']);
   }
 
-  setCancelledRoute(arg?: string) {
+  setCancelledRoute(arg?: string): void {
     // This jankiness is to accommodate how nav.history works
     const index = arg === 'init' ? -2 : -1;
     const historyItem = this.nav.getHistory().at(index);
     this.cancelledRoute = historyItem && !historyItem.success ? historyItem.route : null;
   }
 
-  switchAuthMode(mode: string) {
+  switchAuthMode(mode: string): void {
     if (mode === 'signUp') { this.authMode = 'signUp'; }
     else { this.authMode = 'signIn'; }
   }
 
-  onLogout() {
+  onLogout(): void {
     this.auth.signOut();
   }
 }

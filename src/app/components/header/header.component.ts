@@ -16,10 +16,10 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 export class HeaderComponent implements OnInit, OnDestroy {
   dropdownActive = false;
 
+  settings: Settings = {};
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
   settingsList: string[] = ['firstTime'];
-  settings: Settings = {};
 
   ngOnInit(): void {
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
