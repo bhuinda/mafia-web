@@ -20,6 +20,8 @@ export class TerminalComponent implements OnInit {
   userService = inject(UserService);
   user$: Observable<User>;
 
+  placeholder: string = '';
+
   commandForm = new FormGroup({ command: new FormControl('') });
 
   ngOnInit(): void {
@@ -35,7 +37,8 @@ export class TerminalComponent implements OnInit {
       return;
     }
 
-    this.terminalService.handleCommand(command);
+    const prompt = this.terminalService.handleCommand(command);
+    this.placeholder = prompt;
   }
 
   focusInput(): void {

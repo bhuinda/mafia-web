@@ -33,7 +33,7 @@ export class AuthService {
 
   signOut(): void {
     this.destroyToken();
-    this.userService.user$.next(null); // for refreshing terminal appearance
+    this.userService.user$.next(null);
     this.status$.next(false);
   }
 
