@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { environment } from '@environments/environment';
+import { User } from '@models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ export class UserService {
   private http = inject(HttpClient);
   private url = environment.apiUrl;
 
-  public user$ = new BehaviorSubject<any>(null);
+  public user$ = new BehaviorSubject<User>(null);
 
   getCurrentUser(): Observable<any> {
-    return this.http.get(`${this.url}/users/me`).pipe(
-      tap((user: any) => this.user$.next(user))
+    return this.http.get(`${this.url}/users/me`)
+      .pipe(tap((user: any) => this.user$.next(user))
     );
   }
 
