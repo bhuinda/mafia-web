@@ -1,3 +1,5 @@
+@use '../../../../assets/styles/app.scss' as *;
+
 p, span {
   font-size: 1.5rem;
 }
@@ -20,7 +22,7 @@ p, span {
 }
 
 #user-and-domain {
-  color: yellow;
+  color: $color-primary;
 }
 
 #command {
@@ -28,7 +30,7 @@ p, span {
   background: transparent;
   border: none;
   outline: none;
-  caret-color: lime;
-  color: lime;
+  caret-color: $color-secondary;
+  color: $color-secondary;
   font-size: 1.4rem;
 }
