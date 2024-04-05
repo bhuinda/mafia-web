@@ -26,8 +26,8 @@ export class SignUpComponent {
   signUpSubscription: Subscription;
   signUpFailed: boolean = false;
   signUpError = {
-    header: 'signUpFailed',
-    message: 'Sign up attempt failed.'
+    header: 'Sign Up Failed',
+    message: 'Something went wrong. Please try again.'
   };
 
   form = this.fb.nonNullable.group({
@@ -40,6 +40,10 @@ export class SignUpComponent {
     {
       control: 'email',
       message: 'Email must be valid.'
+    },
+    {
+      control: 'username',
+      message: 'Username must be at least 6 characters long.'
     },
     {
       control: 'password',
@@ -58,19 +62,19 @@ export class SignUpComponent {
         this.signUpFailed = false;
         this.formSubmitted = false;
 
-        this.router.navigateByUrl('/home');
+        window.location.reload();
       },
       error: (error) => {
         console.log(error);
         this.formSubmitted = true;
 
-        if (error.code === 'auth/email-already-in-use') {
-          this.signUpFailed = false;
-          // this.registrationFailedDuplicateEmail = true;
-        } else {
-          this.signUpFailed = true;
-          // this.registrationFailedDuplicateEmail = false;
-        }
+        // if (error.code === 'auth/email-already-in-use') {
+        //   this.signUpFailed = false;
+        //   // this.registrationFailedDuplicateEmail = true;
+        // } else {
+        //   this.signUpFailed = true;
+        //   // this.registrationFailedDuplicateEmail = false;
+        // }
       }
     });
   }

@@ -57,8 +57,8 @@ export class SettingsService {
   /**
    * Subscribes to 1..n settings as a single Subscription object.
    *
-   * @param keys - List setting keys here (see SettingsService.settingsConfig).
-   * @param callback - Value changes are sent back as key-value pairs.
+   * @param keys List setting keys here (see SettingsService.settingsConfig).
+   * @param callback Value changes are sent back as key-value pairs.
    */
   public subscribe(keys: string[], callback: (key: string, value: SettingValue) => void): Subscription {
     const sub = new Subscription();
@@ -76,8 +76,8 @@ export class SettingsService {
   /**
    * Type-agnostic method to update any setting.
    *
-   * @param key - Setting key to update (see SettingsService.settingsConfig).
-   * @param value - Leave undefined to toggle a boolean setting; else set to desired value.
+   * @param key Setting key to update (see SettingsService.settingsConfig).
+   * @param value Leave undefined to toggle a boolean setting; else set to desired value.
    */
   public updateSetting(key: string, value?: SettingValue): void {
     const error = `Setting ${key} failed to update.`;

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import Pusher from 'pusher-js';
 
 // Local; shown to client only
 interface LocalMessage {
@@ -16,6 +17,7 @@ interface LiveMessage {
   providedIn: 'root'
 })
 export class MessageService {
+  private pusher: any;
   private messageCount: number = 0;
 
   private firstMessageTime: number | null = null;
