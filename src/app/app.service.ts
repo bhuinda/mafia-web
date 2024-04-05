@@ -16,10 +16,10 @@ export class AppService {
   router = inject(Router);
   routerSubscription: Subscription;
 
+  settings: Settings = {};
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
-  settingsList: string[] = ['secretMode'];
-  settings: Settings = {};
+  settingsList: string[] = ['firstTime', 'secretMode'];
 
   init(): void {
     // 1. Initialize settings
