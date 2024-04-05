@@ -1,14 +1,19 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { environment } from '@environments/environment';
 import { UserService } from './user';
 import { subscribeOnce } from '../helpers/subscribeOnce';
+import Pusher from 'pusher-js'
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  pusher: any;
+
+  private router = inject(Router);
   private http = inject(HttpClient);
   private url = environment.apiUrl;
   private userService = inject(UserService);
@@ -16,7 +21,15 @@ export class AuthService {
   public status$ = new BehaviorSubject<boolean>(false);
 
   // SIGN UP METHOD
+  signUp(username: string, email: string, password: string) {
+    const payload = JSON.stringify({ username, email, password });
+    const headers = { 'Content-Type': 'application/json' };
 
+    return this.http.post(`${this.url}/users`, payload, {headers})
+    // .pipe(
+    //   map(() => true)
+    // );
+  }
 
   // SIGN IN/OUT METHODS
   signIn(email: string, password: string): Observable<any> {
