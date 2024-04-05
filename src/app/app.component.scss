@@ -1,13 +1,39 @@
 .app-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+}
+
+.filter {
+  &::before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image:
+      linear-gradient(
+        rgba(0, 0, 0, .7),
+        rgba(0, 0, 0, .7)
+      ),
+      url("https://static.vecteezy.com/system/resources/thumbnails/016/413/659/small/black-white-horizontal-lines-seamless-pattern-vector.jpg");
+    z-index: 1;
+    filter: opacity(10%);
+  }
+}
+
+.app-wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 4rem 4rem 4rem 4rem;
   background-image: url('../assets/images/rose.png');
   background-position: -90px -20px;
   background-size: 270px;
   background-repeat: repeat;
-  /* Later on: make custom background with smaller, non-repeating patterns? */
+  padding: 4rem 4rem 4rem 4rem;
 
   @media (max-width: 768px) {
     padding: 0;
@@ -16,9 +42,10 @@
 
 .content-wrapper {
   flex: 1;
-  background-color: black;
+  position: relative;
   color: white;
   border: 5px solid;
+  background: black;
 }
 
 .no-padding {

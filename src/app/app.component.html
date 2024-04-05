@@ -1,9 +1,11 @@
-<div class="app-container" [ngClass]="{'secret': settings['secretMode'], 'no-padding': !settings['backgroundMode']}">
+<div class="app-wrapper" [ngClass]="{'secret': settings['secretMode'], 'no-padding': !settings['backgroundMode']}">
+  <div class="app-container filter">
 
-  <app-header/>
-  <div class="content-wrapper">
-    <router-outlet/>
+    <app-header/>
+    <div class="content-wrapper">
+      <router-outlet/>
+    </div>
+    <app-footer/>
+
   </div>
-  <app-footer/>
-
 </div>
