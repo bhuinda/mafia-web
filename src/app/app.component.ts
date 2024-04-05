@@ -22,7 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
   settingsSubscription: Subscription;
   settingsList: string[] = [
     'secretMode',
-    'backgroundMode'
+    'backgroundMode',
+    'filterMode'
   ];
 
   ngOnInit(): void {

@@ -35,6 +35,10 @@ const settingsConfig: SettingsConfig = {
   backgroundMode: {
     value: true
   },
+  // Toggles filter mode
+  filterMode: {
+    value: true
+  },
   // Toggles rainbow mode
   secretMode: {
     value: false

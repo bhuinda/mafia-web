@@ -13,6 +13,12 @@
       <div class="toggle-box" [ngClass]="{'toggled-on': settings['backgroundMode'], 'toggled-off': !settings['backgroundMode']}"></div>
     </div>
 
+    <p class="setting-label">Filter Mode</p>
+    <div class="setting-container">
+      <button class="setting-button" (click)="toggleFilterMode()">TOGGLE</button>
+      <div class="toggle-box" [ngClass]="{'toggled-on': settings['filterMode'], 'toggled-off': !settings['filterMode']}"></div>
+    </div>
+
   </div>
 
   <div class="ui-settings">

@@ -14,7 +14,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   settings: Settings = {};
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
-  settingsList: string[] = ['terminalMode', 'backgroundMode']
+  settingsList: string[] = [
+    'terminalMode',
+    'backgroundMode',
+    'filterMode'
+  ]
 
   ngOnInit(): void {
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
@@ -30,5 +34,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   toggleBackgroundMode(): void {
     this.settingsService.updateSetting('backgroundMode');
+  }
+
+  toggleFilterMode(): void {
+    this.settingsService.updateSetting('filterMode');
   }
 }
