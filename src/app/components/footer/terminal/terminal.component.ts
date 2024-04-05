@@ -20,7 +20,7 @@ export class TerminalComponent implements OnInit {
   userService = inject(UserService);
   user$: Observable<User>;
 
-  placeholder: string = '';
+  placeholder: string = 'Awaiting response.';
 
   commandForm = new FormGroup({ command: new FormControl('') });
 

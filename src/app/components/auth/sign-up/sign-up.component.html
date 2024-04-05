@@ -21,8 +21,11 @@
     </div>
   }
 
-  <form id="form-container" [formGroup]="form" (ngSubmit)="onSubmit(form.value.email, form.value.password)">
+  <form id="form-container" [formGroup]="form" (ngSubmit)="onSubmit(form.value.username, form.value.email, form.value.password)">
 
+    <div class="email">
+      <input type="username" placeholder="Username" formControlName="username">
+    </div>
     <div class="email">
       <input type="email" placeholder="Email" formControlName="email">
     </div>

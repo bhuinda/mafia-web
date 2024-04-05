@@ -76,6 +76,7 @@ export class TerminalService {
     '/cmem': {
       action: () => {
         localStorage.clear();
+        // Change to use service to fix bug that if on auth, doesn't load correct view
         this.router.navigate(['/auth'], { state: { redirectedFromClearMemory: true } });
         return this.prompt;
       }

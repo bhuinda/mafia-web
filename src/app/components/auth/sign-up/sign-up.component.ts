@@ -27,10 +27,11 @@ export class SignUpComponent {
   signUpFailed: boolean = false;
   signUpError = {
     header: 'signUpFailed',
-    message: 'Sign up attempt failed; email/password is incorrect.'
+    message: 'Sign up attempt failed.'
   };
 
   form = this.fb.nonNullable.group({
+    username: ['', [Validators.required, Validators.minLength(6)]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
@@ -46,31 +47,31 @@ export class SignUpComponent {
     }
   ];
 
-  onSubmit(email: string, password: string) {
+  onSubmit(username: string, email: string, password: string) {
     if (this.form.invalid) {
       this.formSubmitted = true;
       return;
     }
 
-    // this.registrationSubscription = this.auth.register(email, password).subscribe({
-    //   next: () => {
-    //     this.registrationFailed = false;
-    //     this.formSubmitted = false;
+    this.signUpSubscription = this.auth.signUp(username, email, password).subscribe({
+      next: () => {
+        this.signUpFailed = false;
+        this.formSubmitted = false;
 
-    //     this.router.navigateByUrl('/home');
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //     this.formSubmitted = true;
+        this.router.navigateByUrl('/home');
+      },
+      error: (error) => {
+        console.log(error);
+        this.formSubmitted = true;
 
-    //     if (error.code === 'auth/email-already-in-use') {
-    //       this.registrationFailed = false;
-    //       this.registrationFailedDuplicateEmail = true;
-    //     } else {
-    //       this.registrationFailed = true;
-    //       this.registrationFailedDuplicateEmail = false;
-    //     }
-    //   }
-    // });
+        if (error.code === 'auth/email-already-in-use') {
+          this.signUpFailed = false;
+          // this.registrationFailedDuplicateEmail = true;
+        } else {
+          this.signUpFailed = true;
+          // this.registrationFailedDuplicateEmail = false;
+        }
+      }
+    });
   }
 }
