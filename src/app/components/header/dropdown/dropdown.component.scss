@@ -11,7 +11,7 @@ button {
   width: 100%;
   background-color: gray;
   text-align: center;
-  border-bottom: 5px solid;
+  border-bottom: 4px solid;
 
   &:hover {
     background-color: lightgray;
@@ -36,7 +36,7 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-bottom: 5px solid;
+    border-bottom: 4px solid;
 
     &:last-child {
       border-bottom: 0;
@@ -55,5 +55,5 @@ nav {
   justify-content: space-evenly;
   align-items: center;
   background-color: black;
-  border: 5px solid;
+  border: 4px solid;
 }

@@ -7,6 +7,7 @@ main {
 }
 
 p, span, a {
+  color: #EEEEEE;
   font-size: 2rem;
   text-align: justify;
   line-height: 1.2;
@@ -46,7 +47,8 @@ h1 {
 
 #lobby-finder {
   p {
-    color: white;
+    color: #EEEEEE
+    ;
     text-align: left;
   }
 
@@ -88,7 +90,7 @@ h1 {
 
 .chat-box {
   display: none;
-  color: white;
+  color: #EEEEEE;
   padding: 1rem;
   padding-bottom: 165%;
   border: 2px solid;

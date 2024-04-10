@@ -1,6 +1,7 @@
 @use '../../../assets/styles/app.scss' as *;
 
 main {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,6 +22,11 @@ section {
 }
 
 .welcome-cursive {
+  // position: absolute;
+  // left: 50%;
+  // top: 9%;
+  // transform: translate(-50%, -50%);
+
   display: inline;
   font-size: 1.2rem;
   line-height: 2;
@@ -29,6 +35,11 @@ section {
 }
 
 .welcome-regular {
+  // position: absolute;
+  // left: 50%;
+  // top: 15%;
+  // transform: translate(-50%, -50%);
+
   display: inline;
   font-size: 5rem;
   line-height: 0.8;

@@ -9,11 +9,11 @@
       <div id="overview">
         <div class="container">
           <div class="login-prompt" *ngIf="!authStatus">
-            <p>[<a routerLink="/auth" style="color: lime; text-decoration: none">LOGIN</a>] to see your stats.</p>
+            <p>[<a routerLink="/auth" style="color: yellow; text-decoration: none">LOGIN</a>] to see your stats.</p>
           </div>
           <div *ngIf="authStatus">
             <p>Logged in! (Stats)</p>
-            <p>[<a routerLink="/auth" style="color: lime; text-decoration: none">LOGOUT</a>]</p>
+            <p>[<a routerLink="/auth" style="color: yellow; text-decoration: none">LOGOUT</a>]</p>
           </div>
           <!-- <div class="stats-card" *ngIf="status != null"></div> -->
         </div>

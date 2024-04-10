@@ -22,7 +22,7 @@ p, span {
 }
 
 #user-and-domain {
-  color: $color-primary;
+  color: $color-secondary;
 }
 
 #command {
@@ -30,7 +30,7 @@ p, span {
   background: transparent;
   border: none;
   outline: none;
-  caret-color: $color-tertiary;
-  color: $color-tertiary;
+  caret-color: $color-secondary;
+  color: $color-secondary;
   font-size: 1.4rem;
 }
