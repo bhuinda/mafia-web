@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 type Setting = NumberSetting | BooleanSetting;
 type SettingValue = number | boolean;
@@ -22,6 +22,10 @@ interface SettingsConfig {
 };
 
 // DECLARE SETTINGS AND DEFAULTS HERE
+/*
+TO-DO: Populate config by declaring settings in separate const exports
+so that it's obvious if a setting is from "UX Preferences"/"System"/"Secret"/etc.
+*/
 const settingsConfig: SettingsConfig = {
   // On very first app load, sets website to "first time" mode and shows welcome screen
   firstTime: {
@@ -85,6 +89,7 @@ export class SettingsService {
    */
   public updateSetting(key: string, value?: SettingValue): void {
     const error = `Setting ${key} failed to update.`;
+    const type = typeof value;
 
     // 1. Check if key exists
     if (!this.settings[key]) {
@@ -93,9 +98,9 @@ export class SettingsService {
     }
 
     // 2. Decide which update method to call; if value is not of type SettingValue, throw an error
-    if (typeof value === 'undefined' || typeof value === 'boolean') { this.updateBooleanSetting(key, value as boolean); }
-    else if (typeof value === 'number') { this.updateNumberSetting(key, value as number, error); }
-    else { console.error(`${error} Value ${value} is of invalid type ${typeof value}.`); }
+    if (type === 'undefined' || type === 'boolean') { this.updateBooleanSetting(key, value as boolean); }
+    else if (type === 'number') { this.updateNumberSetting(key, value as number, error); }
+    else { console.error(`${error} Value ${value} is of invalid type ${type}.`); }
   }
 
   private updateBooleanSetting(key: string, value?: boolean): void {
