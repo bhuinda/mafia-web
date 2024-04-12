@@ -32,7 +32,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   auth = inject(AuthService);
   authMode: string = 'signIn';
 
-  cancelledRoute: string = '';
+  signUpIndicator: string;
+  cancelledRoute: string;
 
   ngOnInit(): void {
     // Check if redirected from the command /cmem; reload to reinit app if so
@@ -43,6 +44,8 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     // Initialize with cancelled route, only if redirected from AuthGuard
     if (history.state?.redirectedFromGuard) { this.setCancelledRoute('init'); }
+
+    if (history.state?.redirectedFromSignUp) { this.signUpIndicator = 'Sign up was successful.'}
 
     // If already on AuthComponent after an auth-based nav cancellation, update cancelledRoute
     this.routerSubscription = this.router.events.pipe(
@@ -58,7 +61,19 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   disableFirstTime(): void {
     this.settingsService.updateSetting('firstTime', false);
-    this.router.navigate(['/home']);
+  }
+
+  handleAuth(mode?: string): void {
+    // 1. Disable first time mode if still enabled
+    if (this.settings['firstTime'] === true) { this.disableFirstTime(); }
+
+    // 2. Check auth mode
+    if (mode === 'signUp') {
+      history.pushState({ redirectedFromSignUp: true }, '', this.router.url);
+      window.location.reload();
+    }
+    else if (mode === 'signUp') { this.router.navigate(['/home']); }
+    else { this.router.navigate(['/home']); }
   }
 
   setCancelledRoute(arg?: string): void {
@@ -73,7 +88,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     else { this.authMode = 'signIn'; }
   }
 
-  onLogout(): void {
+  onSignOut(): void {
     this.auth.signOut();
   }
 }

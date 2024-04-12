@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,6 +18,8 @@ import { subscribeOnce } from '@app/shared/helpers/subscribeOnce';
     ],
 })
 export class SignInComponent {
+  @Output() invokeHandleAuth = new EventEmitter<void>();
+
   auth = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
@@ -55,7 +57,8 @@ export class SignInComponent {
       next: () => {
         this.signInFailed = false;
         this.formSubmitted = false;
-        this.router.navigateByUrl('/home');
+
+        this.invokeHandleAuth.emit();
       },
       error: (error) => {
         console.log(error);

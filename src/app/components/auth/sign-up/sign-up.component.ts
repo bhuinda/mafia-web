@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,6 +18,7 @@ import { NgClass } from '@angular/common';
 })
 export class SignUpComponent {
   // TO-DO: Add "success!" message after successful registration to AuthComponent
+  @Output() invokeHandleAuth = new EventEmitter<void>();
 
   auth = inject(AuthService);
   router = inject(Router);
@@ -62,7 +63,7 @@ export class SignUpComponent {
         this.signUpFailed = false;
         this.formSubmitted = false;
 
-        window.location.reload();
+        this.invokeHandleAuth.emit();
       },
       error: (error) => {
         console.log(error);

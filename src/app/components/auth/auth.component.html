@@ -3,14 +3,20 @@
   <section>
 
     @if (cancelledRoute) {
-      <div class="error-container">
+      <div class="indicator-container">
         UNAUTHORIZED ACCESS TO {{ cancelledRoute.toUpperCase() }}. SIGN IN?
+      </div>
+    }
+
+    @if (signUpIndicator) {
+      <div class="indicator-container">
+        {{ signUpIndicator.toUpperCase() }}
       </div>
     }
 
     @if (auth.status$ | async) {
       <div class="sign-out">
-        <button (click)="onLogout()">Sign out :(</button>
+        <button (click)="onSignOut()">Sign out :(</button>
       </div>
     } @else {
 
@@ -20,8 +26,8 @@
         <p class="welcome-regular">MAFIA4WEB</p>
 
         <div class="form-container">
-          @if (authMode === 'signIn') { <sign-in/> }
-          @if (authMode === 'signUp') { <sign-up/> }
+          @if (authMode === 'signIn') { <sign-in (invokeHandleAuth)="handleAuth('signIn')"/> }
+          @if (authMode === 'signUp') { <sign-up (invokeHandleAuth)="handleAuth('signUp')"/> }
         </div>
 
         <div class="button-container">
