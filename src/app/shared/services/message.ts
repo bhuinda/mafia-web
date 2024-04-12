@@ -41,11 +41,12 @@ const warningsConfig = {
   providedIn: 'root'
 })
 export class MessageService implements OnInit {
+  private pusher: any;
+
   private user: User;
   private userService = inject(UserService);
   private userSubscription: Subscription;
 
-  private pusher: any;
   private messageCount: number = 0;
 
   private firstMessageTime: number | null = null;
@@ -53,6 +54,7 @@ export class MessageService implements OnInit {
 
   private messageRateCount: number = 0;
   private messageRateLimited: boolean = false;
+  private messageRateTimeout: any;
 
   ngOnInit(): void {
     this.userSubscription = this.userService.user$.subscribe(user => this.user = user);
@@ -63,35 +65,44 @@ export class MessageService implements OnInit {
   }
 
   // Messages for local terminal, no real-time needed
-  public async createLocalMessage(input: string): Promise<LocalMessage | null> {
+  public async createLocalMessage(input: string): Promise<LocalMessage | void> {
     const now = Date.now();
 
+    // If already rate limited, send a warning and return
     if (this.messageRateLimited) {
       if (now - (this.lastMessageTime || 0) < 5000) {
-        console.log('You can only send a message every 5 seconds.');
-        return null;
+        this.createWarningMessage('spam');
+        return;
       }
     }
 
+    // If no first message time yet, set it and initiate a timer
     if (this.firstMessageTime === null) {
       this.firstMessageTime = now;
+      this.messageRateCount = 1;
+
       setTimeout(() => {
         this.firstMessageTime = null;
         this.messageRateCount = 0;
       }, 5000);
+    } else {
+      this.messageRateCount++;
     }
 
-    this.messageCount++;
-
+    // If the user has sent 5 or more messages in less than 5 seconds
     if (this.messageRateCount >= 5 && now - (this.firstMessageTime || 0) < 5000) {
       this.messageRateLimited = true;
-      console.log('You have been limited to sending a message every 5 seconds for the next 20 seconds.');
-      setTimeout(() => {
+
+      // If timeout is already running, clear it
+      if (this.messageRateTimeout) { clearTimeout(this.messageRateTimeout); }
+
+      this.messageRateTimeout = setTimeout(() => {
         this.messageRateLimited = false;
       }, 20000);
     }
 
     this.lastMessageTime = now;
+    this.messageCount++;
 
     return {
       metadata: {
