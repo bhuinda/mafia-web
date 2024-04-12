@@ -3,8 +3,11 @@
   <form [formGroup]="commandForm" (ngSubmit)="onSubmit()">
 
     <label for="command">
-      <!-- One-liner so evil that the braces are flagged as incorrect -->
-      [<span id="user-and-domain">@if (user$ | async){{{(user$ | async).username}}} @else {{{'guest'}}}</span>&#64;mafia4web ~] $
+      <!-- Abhorrent. Unholy. Sacreligious. -->
+      [<span id="user-and-domain">
+        @if (user$ | async){{{(user$ | async).username}}}
+        @else {{{'guest'}}}
+      </span>&#64;mafia4web ~] $
     </label>
     <input #commandInput
            id="command"
