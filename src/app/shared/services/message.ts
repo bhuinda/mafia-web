@@ -59,7 +59,6 @@ export class MessageService {
 
   public messages$ = new BehaviorSubject<any>([]);
 
-
   constructor() {
     this.userSubscription = this.userService.user$.subscribe(user => this.user = user);
   }
@@ -68,10 +67,19 @@ export class MessageService {
   public async createLocalMessage(input: string): Promise<LocalMessage | void> {
     const now = Date.now();
 
-    // If already rate limited, send a warning and return
-    if (this.messageRateLimited) {
-      if (now - (this.lastMessageTime || 0) < 5000) {
-        return this.createWarningMessage('spam');
+    // If the user has sent 5 or more messages, each within 5 seconds of the last
+    if (this.messageRateCount >= 5) {
+      // Send a warning and refresh the 20-second timeout
+      if (this.messageRateLimited || now - (this.lastMessageTime || 0) < 5000) {
+        if (this.messageRateTimeout) { clearTimeout(this.messageRateTimeout); }
+        this.messageRateTimeout = setTimeout(() => {
+          this.messageRateLimited = false;
+          this.messageRateCount = 0;
+          this.firstMessageTime = null;
+        }, 20000);
+        this.messageRateLimited = true;
+        this.createWarningMessage('spam');
+        return;
       }
     }
 
@@ -79,11 +87,6 @@ export class MessageService {
     if (this.firstMessageTime === null) {
       this.firstMessageTime = now;
       this.messageRateCount = 1;
-
-      setTimeout(() => {
-        this.firstMessageTime = null;
-        this.messageRateCount = 0;
-      }, 5000);
     } else {
       this.messageRateCount++;
     }
@@ -91,20 +94,12 @@ export class MessageService {
     // If the user has sent 5 or more messages in less than 5 seconds
     if (this.messageRateCount >= 5 && now - (this.firstMessageTime || 0) < 5000) {
       this.messageRateLimited = true;
-
-      // If timeout is already running, clear it
-      if (this.messageRateTimeout) { clearTimeout(this.messageRateTimeout); }
-
-      this.messageRateTimeout = setTimeout(() => {
-        this.messageRateLimited = false;
-      }, 20000);
     }
 
     this.lastMessageTime = now;
     this.messageCount++;
 
     const currentMessages = this.messages$.getValue();
-
     currentMessages.push({
       metadata: {
         sender: this.user.username,
@@ -118,35 +113,38 @@ export class MessageService {
     this.messages$.next(currentMessages);
   }
 
-  private createWarningMessage(warningType: string): LocalMessage {
+  private createWarningMessage(warningType: string): void {
     const now = Date.now();
     const warning = warningsConfig[warningType] ? warningsConfig[warningType] : null;
+    const currentMessages = this.messages$.getValue();
 
     this.messageCount++;
 
     if (warning === null) {
       console.error(`Unprocessable warning sent to terminal (of type ${warningType})`)
-      return {
+      currentMessages.push({
         metadata: {
-          sender: 'system',
+          sender: 'SYSTEM',
           timestamp: now,
           id: this.messageCount
         },
         content: {
-          text: 'An unprocessable warning was sent.'
+          text: warning.text
         }
-      }
+      });
+    } else {
+      currentMessages.push({
+        metadata: {
+          sender: 'SYSTEM',
+          timestamp: now,
+          id: this.messageCount
+        },
+        content: {
+          text: warning.text
+        }
+      });
     }
 
-    return {
-      metadata: {
-        sender: 'system',
-        timestamp: now,
-        id: this.messageCount
-      },
-      content: {
-        text: warning.text
-      }
-    }
+    this.messages$.next(currentMessages);
   }
 }
