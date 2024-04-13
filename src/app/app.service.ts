@@ -5,6 +5,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, Router } from '@angul
 import { AuthService } from '@services/auth';
 import { subscribeOnce } from './shared/helpers/subscribeOnce';
 import { NavService } from './shared/services/nav';
+import { UserService } from './shared/services/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { NavService } from './shared/services/nav';
 export class AppService {
   auth = inject(AuthService);
   nav = inject(NavService);
+  userService = inject(UserService);
 
   router = inject(Router);
   routerSubscription: Subscription;
@@ -38,5 +40,8 @@ export class AppService {
 
     // 4. Attempt to validate user token
     subscribeOnce(this.auth.validateToken());
+
+    // 5. Attempt to get current user
+    subscribeOnce(this.userService.getCurrentUser());
   }
 }

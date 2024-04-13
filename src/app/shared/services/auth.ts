@@ -43,6 +43,7 @@ export class AuthService {
       tap((response: any) => {
         localStorage.setItem('token', response.token);
         subscribeOnce(this.validateToken());
+        subscribeOnce(this.userService.getCurrentUser());
       })
     );
   }

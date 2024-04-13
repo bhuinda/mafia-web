@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ChatService } from '@services/chat';
 import { FormsModule } from '@angular/forms';
 import { NgFor, DatePipe } from '@angular/common';
+import { MessageService } from '@services/message';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-chat',
@@ -11,25 +13,20 @@ import { NgFor, DatePipe } from '@angular/common';
     imports: [NgFor, FormsModule, DatePipe]
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  // chatService = inject(ChatService);
-  text = '';
-  messages;
+  messageService = inject(MessageService);
+  messageSubscription: Subscription;
+  messages: any = [];
+  text: string = '';
 
   ngOnInit(): void {
-    // this.chatService.getMessages().subscribe((data) => {
-    //   this.messages = data.sort((a: any, b: any) =>
-    //     new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-    //   );
-    // });
+    this.messageSubscription = this.messageService.messages$.subscribe(messages => this.messages = messages);
   }
 
   sendMessage() {
-    // this.chatService.sendMessage(this.text);
+    this.messageService.createLocalMessage(this.text);
     this.text = '';
   }
 
   ngOnDestroy(): void {
-    // This implementation is flawed; in future, only delete messages in chat collection when lobby reaches 0 players, e.g. check for playerCount == 0.
-    // this.chatService.deleteMessages();
   }
 }

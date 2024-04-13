@@ -3,7 +3,8 @@ import { environment as env } from '@environments/environment.development';
 import Pusher from 'pusher-js';
 import { UserService } from "./user";
 import { User } from "../models/user";
-import { Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
+import { subscribeOnce } from "../helpers/subscribeOnce";
 
 interface Content {
   text: string;
@@ -40,7 +41,7 @@ const warningsConfig = {
 @Injectable({
   providedIn: 'root'
 })
-export class MessageService implements OnInit {
+export class MessageService {
   private pusher: any;
 
   private user: User;
@@ -56,12 +57,11 @@ export class MessageService implements OnInit {
   private messageRateLimited: boolean = false;
   private messageRateTimeout: any;
 
-  ngOnInit(): void {
-    this.userSubscription = this.userService.user$.subscribe(user => this.user = user);
-  }
+  public messages$ = new BehaviorSubject<any>([]);
 
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
+
+  constructor() {
+    this.userSubscription = this.userService.user$.subscribe(user => this.user = user);
   }
 
   // Messages for local terminal, no real-time needed
@@ -71,8 +71,7 @@ export class MessageService implements OnInit {
     // If already rate limited, send a warning and return
     if (this.messageRateLimited) {
       if (now - (this.lastMessageTime || 0) < 5000) {
-        this.createWarningMessage('spam');
-        return;
+        return this.createWarningMessage('spam');
       }
     }
 
@@ -104,7 +103,9 @@ export class MessageService implements OnInit {
     this.lastMessageTime = now;
     this.messageCount++;
 
-    return {
+    const currentMessages = this.messages$.getValue();
+
+    currentMessages.push({
       metadata: {
         sender: this.user.username,
         timestamp: now,
@@ -113,7 +114,8 @@ export class MessageService implements OnInit {
       content: {
         text: input
       }
-    }
+    });
+    this.messages$.next(currentMessages);
   }
 
   private createWarningMessage(warningType: string): LocalMessage {
@@ -123,7 +125,7 @@ export class MessageService implements OnInit {
     this.messageCount++;
 
     if (warning === null) {
-      console.error(`Unknown warning sent to terminal (of type ${warningType})`)
+      console.error(`Unprocessable warning sent to terminal (of type ${warningType})`)
       return {
         metadata: {
           sender: 'system',
@@ -131,7 +133,7 @@ export class MessageService implements OnInit {
           id: this.messageCount
         },
         content: {
-          text: 'An unknown warning was detected.'
+          text: 'An unprocessable warning was sent.'
         }
       }
     }

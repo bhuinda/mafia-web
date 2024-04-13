@@ -2,9 +2,9 @@
 
   <div class="messages" *ngFor="let message of messages">
     <div class="message">
-      <span id="timestamp">{{ message.timestamp | date: 'H:mm' + ' '}}</span>
-      <span id="username">{{ message.user }}</span>
-      <span id="text">: {{ message.text }}</span>
+      <span id="timestamp">{{ message.metadata.timestamp | date: 'H:mm' + ' '}}</span>
+      <span id="username">{{ message.metadata.sender }}</span>
+      <span id="text">: {{ message.content.text }}</span>
     </div>
   </div>
 
