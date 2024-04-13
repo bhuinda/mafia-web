@@ -21,13 +21,12 @@ export class DropdownComponent {
     if (arg === 'wait') {
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd || event instanceof NavigationCancel),
-        first()).subscribe(() => {
-          this.visible = false;
-          this.closed.emit();
-        });
-    } else {
-      this.visible = false;
-      this.closed.emit();
-    }
+        first()).subscribe(() => { this.close(); });
+    } else { this.close(); }
+  }
+
+  close() {
+    this.visible = false;
+    this.closed.emit();
   }
 }
