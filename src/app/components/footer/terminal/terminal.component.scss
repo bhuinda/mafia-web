@@ -4,7 +4,12 @@ p, span {
   font-size: 1.5rem;
 }
 
+.terminal-button {
+  all: unset;
+}
+
 .terminal {
+  display: flex;
   padding: 0.5rem;
 
   form {
@@ -25,7 +30,7 @@ p, span {
   color: $color-secondary;
 }
 
-#command {
+#input {
   padding-left: 0.8rem;
   background: transparent;
   border: none;

@@ -1,0 +1,52 @@
+@use '../../../../../assets/styles/app.scss' as *;
+
+.chatbox {
+  color: $color-secondary;
+  overflow-y: scroll;
+  height: 200px;
+}
+
+.messages {
+  flex: 1;
+  padding: 0.5rem;
+  line-height: 1;
+}
+
+/* Message formatting */
+#timestamp {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+#username {
+  font-size: 2rem;
+  color: $color-tertiary;
+}
+
+#text {
+  font-size: 2rem;
+  margin-left: 0px;
+}
+
+.input-container {
+  display: flex;
+  align-items: stretch;
+  padding: 0.5rem;
+}
+
+input[type="text"] {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button {
+  margin-left: 0.5rem;
+  padding: 10px;
+  font-size: 16px;
+  background: $color-tertiary;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

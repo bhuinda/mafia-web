@@ -1,8 +1,14 @@
+@if (expandedTerminal) {
+  <app-chat></app-chat>
+}
+
 <div class="terminal" (click)="focusInput()">
 
-  <form [formGroup]="commandForm" (ngSubmit)="onSubmit()">
+  <button id="terminal-button" (click)="toggleExpandedTerminal()">^</button>
 
-    <label for="command">
+  <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+
+    <label for="input">
       <!-- Abhorrent. Unholy. Sacreligious. -->
       [<span id="user-and-domain">
         @if (user$ | async){{{(user$ | async).username}}}
@@ -10,12 +16,11 @@
       </span>&#64;mafia4web ~] $
     </label>
     <input #commandInput
-           id="command"
-           formControlName="command"
+           id="input"
+           formControlName="input"
            type="text"
            autocomplete="off"
-           spellcheck="false"
-           [placeholder]="placeholder">
+           spellcheck="false">
 
   </form>
 

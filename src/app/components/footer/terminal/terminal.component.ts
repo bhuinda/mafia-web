@@ -3,15 +3,17 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { UserService } from '@services/user';
 import { User } from '@models/user';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { TerminalService } from './terminal.service';
+import { ChatComponent } from './chat/chat.component';
+import { MessageService } from '@app/shared/services/message';
 
 @Component({
     selector: 'terminal',
     templateUrl: './terminal.component.html',
     styleUrls: ['./terminal.component.scss'],
     standalone: true,
-    imports: [ReactiveFormsModule, AsyncPipe, NgIf]
+    imports: [ReactiveFormsModule, AsyncPipe, NgIf, ChatComponent, NgClass]
 })
 export class TerminalComponent implements OnInit {
   @ViewChild('commandInput') commandInput: ElementRef;
@@ -20,28 +22,34 @@ export class TerminalComponent implements OnInit {
   userService = inject(UserService);
   user$: Observable<User>;
 
-  placeholder: string = 'Awaiting response.';
+  messageService = inject(MessageService);
 
-  commandForm = new FormGroup({ command: new FormControl('') });
+  expandedTerminal: boolean = false;
+
+  inputForm = new FormGroup({ input: new FormControl('') });
 
   ngOnInit(): void {
     this.user$ = this.userService.user$;
   }
 
   onSubmit(): void {
-    const command = this.commandForm.get('command').value;
-    this.commandForm.reset();
+    const input = this.inputForm.get('input').value;
+    this.inputForm.reset();
 
     // May need to change this to work with other prefixes
-    if (!command.startsWith('/')) {
+    if (!input.startsWith('/')) {
+      this.messageService.createLocalMessage(input);
       return;
     }
 
-    const prompt = this.terminalService.handleCommand(command);
-    this.placeholder = prompt;
+    this.messageService.createLocalMessage(this.terminalService.handleCommand(input));
   }
 
   focusInput(): void {
     this.commandInput.nativeElement.focus();
+  }
+
+  toggleExpandedTerminal(): void {
+    this.expandedTerminal = !this.expandedTerminal;
   }
 }
