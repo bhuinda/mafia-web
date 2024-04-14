@@ -33,7 +33,7 @@
         <div class="button-container">
           @if (authMode === 'signIn') { <button (click)="switchAuthMode('signUp')">SIGN UP?</button> }
           @if (authMode === 'signUp') { <button (click)="switchAuthMode('signIn')">SIGN IN?</button> }
-          @if (settings['firstTime']) { <button class="welcome-button" (click)="disableFirstTime()">ENTER AS GUEST</button> }
+          @if (settings['firstTime']) { <button class="welcome-button" (click)="handleAuth()">ENTER AS GUEST</button> }
         </div>
 
     }
