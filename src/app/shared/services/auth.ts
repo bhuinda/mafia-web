@@ -65,10 +65,7 @@ export class AuthService {
 
   validateToken(): Observable<boolean> {
     return this.http.get(`${this.url}/validate_token`).pipe(
-      tap((response: any) => {
-        this.status$.next(response.valid);
-        subscribeOnce(this.userService.getCurrentUser());
-      }),
+      tap((response: any) => this.status$.next(response.valid)),
       catchError(error => {
         console.error(error);
         return of(false);

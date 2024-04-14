@@ -77,3 +77,47 @@ nav a:hover {
     font-size: 2rem;
   }
 }
+
+// LOBBY
+// @use '../../../../assets/styles/app.scss' as *;
+
+// main {
+//   overflow-y: auto;
+//   height: 100%;
+// }
+
+// .box {
+//   color: $color-secondary;
+//   border: 3px dashed;
+// }
+
+// .row {
+//   display: flex;
+//   flex-direction: row;
+//   padding: 10px;
+
+//   .column {
+//     flex: 1;
+//   }
+// }
+
+// .config {
+//   flex: 1;
+// }
+
+// .start {
+//   flex: 0.2;
+//   width: 2em;
+//   height: 2em;
+//   padding: 10px;
+//   background-color: lime;
+//   line-height: 1em;
+//   text-align: center;
+//   font-size: 1.5em;
+//   text-decoration: none;
+
+//   &:hover {
+//     cursor: pointer;
+//     background-color: gray;
+//   }
+// }
