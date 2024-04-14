@@ -1,10 +1,9 @@
-import { Injectable, OnInit, inject } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { environment as env } from '@environments/environment.development';
 import Pusher from 'pusher-js';
 import { UserService } from "./user";
 import { User } from "../models/user";
 import { BehaviorSubject, Subscription } from "rxjs";
-import { subscribeOnce } from "../helpers/subscribeOnce";
 
 interface Content {
   text: string;
@@ -70,13 +69,13 @@ export class MessageService {
     // If the user has sent 5 or more messages, each within 5 seconds of the last
     if (this.messageRateCount >= 5) {
       // Send a warning and refresh the 20-second timeout
-      if (this.messageRateLimited || now - (this.lastMessageTime || 0) < 5000) {
+      if (this.messageRateLimited || now - (this.lastMessageTime || 0) < 3000) {
         if (this.messageRateTimeout) { clearTimeout(this.messageRateTimeout); }
         this.messageRateTimeout = setTimeout(() => {
           this.messageRateLimited = false;
           this.messageRateCount = 0;
           this.firstMessageTime = null;
-        }, 20000);
+        }, 10000);
         this.messageRateLimited = true;
         this.createWarningMessage('spam');
         return;
@@ -92,15 +91,14 @@ export class MessageService {
     }
 
     // If the user has sent 5 or more messages in less than 5 seconds
-    if (this.messageRateCount >= 5 && now - (this.firstMessageTime || 0) < 5000) {
+    if (this.messageRateCount >= 5 && now - (this.firstMessageTime || 0) < 3000) {
       this.messageRateLimited = true;
     }
 
     this.lastMessageTime = now;
     this.messageCount++;
 
-    const currentMessages = this.messages$.getValue();
-    currentMessages.push({
+    this.addMessage({
       metadata: {
         sender: this.user.username,
         timestamp: now,
@@ -110,19 +108,17 @@ export class MessageService {
         text: input
       }
     });
-    this.messages$.next(currentMessages);
   }
 
   private createWarningMessage(warningType: string): void {
     const now = Date.now();
     const warning = warningsConfig[warningType] ? warningsConfig[warningType] : null;
-    const currentMessages = this.messages$.getValue();
 
     this.messageCount++;
 
     if (warning === null) {
       console.error(`Unprocessable warning sent to terminal (of type ${warningType})`)
-      currentMessages.push({
+      this.addMessage({
         metadata: {
           sender: 'SYSTEM',
           timestamp: now,
@@ -133,7 +129,7 @@ export class MessageService {
         }
       });
     } else {
-      currentMessages.push({
+      this.addMessage({
         metadata: {
           sender: 'SYSTEM',
           timestamp: now,
@@ -144,7 +140,11 @@ export class MessageService {
         }
       });
     }
+  }
 
+  private addMessage(message): void {
+    const currentMessages = this.messages$.getValue();
+    currentMessages.push(message);
     this.messages$.next(currentMessages);
   }
 }
