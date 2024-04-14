@@ -96,7 +96,6 @@ export class MessageService {
     }
 
     this.lastMessageTime = now;
-    this.messageCount++;
 
     this.addMessage({
       metadata: {
@@ -112,37 +111,25 @@ export class MessageService {
 
   private createWarningMessage(warningType: string): void {
     const now = Date.now();
-    const warning = warningsConfig[warningType] ? warningsConfig[warningType] : null;
+    const warning = warningsConfig[warningType] || { text: `Unprocessable warning sent to terminal (of type ${warningType})` };
 
-    this.messageCount++;
-
-    if (warning === null) {
-      console.error(`Unprocessable warning sent to terminal (of type ${warningType})`)
-      this.addMessage({
-        metadata: {
-          sender: 'SYSTEM',
-          timestamp: now,
-          id: this.messageCount
-        },
-        content: {
-          text: warning.text
-        }
-      });
-    } else {
-      this.addMessage({
-        metadata: {
-          sender: 'SYSTEM',
-          timestamp: now,
-          id: this.messageCount
-        },
-        content: {
-          text: warning.text
-        }
-      });
-    }
+    this.addMessage({
+      metadata: {
+        sender: 'SYSTEM',
+        timestamp: now,
+        id: this.messageCount
+      },
+      content: {
+        text: warning.text
+      }
+    });
   }
 
-  private addMessage(message): void {
+  private addMessage(message: LocalMessage | LiveMessage | GameMessage): void {
+    // 1. Increment message count
+    this.messageCount++;
+
+    // 2. Add message to messages$
     const currentMessages = this.messages$.getValue();
     currentMessages.push(message);
     this.messages$.next(currentMessages);
