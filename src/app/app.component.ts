@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Settings, SettingsService } from '@services/settings';
 import { Subscription } from 'rxjs';
 import { FooterComponent } from './components/footer/footer.component';

@@ -1,49 +1,41 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { Settings, SettingsService } from '@services/settings';
-import { Subscription, filter, firstValueFrom } from 'rxjs';
-import { NavigationCancel, NavigationEnd, NavigationError, Router } from '@angular/router';
+import { Subscription, firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 import { AuthService } from '@services/auth';
-import { subscribeOnce } from './shared/helpers/subscribeOnce';
-import { NavService } from './shared/services/nav';
 import { UserService } from './shared/services/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppService {
-  auth = inject(AuthService);
-  nav = inject(NavService);
-  userService = inject(UserService);
+export class AppService implements OnInit {
+  private auth = inject(AuthService);
+  private userService = inject(UserService);
 
-  router = inject(Router);
-  routerSubscription: Subscription;
+  private router = inject(Router);
 
-  settings: Settings = {};
-  settingsService = inject(SettingsService);
-  settingsSubscription: Subscription;
-  settingsList: string[] = ['firstTime', 'secretMode'];
+  private settings: Settings = {};
+  private settingsService = inject(SettingsService);
+  private settingsSubscription: Subscription;
+  private settingsList: string[] = ['firstTime'];
 
-  async init(): Promise<void> {
-    const tokenPromise = firstValueFrom(this.auth.validateToken());
-    const userPromise = firstValueFrom(this.userService.getCurrentUser());
-
-    // Wait for token and user to be checked
-    await Promise.all([tokenPromise, userPromise]);
-
-    // then...
-
-    // Initialize settings
+  ngOnInit(): void {
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
+  }
 
+  public async init(): Promise<void> {
     // Check if app was opened for the first time
     if (this.settings['firstTime']) { this.router.navigate(['/auth']); }
 
-    // Initialize navigation history manager
-    this.routerSubscription = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd || event instanceof NavigationError || event instanceof NavigationCancel)
-    ).subscribe(event => {
-      if (event instanceof NavigationEnd) { this.nav.addToHistory(event.urlAfterRedirects, true); }
-      else if (event instanceof NavigationError || event instanceof NavigationCancel) { this.nav.addToHistory(event.url, false); }
-    });
+    // Check token, user
+    const tokenPromise = this.alwaysResolve(firstValueFrom(this.auth.validateToken()));
+    const userPromise = this.alwaysResolve(firstValueFrom(this.userService.getCurrentUser()));
+
+    await Promise.all([tokenPromise, userPromise]);
+  }
+
+  private async alwaysResolve(promise: Promise<any>): Promise<boolean> {
+    try { await promise; return true; }
+    catch { return true; }
   }
 }

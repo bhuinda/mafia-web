@@ -1,5 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable, OnInit, inject } from '@angular/core';
+import { NavigationCancel, NavigationEnd, NavigationError, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 
 interface HistoryItem {
   route: string;
@@ -9,10 +10,21 @@ interface HistoryItem {
 @Injectable({
   providedIn: 'root'
 })
-export class NavService {
+export class NavService implements OnInit {
   private router = inject(Router);
+  private routerSubscription: Subscription;
 
   private history: HistoryItem[] = [];
+
+  ngOnInit(): void {
+    // Initialize navigation history manager
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd || event instanceof NavigationError || event instanceof NavigationCancel)
+    ).subscribe(event => {
+      if (event instanceof NavigationEnd) { this.addToHistory(event.urlAfterRedirects, true); }
+      else if (event instanceof NavigationError || event instanceof NavigationCancel) { this.addToHistory(event.url, false); }
+    });
+  }
 
   public getHistory(): HistoryItem[] {
     return this.history;

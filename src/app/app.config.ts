@@ -1,5 +1,5 @@
 import { importProvidersFrom, ApplicationConfig, inject, APP_INITIALIZER,  } from "@angular/core";
-import { HttpClient, provideHttpClient, withInterceptors } from "@angular/common/http";
+import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { provideRouter } from "@angular/router";
 import { BrowserModule } from "@angular/platform-browser";
 import { routes } from "@app/app.routes";
