@@ -66,19 +66,31 @@ export class MessageService {
   public async createLocalMessage(input: string): Promise<LocalMessage | void> {
     const now = Date.now();
 
+    if (!this.checkForSpam(now)) {
+      this.addMessage({
+        metadata: {
+          sender: this.user.username,
+          timestamp: now,
+          id: this.messageCount
+        },
+        content: {
+          text: input
+        }
+      });
+    }
+  }
+
+  private checkForSpam(now: number): boolean {
     // If the user has sent 5 or more messages, each within 5 seconds of the last
     if (this.messageRateCount >= 5) {
+
       // Send a warning and refresh the 20-second timeout
       if (this.messageRateLimited || now - (this.lastMessageTime || 0) < 3000) {
-        if (this.messageRateTimeout) { clearTimeout(this.messageRateTimeout); }
-        this.messageRateTimeout = setTimeout(() => {
-          this.messageRateLimited = false;
-          this.messageRateCount = 0;
-          this.firstMessageTime = null;
-        }, 10000);
+        this.refreshRateLimitTimeout();
         this.messageRateLimited = true;
         this.createWarningMessage('spam');
-        return;
+
+        return true;
       }
     }
 
@@ -97,16 +109,17 @@ export class MessageService {
 
     this.lastMessageTime = now;
 
-    this.addMessage({
-      metadata: {
-        sender: this.user.username,
-        timestamp: now,
-        id: this.messageCount
-      },
-      content: {
-        text: input
-      }
-    });
+    return false;
+  }
+
+  private refreshRateLimitTimeout(): void {
+    if (this.messageRateTimeout) { clearTimeout(this.messageRateTimeout); }
+
+    this.messageRateTimeout = setTimeout(() => {
+      this.messageRateLimited = false;
+      this.messageRateCount = 0;
+      this.firstMessageTime = null;
+    }, 10000);
   }
 
   private createWarningMessage(warningType: string): void {
