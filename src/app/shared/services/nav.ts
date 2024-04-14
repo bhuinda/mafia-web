@@ -1,4 +1,4 @@
-import { Injectable, OnInit, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 
@@ -10,13 +10,13 @@ interface HistoryItem {
 @Injectable({
   providedIn: 'root'
 })
-export class NavService implements OnInit {
+export class NavService {
   private router = inject(Router);
   private routerSubscription: Subscription;
 
   private history: HistoryItem[] = [];
 
-  ngOnInit(): void {
+  constructor() {
     // Initialize navigation history manager
     this.routerSubscription = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd || event instanceof NavigationError || event instanceof NavigationCancel)

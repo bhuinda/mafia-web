@@ -1,4 +1,4 @@
-import { Injectable, OnInit, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Settings, SettingsService } from '@services/settings';
 import { Subscription, firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { UserService } from './shared/services/user';
 @Injectable({
   providedIn: 'root'
 })
-export class AppService implements OnInit {
+export class AppService {
   private auth = inject(AuthService);
   private userService = inject(UserService);
 
@@ -19,7 +19,7 @@ export class AppService implements OnInit {
   private settingsSubscription: Subscription;
   private settingsList: string[] = ['firstTime'];
 
-  ngOnInit(): void {
+  constructor() {
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
   }
 
