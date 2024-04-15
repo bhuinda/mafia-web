@@ -12,10 +12,9 @@
       <!-- Abhorrent. Unholy. Sacreligious. -->
       [<span id="user-and-domain">
         @if (user$ | async){{{(user$ | async).username}}}
-        @else {{{'guest'}}}
       </span>&#64;mafia4web ~] $
     </label>
-    <input #commandInput
+    <input #inputContainer
            id="input"
            formControlName="input"
            type="text"

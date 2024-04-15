@@ -1,14 +1,25 @@
 @use '../../../../../assets/styles/app.scss' as *;
 
-.chatbox {
-  color: $color-secondary;
-  overflow-y: scroll;
+.terminal-output-wrapper {
   height: 200px;
+  overflow-y: scroll;
+}
+
+.terminal-output {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  position: relative;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem
+}
+
+.spacer {
+  flex-grow: 1;
 }
 
 .messages {
-  flex: 1;
-  padding: 0.5rem;
+  padding: 0;
   line-height: 1;
 }
 
@@ -19,34 +30,11 @@
 }
 
 #username {
-  font-size: 2rem;
-  color: $color-tertiary;
+  font-size: 1.5rem;
+  color: $color-secondary;
 }
 
 #text {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-left: 0px;
-}
-
-.input-container {
-  display: flex;
-  align-items: stretch;
-  padding: 0.5rem;
-}
-
-input[type="text"] {
-  flex: 1;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  font-size: 16px;
-}
-
-button {
-  margin-left: 0.5rem;
-  padding: 10px;
-  font-size: 16px;
-  background: $color-tertiary;
-  color: white;
-  border: none;
-  cursor: pointer;
 }
