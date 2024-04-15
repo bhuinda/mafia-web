@@ -32,6 +32,9 @@ export class AppService {
     const userPromise = this.alwaysResolve(firstValueFrom(this.userService.getCurrentUser()));
 
     await Promise.all([tokenPromise, userPromise]);
+
+    const loadingScreen = document.querySelector('.loading-screen');
+    loadingScreen.remove();
   }
 
   private async alwaysResolve(promise: Promise<any>): Promise<boolean> {
