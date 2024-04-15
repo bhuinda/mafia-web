@@ -1,5 +1,4 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
-import { ChatService } from '@services/chat';
 import { FormsModule } from '@angular/forms';
 import { NgFor, DatePipe } from '@angular/common';
 import { MessageService } from '@services/message';
@@ -13,7 +12,7 @@ import { Subscription } from 'rxjs';
     imports: [NgFor, FormsModule, DatePipe]
 })
 export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
-  @ViewChild('chatbox') chatbox: ElementRef;
+  @ViewChild('terminalOutputWrapper') terminalOutputWrapper: ElementRef;
   @ViewChildren('message') messagesHTML: QueryList<ElementRef>;
 
   messageService = inject(MessageService);
@@ -25,6 +24,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit(): void {
     this.messageSubscription = this.messageService.messages$.subscribe(messages => this.messages = messages);
+    console.log(this.terminalOutputWrapper)
   }
 
   ngAfterViewChecked(): void {
@@ -43,8 +43,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   scrollToBottom(): void {
-    try {
-      this.chatbox.nativeElement.scrollTop = this.chatbox.nativeElement.scrollHeight;
-    } catch(err) { }
+    this.terminalOutputWrapper.nativeElement.scrollTop = this.terminalOutputWrapper.nativeElement.scrollHeight;
   }
 }

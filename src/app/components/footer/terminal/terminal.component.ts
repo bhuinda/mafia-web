@@ -16,7 +16,7 @@ import { MessageService } from '@app/shared/services/message';
     imports: [ReactiveFormsModule, AsyncPipe, NgIf, ChatComponent, NgClass]
 })
 export class TerminalComponent implements OnInit {
-  @ViewChild('commandInput') commandInput: ElementRef;
+  @ViewChild('inputContainer') inputContainer: ElementRef;
 
   terminalService = inject(TerminalService);
   userService = inject(UserService);
@@ -36,17 +36,20 @@ export class TerminalComponent implements OnInit {
     const input = this.inputForm.get('input').value;
     this.inputForm.reset();
 
+    if (!input) { return; }
+
     // May need to change this to work with other prefixes
     if (!input.startsWith('/')) {
       this.messageService.createLocalMessage(input);
       return;
     }
 
+    // Fix later
     this.messageService.createLocalMessage(this.terminalService.handleCommand(input));
   }
 
   focusInput(): void {
-    this.commandInput.nativeElement.focus();
+    this.inputContainer.nativeElement.focus();
   }
 
   toggleExpandedTerminal(): void {
