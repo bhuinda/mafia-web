@@ -68,21 +68,20 @@ export class MessageService {
     const now = Date.now();
     let sender = this.user.username;
 
-    if (!this.checkForSpam(now) || mode === 'command') {
-      // Change sender name to SYSTEM if sent as command
-      if (mode === 'command') { sender = 'SYSTEM'; }
+    // If input is sent as a command, skip spam check and set sender as SYSTEM
+    if (mode === 'command') { sender = 'SYSTEM'; }
+    else if (this.checkForSpam(now)) { return; }
 
-      this.addMessage({
-        metadata: {
-          sender: sender,
-          timestamp: now,
-          id: this.messageCount
-        },
-        content: {
-          text: input
-        }
-      });
-    }
+    this.addMessage({
+      metadata: {
+        sender: sender,
+        timestamp: now,
+        id: this.messageCount
+      },
+      content: {
+        text: input
+      }
+    });
   }
 
   private checkForSpam(now: number): boolean {

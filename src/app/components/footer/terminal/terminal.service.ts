@@ -1,4 +1,4 @@
-import { Injectable, OnInit, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth';
 import { Settings, SettingsService } from '@services/settings';
@@ -110,8 +110,8 @@ export class TerminalService {
       action: () => {
         this.settingsService.updateSetting('secretMode');
 
-        if (this.settings['secretMode']) { this.prompt = "My name is bhuinda, King of Kings: / Look on my works, ye Mighty, and despair!" }
-        else { this.prompt = 'Round the decay / Of that colossal wreck, boundless and bare / The lone and level sands stretch far away.' }
+        if (this.settings['secretMode']) { this.prompt = "My name is bhuinda, King of Kings: Look on my works, ye Mighty, and despair!" }
+        else { this.prompt = "Round the decay Of that colossal wreck, boundless and bare The lone and level sands stretch far away." }
 
         return this.prompt;
       }
