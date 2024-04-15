@@ -73,26 +73,6 @@ p, h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.filter {
-  &::before {
-    pointer-events: none;
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-image:
-      linear-gradient(
-        rgba(0, 0, 0, .5),
-        rgba(0, 0, 0, .5)
-      ),
-      url("https://static.vecteezy.com/system/resources/thumbnails/016/413/659/small/black-white-horizontal-lines-seamless-pattern-vector.jpg");
-    z-index: 1;
-    filter: opacity(6%);
-  }
-}
-
 /*** Scrollbar styling ***/
 
 ::-webkit-scrollbar {
