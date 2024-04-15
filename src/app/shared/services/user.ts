@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 import { environment } from '@environments/environment';
 import { User } from '@models/user';
 
@@ -15,8 +15,18 @@ export class UserService {
 
   getCurrentUser(): Observable<any> {
     return this.http.get(`${this.url}/users/me`)
-      .pipe(tap((user: any) => this.user$.next(user))
-    );
+      .pipe(
+        tap((user: any) => this.user$.next(user)),
+        catchError(error => {
+          console.error('Failed to get current user:', error);
+          const dummyUser = {
+            username: 'guest',
+            access_level: 1,
+          };
+          this.user$.next(dummyUser);
+          return of(dummyUser);
+        })
+      );
   }
 
   // Fetch all users

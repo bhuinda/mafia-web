@@ -49,13 +49,14 @@ export class MessageService {
 
   private messageCount: number = 0;
 
+  // Spam-related properties
   private firstMessageTime: number | null = null;
   private lastMessageTime: number | null = null;
-
   private messageRateCount: number = 0;
   private messageRateLimited: boolean = false;
   private messageRateTimeout: any;
 
+  // Messages array
   public messages$ = new BehaviorSubject<any>([]);
 
   constructor() {
@@ -63,10 +64,10 @@ export class MessageService {
   }
 
   // Messages for local terminal, no real-time needed
-  public async createLocalMessage(input: string): Promise<LocalMessage | void> {
+  public async createLocalMessage(input: string, mode?: string): Promise<LocalMessage | void> {
     const now = Date.now();
 
-    if (!this.checkForSpam(now)) {
+    if (!this.checkForSpam(now) || mode === 'command') {
       this.addMessage({
         metadata: {
           sender: this.user.username,
