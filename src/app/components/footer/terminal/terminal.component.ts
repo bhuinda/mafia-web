@@ -45,7 +45,7 @@ export class TerminalComponent implements OnInit {
     }
 
     // Fix later
-    this.messageService.createLocalMessage(this.terminalService.handleCommand(input));
+    this.messageService.createLocalMessage(this.terminalService.handleCommand(input), 'command');
   }
 
   focusInput(): void {

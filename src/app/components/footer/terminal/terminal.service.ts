@@ -1,8 +1,9 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth';
-import { SettingsService } from '@services/settings';
+import { Settings, SettingsService } from '@services/settings';
 import { NavService } from '@services/nav';
+import { Subscription } from 'rxjs';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
@@ -20,10 +21,19 @@ export class TerminalService {
   nav = inject(NavService);
   auth = inject(AuthService);
 
+  settings: Settings = {};
   settingsService = inject(SettingsService);
+  settingsSubscription: Subscription;
+  settingsList: string[] = [
+    'secretMode'
+  ];
 
   promptDefault: string = 'Awaiting response.';
   prompt: string = this.promptDefault;
+
+  constructor() {
+    this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
+  }
 
   commandList: { [name: string]: Command } = {
     // Show available, non-secret commands
@@ -98,8 +108,11 @@ export class TerminalService {
     // Toggle rainbow mode
     '/bhuinda': {
       action: () => {
-        this.prompt = 'Witness!';
         this.settingsService.updateSetting('secretMode');
+
+        if (this.settings['secretMode']) { this.prompt = "My name is bhuinda, King of Kings: / Look on my works, ye Mighty, and despair!" }
+        else { this.prompt = 'Round the decay / Of that colossal wreck, boundless and bare / The lone and level sands stretch far away.' }
+
         return this.prompt;
       }
     }

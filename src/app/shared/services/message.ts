@@ -66,11 +66,15 @@ export class MessageService {
   // Messages for local terminal, no real-time needed
   public async createLocalMessage(input: string, mode?: string): Promise<LocalMessage | void> {
     const now = Date.now();
+    let sender = this.user.username;
 
     if (!this.checkForSpam(now) || mode === 'command') {
+      // Change sender name to SYSTEM if sent as command
+      if (mode === 'command') { sender = 'SYSTEM'; }
+
       this.addMessage({
         metadata: {
-          sender: this.user.username,
+          sender: sender,
           timestamp: now,
           id: this.messageCount
         },
