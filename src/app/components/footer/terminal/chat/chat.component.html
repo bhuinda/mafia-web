@@ -1,13 +1,16 @@
 <div class="terminalOutputWrapper" #terminalOutputWrapper>
-  <div class="spacer"></div>
   <div class="terminal-output">
+
     <div class="messages" #messagesHTML>
+
       <div class="message" *ngFor="let message of messages">
         <span id="timestamp">{{ message.metadata.timestamp | date: 'H:mm' + ' '}}</span>
         <span id="username">{{ message.metadata.sender }}</span>
         <span id="text">: {{ message.content.text }}</span>
       </div>
+
     </div>
+
   </div>
 </div>
 

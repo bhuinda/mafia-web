@@ -8,17 +8,15 @@
 .terminal-output {
   display: flex;
   flex-direction: column-reverse;
-  align-items: flex-start;
+  justify-content: flex-start;
   position: relative;
+  min-height: 100%;
   padding-left: 0.5rem;
   padding-right: 0.5rem
 }
 
-.spacer {
-  flex-grow: 1;
-}
-
 .messages {
+  width: 100%;
   padding: 0;
   line-height: 1;
 }

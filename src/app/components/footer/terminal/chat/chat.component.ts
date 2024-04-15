@@ -24,7 +24,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit(): void {
     this.messageSubscription = this.messageService.messages$.subscribe(messages => this.messages = messages);
-    console.log(this.terminalOutputWrapper)
   }
 
   ngAfterViewChecked(): void {
