@@ -17,7 +17,8 @@
 
 .messages {
   width: 100%;
-  padding: 0;
+  word-wrap: break-word;
+  white-space: normal;
   line-height: 1;
 }
 

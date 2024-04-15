@@ -85,10 +85,10 @@ export class MessageService {
   }
 
   private checkForSpam(now: number): boolean {
-    // If the user has sent 5 or more messages, each within 5 seconds of the last
-    if (this.messageRateCount >= 5) {
+    // If the user has sent 10 or more messages, each within 3 seconds of the last
+    if (this.messageRateCount >= 10) {
 
-      // Send a warning and refresh the 20-second timeout
+      // Send a warning and refresh the 10-second timeout
       if (this.messageRateLimited || now - (this.lastMessageTime || 0) < 3000) {
         this.refreshRateLimitTimeout();
         this.messageRateLimited = true;
@@ -106,8 +106,8 @@ export class MessageService {
       this.messageRateCount++;
     }
 
-    // If the user has sent 5 or more messages in less than 5 seconds
-    if (this.messageRateCount >= 5 && now - (this.firstMessageTime || 0) < 3000) {
+    // If the user has sent 10 or more messages in less than 3 seconds
+    if (this.messageRateCount >= 10 && now - (this.firstMessageTime || 0) < 3000) {
       this.messageRateLimited = true;
     }
 
