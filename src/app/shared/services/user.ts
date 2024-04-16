@@ -12,45 +12,56 @@ export class UserService {
   private url = environment.apiUrl;
 
   public user$ = new BehaviorSubject<User>(null);
+  private userDummy = {
+    username: 'guest',
+    access_level: 1,
+  }
 
-  getCurrentUser(): Observable<any> {
+  public getCurrentUser(): Observable<any> {
     return this.http.get(`${this.url}/users/me`)
       .pipe(
         tap((user: any) => this.user$.next(user)),
         catchError(error => {
           console.error('Failed to get current user:', error);
-          const dummyUser = {
-            username: 'guest',
-            access_level: 1,
-          };
-          this.user$.next(dummyUser);
-          return of(dummyUser);
+
+          this.user$.next(this.userDummy);
+
+          return of(this.userDummy);
         })
       );
   }
 
   // Fetch all users
-  getUsers(): Observable<any> {
+  public getUsers(): Observable<any> {
     return this.http.get(`${this.url}/users`);
   }
 
   // Fetch a single user by id
-  getUser(id: number): Observable<any> {
+  public getUser(id: number): Observable<any> {
     return this.http.get(`${this.url}/users/${id}`);
   }
 
+  // Fetch a single user by USERNAME
+  public findUser(username: string): Observable<any> {
+    const payload = {
+      "username": username
+    };
+
+    return this.http.post(`${this.url}/users/find`, payload)
+  }
+
   // Create a new user
-  createUser(user: any): Observable<any> {
+  public createUser(user: any): Observable<any> {
     return this.http.post(`${this.url}/users`, user);
   }
 
   // Update a user
-  updateUser(id: number, user: any): Observable<any> {
+  public updateUser(id: number, user: any): Observable<any> {
     return this.http.put(`${this.url}/users/${id}`, user);
   }
 
   // Delete a user
-  deleteUser(id: number): Observable<any> {
+  public deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.url}/users/${id}`);
   }
 }

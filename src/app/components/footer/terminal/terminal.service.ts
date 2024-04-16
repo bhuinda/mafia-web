@@ -4,6 +4,7 @@ import { AuthService } from '@services/auth';
 import { Settings, SettingsService } from '@services/settings';
 import { NavService } from '@services/nav';
 import { Subscription } from 'rxjs';
+import { FriendService } from '@app/shared/services/friend';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
@@ -27,6 +28,9 @@ export class TerminalService {
   settingsList: string[] = [
     'secretMode'
   ];
+
+  friendService = inject(FriendService);
+  friends: any;
 
   promptDefault: string = 'Awaiting response.';
   prompt: string = this.promptDefault;
@@ -89,6 +93,16 @@ export class TerminalService {
         history.pushState({ redirectedFromClearMemory: true }, '', this.router.url);
         window.location.reload();
 
+        return this.prompt;
+      }
+    },
+
+    // === FRIENDS === //
+    '/friend': {
+      action: () => {
+        this.friendService.getFriendRequests().subscribe(
+          response => console.log(response)
+        );
         return this.prompt;
       }
     },
