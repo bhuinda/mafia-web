@@ -1,5 +1,17 @@
 @use '../../../assets/styles/app.scss' as *;
 
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 main {
   flex-direction: column;
   height: 100%;
@@ -51,4 +63,58 @@ p, span {
 
 .toggled-off {
   background-color: maroon;
+}
+
+.apply-button {
+  margin-top: 2rem;
+  height: 5rem;
+  color: yellow;
+  background-color: black;
+  border: 5px solid;
+  font-size: 3rem;
+
+  &:hover {
+    background-color: gray;
+    cursor: pointer;
+  }
+}
+
+.slider {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+
+  label {
+    color: $color-secondary;
+    text-align: center;
+    font-size: 3rem;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 1.5rem 0;
+    background-color: black;
+    width: 200px;
+
+    &::-webkit-slider-runnable-track {
+      height: 0.5rem;
+      background: white;
+      border: none;
+    }
+
+    // Style the thumb
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      border: none;
+      height: 2rem;
+      width: 2rem;
+      border-radius: 0;
+      background: $color-secondary;
+      margin-top: -0.75rem;
+    }
+  }
+
+  &:hover {
+    opacity: 1;
+  }
 }
