@@ -43,7 +43,22 @@ const settingsConfig: SettingsConfig = {
   filterMode: {
     value: true
   },
-  // Toggles rainbow mode
+  // Adjusts contrast of application; 100 is contrast(1)
+  contrastLevel: {
+    value: 100,
+    range: [10, 100]
+  },
+  // Adjusts brightness of application; 100 is brightness(1)
+  brightnessLevel: {
+    value: 100,
+    range: [10, 200]
+  },
+  // Adjusts blur of application; 0 is blur(0)
+  blurLevel: {
+    value: 0,
+    range: [0, 200]
+  },
+  // SECRET - Toggles rainbow mode
   secretMode: {
     value: false
   }

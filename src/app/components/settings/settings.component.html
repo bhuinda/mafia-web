@@ -19,6 +19,23 @@
       <div class="toggle-box" [ngClass]="{'toggled-on': settings['filterMode'], 'toggled-off': !settings['filterMode']}"></div>
     </div>
 
+    <form>
+      <label for="slider">Contrast</label>
+      <input type="range" id="slider" name="slider" min="10" max="100" [(ngModel)]="contrastLevelValue">
+    </form>
+
+    <form>
+      <label for="slider">Brightness</label>
+      <input type="range" id="slider" name="slider" min="10" max="100" [(ngModel)]="brightnessLevelValue">
+    </form>
+
+    <form>
+      <label for="slider">Blur</label>
+      <input type="range" id="slider" name="slider" min="0" max="200" [(ngModel)]="blurLevelValue">
+    </form>
+
+    <button class="apply-button" (click)="applySettingsChanges()">APPLY</button>
+
   </div>
 
   <div class="ui-settings">
