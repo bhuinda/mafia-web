@@ -56,7 +56,6 @@ export class TerminalService {
 
     this.chatService.getMessages().subscribe((messages: any) => {
       this.chatMessages$.next(messages);
-      console.log(this.chatMessages$.getValue());
     });
 
     this.chatService.subscribeToNewMessages((message: any) => {
@@ -120,6 +119,12 @@ export class TerminalService {
         window.location.reload();
 
         this.message$.next(this.messageCommandSuccess);
+      }
+    },
+
+    '/signout': {
+      action: () => {
+        this.router.navigate(['/auth']);
       }
     },
 

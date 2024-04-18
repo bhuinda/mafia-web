@@ -38,8 +38,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.terminalChatModeSubscription = this.terminalService.chatMode$.subscribe(mode => {
       this.chatMode = mode;
     });
-
-    console.log(this.chatMessages[9].sender);
   }
 
   ngAfterViewChecked(): void {

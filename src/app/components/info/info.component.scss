@@ -4,7 +4,7 @@
 /* The subcomponents, when overflowed, are not recognized by main */
 main {
   flex-direction: column;
-  height: 100%;
+  height: 80%;
   padding: 2rem;
   overflow-y: auto;
 }
@@ -42,7 +42,7 @@ a {
 }
 
 #prompt {
-  font-size: 5rem;
+  font-size: 4rem;
   text-align: center;
   color: white;
 }
