@@ -63,12 +63,12 @@ export class SettingsService {
   }
 
   /**
-   * Subscribes to 1..n settings as a single Subscription object.
+   * Subscribe to 1..n settings as a single Subscription object.
    *
    * @param keys List setting keys here (see SettingsService.settingsConfig).
-   * @param callback Value changes are sent back as key-value pairs.
+   * @param callback Value changes are emitted as key-value pairs.
    */
-  public subscribe(keys: string[], callback: (key: string, value: SettingValue) => void): Subscription {
+  public subscribe(keys: string[], callback: (key: string, value: number | boolean) => void): Subscription {
     const sub = new Subscription();
 
     keys.forEach(key => {
