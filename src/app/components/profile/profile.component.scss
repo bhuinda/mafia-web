@@ -1,19 +1,78 @@
 @use '../../../assets/styles/app.scss' as *;
 
 main {
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100%;
   padding: 2rem;
   overflow-y: auto;
   color: white;
-  border-left: 5px solid;
-  border-right: 5px solid;
 }
 
-.construction {
-  font-size: 3rem;
-  color: $color-secondary;
-  white-space: nowrap;
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.column {
+  flex: 1;
+}
+
+.header {
+  line-height: 1;
+
+  h1 {
+    font-size: 4rem;
+    color: $color-secondary;
+
+    span {
+      font-family: 'Cursive';
+      line-height: 4;
+      font-size: 2rem;
+    }
+  }
+
+  h2 {
+    font-size: 2rem;
+
+    span {
+      font-size: 2rem;
+      color: $color-secondary;
+    }
+  }
+}
+
+.achievements {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  // gap: 1rem;
+
+  h1 {
+    font-size: 2rem;
+    color: $color-secondary;
+    text-align: center;
+  }
+
+  .achievement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: $color-secondary;
+    width: 100%;
+
+    p {
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .name {
+      font-size: 2rem;
+    }
+  }
 }

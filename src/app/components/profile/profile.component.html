@@ -1,10 +1,36 @@
 <main>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
-  <p class="construction">PAGE UNDER CONSTRUCTION</p>
+
+  <div class="row">
+    <div class="header">
+
+      <h1><span>subject</span>: {{user.username}}</h1>
+
+      <div class="primary-info">
+        <h2><span>LEVEL</span>: {{math.floor(userInfo.points / 1000) + 1}} ({{1000 - userInfo.points}} POINTS until next LEVEL.)</h2>
+        <h2><span>BIRTHDAY</span>: {{user.created_at | date: 'short'}}</h2>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+
+      <div class="achievements">
+
+        <h1>ACHIEVEMENTS</h1>
+        @for (achievement of userInfo.achievements; track $index) {
+          <div class="achievement">
+            <p class="name">{{achievement.name.toUpperCase()}}</p>
+            <p class="description">{{achievement.description}}</p>
+            <p class="points">{{achievement.points}} POINTS</p>
+            <p class="date">{{achievement.created_at | date: 'M/d/yy'}}</p>
+          </div>
+        }
+
+      </div>
+
+    </div>
+  </div>
+
 </main>
