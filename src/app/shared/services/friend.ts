@@ -45,14 +45,13 @@ export class FriendService {
   //   return this.http.patch(`${this.url}/friend_requests/${friendId}`)
   // }
 
-  private findFriendId(friend: string): number {
-    let friendId: number;
-
-    subscribeOnce(this.userService.findUser(friend), {
-      next: (user: User) => friendId = user.id,
-      error: (error) => console.error(error)
-    });
-
-    return friendId;
+  public async findFriendId(friend: string): Promise<number> {
+    return subscribeOnce(this.userService.findUser(friend))
+      .then(user => user.id)
+      .catch(error => {
+        console.error(error);
+        return null;
+      }
+    );
   }
 }
