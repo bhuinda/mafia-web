@@ -1,15 +1,29 @@
 <div class="terminalOutputWrapper" #terminalOutputWrapper>
   <div class="terminal-output">
 
-    <div class="messages" #messagesHTML>
+    @if (!chatMode) {
+      <div class="messages" #messagesHTML>
 
-      <div class="message" *ngFor="let message of messages">
-        <span id="timestamp">{{ message.metadata.timestamp | date: 'H:mm' + ' '}}</span>
-        <span id="username">{{ message.metadata.sender }}</span>
-        <span id="text">: {{ message.content.text }}</span>
+        <div class="message" *ngFor="let message of messages">
+          <span id="timestamp">{{ message.metadata.timestamp | date: 'H:mm' + ' '}}</span>
+          <span id="username">{{ message.metadata.sender }}</span>
+          <span id="text">: {{ message.content.text }}</span>
+        </div>
+
       </div>
+    }
 
-    </div>
+    @else {
+      <div class="chat messages">
+
+        <div class="message" *ngFor="let message of chatMessages">
+          <span id="timestamp">{{ message.created_at | date: 'H:mm' + ' '}}</span>
+          <span id="username">{{ message.sender }}</span>
+          <span id="text">: {{ message.content }}</span>
+        </div>
+
+      </div>
+    }
 
   </div>
 </div>

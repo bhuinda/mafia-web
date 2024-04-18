@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgFor, DatePipe } from '@angular/common';
 import { MessageService } from '@services/message';
 import { Subscription } from 'rxjs';
+import { TerminalService } from '@app/shared/services/terminal';
 
 @Component({
     selector: 'app-chat',
@@ -20,10 +21,25 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   messages: any = [];
   text: string = '';
 
+  terminalService = inject(TerminalService);
+  terminalChatSubscription: Subscription;
+  terminalChatModeSubscription: Subscription;
+  chatMessages: any;
+  chatMode: boolean = false;
+
   cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.messageSubscription = this.messageService.messages$.subscribe(messages => this.messages = messages);
+
+    this.terminalChatSubscription = this.terminalService.chatMessages$.subscribe(messages => {
+      this.chatMessages = messages;
+    });
+    this.terminalChatModeSubscription = this.terminalService.chatMode$.subscribe(mode => {
+      this.chatMode = mode;
+    });
+
+    console.log(this.chatMessages[9].sender);
   }
 
   ngAfterViewChecked(): void {

@@ -64,6 +64,8 @@ export class MessageService {
   // Messages array
   public messages$ = new BehaviorSubject<any>([]);
 
+  public chatMessages$ = new BehaviorSubject<any>([]);
+
   constructor() {
     this.userSubscription = this.userService.user$.subscribe(user => this.user = user);
     this.terminalSubscription = this.terminalService.message$.subscribe(message => {

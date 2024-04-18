@@ -13,17 +13,21 @@ export class ChatService {
   pusher: any;
   channel: any;
 
-  listen(userID: number) {
+  constructor() {
     this.pusher = new Pusher(env.pusher.key, { cluster: env.pusher.cluster });
-    this.channel = this.pusher.subscribe(userID.toString());
+    this.channel = this.pusher.subscribe('chat');
   }
+
+  // listen(userID: number) {
+
+  // }
 
   getMessages(): Observable<any> {
     return this.http.get('http://localhost:3000/messages');
   }
 
-  sendMessage(message: string): Observable<any> {
-    return this.http.post('http://localhost:3000/messages', { content: message });
+  sendMessage(message: any): Observable<any> {
+    return this.http.post('http://localhost:3000/messages', message);
   }
 
   subscribeToNewMessages(callback: (message: any) => void): void {

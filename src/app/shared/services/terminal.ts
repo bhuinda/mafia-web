@@ -7,6 +7,8 @@ import { BehaviorSubject, Subscription, catchError, map, of } from 'rxjs';
 import { FriendService } from '@app/shared/services/friend';
 import { FriendRequestService } from '@app/shared/services/friend-request';
 import { ChatService } from './chat';
+import { User } from '../models/user';
+import { UserService } from './user';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
@@ -24,6 +26,10 @@ export class TerminalService {
   nav = inject(NavService);
   auth = inject(AuthService);
 
+  user: User;
+  userService = inject(UserService);
+  userSubscription: Subscription;
+
   settings: Settings = {};
   settingsService = inject(SettingsService);
   settingsSubscription: Subscription;
@@ -37,20 +43,31 @@ export class TerminalService {
 
   messageDefault: string = 'Type "/help" for a list of commands.';
   messageCommandSuccess: string = 'Command was successful.';
-  message$: BehaviorSubject<string> = new BehaviorSubject<string>(this.messageDefault);
+  message$ = new BehaviorSubject<string>(this.messageDefault);
 
   chatService = inject(ChatService);
-  chatMessages: any[] = [];
+  chatMessages$ = new BehaviorSubject<any>([]);
+  chatMode$ = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
 
+    this.userSubscription = this.userService.user$.subscribe(user => this.user = user);
+
     this.chatService.getMessages().subscribe((messages: any) => {
-      this.chatMessages = messages;
+      this.chatMessages$.next(messages);
+      console.log(this.chatMessages$.getValue());
     });
 
     this.chatService.subscribeToNewMessages((message: any) => {
-      this.chatMessages.push(message);
+      // Get the current value of the BehaviorSubject
+      const currentMessages = this.chatMessages$.getValue();
+
+      // Push the new message to the array
+      currentMessages.push(message);
+
+      // Update the BehaviorSubject with the new array
+      this.chatMessages$.next(currentMessages);
     });
   }
 
@@ -108,19 +125,47 @@ export class TerminalService {
 
     // === LIVE MESSAGING === //
 
-    '/msg': {
+    '/chat': {
+      arguments: ['enable', 'disable', 'msg'],
       action: (args?: Argument) => {
         if (!args) {
-          this.message$.next(`FORMAT: /msg [text] -- send messages.`);
-
-          return
+          this.message$.next(`FORMAT: /chat [arg] [subject] -- manage chat. ARGs: ${this.commandList['/chat'].arguments.join(', ')}`);
         }
 
-        const message = args.join(' ');
+        if (!this.commandList['/chat'].arguments.includes(args[0])) {
+          this.message$.next(`Argument "${args.join(' ')}" not found. Try "/chat".`);
+        }
 
-        this.chatService.sendMessage(message).subscribe((message: any) => {
-          this.chatMessages.push(message);
-        });
+        if (args[0] === 'enable') {
+          this.chatMode$.next(true);
+          return;
+        }
+
+        if (args[0] === 'disable') {
+          this.chatMode$.next(false);
+          return;
+        }
+
+        if (args[0] === 'msg') {
+          if (!args[1]) {
+            this.message$.next('FORMAT: /chat msg [message] -- send a message to chat.');
+            return;
+          }
+
+          const message = {
+            content: args.slice(1).join(' '),
+            sender: this.user.username
+          }
+
+          this.chatService.sendMessage(message).subscribe((message: any) => {
+            const currentMessages = this.chatMessages$.getValue();
+
+            if (!currentMessages.find((m: any) => m.id === message.id)) {
+              currentMessages.push(message);
+              this.chatMessages$.next(currentMessages);
+            }
+          });
+        }
       }
     },
 
