@@ -4,6 +4,7 @@ import Pusher from 'pusher-js';
 import { UserService } from "./user";
 import { User } from "../models/user";
 import { BehaviorSubject, Subscription } from "rxjs";
+import { TerminalService } from "@app/components/footer/terminal/terminal.service";
 
 interface Content {
   text: string;
@@ -43,6 +44,9 @@ const warningsConfig = {
 export class MessageService {
   private pusher: any;
 
+  private terminalService = inject(TerminalService);
+  private terminalSubscription: Subscription;
+
   private user: User;
   private userService = inject(UserService);
   private userSubscription: Subscription;
@@ -61,6 +65,9 @@ export class MessageService {
 
   constructor() {
     this.userSubscription = this.userService.user$.subscribe(user => this.user = user);
+    this.terminalSubscription = this.terminalService.message$.subscribe(message => {
+      this.createLocalMessage(message, 'command');
+    });
   }
 
   // Messages for local terminal, no real-time needed

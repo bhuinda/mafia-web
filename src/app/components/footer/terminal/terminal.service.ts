@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { AuthService } from '@services/auth';
 import { Settings, SettingsService } from '@services/settings';
 import { NavService } from '@services/nav';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, catchError, map, of } from 'rxjs';
 import { FriendService } from '@app/shared/services/friend';
+import { FriendRequestService } from '@app/shared/services/friend-request';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
   arguments?: string[];
-  action: (args?: any) => string;
+  action: (args?: any) => void;
 }
 
 type Argument = string[] | null;
@@ -29,11 +30,13 @@ export class TerminalService {
     'secretMode'
   ];
 
+  friendRequestService = inject(FriendRequestService);
   friendService = inject(FriendService);
   friends: any;
 
-  promptDefault: string = 'Awaiting response.';
-  prompt: string = this.promptDefault;
+  messageDefault: string = 'Type "/help" for a list of commands.';
+  messageCommandSuccess: string = 'Command was successful.';
+  message$: BehaviorSubject<string> = new BehaviorSubject<string>(this.messageDefault);
 
   constructor() {
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
@@ -43,44 +46,38 @@ export class TerminalService {
     // Show available, non-secret commands
     '/help': {
       action: () => {
-        this.prompt = `Available commands: ${Object.keys(this.commandList)
+        this.message$.next(`Available commands: ${Object.keys(this.commandList)
         .filter(command => !this.commandListSecrets.includes(command)) // Filter could be removed if secret & admin commands are moved to separate instance
-        .join(', ')}`;
-        return this.prompt;
+        .join(', ')}`);
       }
     },
 
     // Navigate between main pages
     '/nav': {
       arguments: ['home', 'info', 'game', 'profile', 'settings'],
-      action: (args: Argument) => {
+      action: (args?: Argument) => {
         if (!args) {
-          this.prompt = `FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`;
-          return this.prompt;
+          this.message$.next(`FORMAT: /nav [arg] -- navigates between main pages. ARGs: ${this.commandList['/nav'].arguments.join(', ')}`);
         }
 
         if (!this.commandList['/nav'].arguments.includes(args[0])) {
-          this.prompt = `Argument "${args.join(' ')}" not found. Try "/nav".`;
-          return this.prompt;
+          this.message$.next(`Argument "${args.join(' ')}" not found. Try "/nav".`);
         }
 
         if (this.router.url === `/${args[0]}`) {
-          this.prompt = `You are already on this page.`;
-          return this.prompt;
+          this.message$.next(`You are already on this page.`);
         }
 
-        this.prompt = this.promptDefault;
+        this.message$.next(this.messageCommandSuccess);
         this.router.navigateByUrl(`/${args[0]}`);
-        return this.prompt;
       }
     },
 
     // Navigate backward in history
     '/back': {
       action: () => {
-        if (this.nav.back()) { this.prompt = this.promptDefault; }
-        else { this.prompt = 'No navigation history left!'; }
-        return this.prompt;
+        if (this.nav.back()) { this.message$.next('Traveled backward!'); }
+        else { this.message$.next('No navigation history left!'); }
       }
     },
 
@@ -93,27 +90,43 @@ export class TerminalService {
         history.pushState({ redirectedFromClearMemory: true }, '', this.router.url);
         window.location.reload();
 
-        return this.prompt;
+        this.message$.next(this.messageCommandSuccess);
       }
     },
 
     // === FRIENDS === //
     '/friend': {
-      action: () => {
-        this.friendService.getFriendRequests().subscribe(
-          response => console.log(response)
-        );
-        return this.prompt;
+      arguments: ['add', 'remove', 'accept', 'decline', 'list'],
+      action: (args?: Argument) => {
+        if (!args) {
+          this.message$.next(`FORMAT: /friend [arg] [subject] -- manage friends. ARGs: ${this.commandList['/friends'].arguments.join(', ')}`);
+        }
+
+        const arg = args[0];
+        const argSubject = args[1] || null;
+
+        if (!this.commandList['/friend'].arguments.includes(arg)) {
+          this.message$.next(`Argument "${arg}" not found. Try "/friend".`);
+        }
+
+        else if (arg === 'add') {
+          this.friendRequestService.createFriendRequest(argSubject)
+            .pipe(
+              map(() => this.message$.next(`Friend request sent to ${argSubject}.`)),
+              catchError(() => {
+                this.message$.next(`Failed to send friend request to ${argSubject}.`)
+                return of(null);
+              })
+            ).subscribe();
+        }
       }
     },
-
     // === MISC === //
 
     // Show website credits
     '/credits': {
       action: () => {
-        this.prompt = 'CREDIT: DarkRevenant | MADE BY: bhuinda';
-        return this.prompt;
+        this.message$.next('CREDIT: DarkRevenant | MADE BY: bhuinda');
       }
     },
 
@@ -124,10 +137,8 @@ export class TerminalService {
       action: () => {
         this.settingsService.updateSetting('secretMode');
 
-        if (this.settings['secretMode']) { this.prompt = "My name is bhuinda, King of Kings: Look on my works, ye Mighty, and despair!" }
-        else { this.prompt = "Round the decay Of that colossal wreck, boundless and bare The lone and level sands stretch far away." }
-
-        return this.prompt;
+        if (this.settings['secretMode']) { this.message$.next("My name is bhuinda, King of Kings: Look on my works, ye Mighty, and despair!"); }
+        else { this.message$.next("Round the decay Of that colossal wreck, boundless and bare The lone and level sands stretch far away."); }
       }
     }
   };
@@ -139,33 +150,36 @@ export class TerminalService {
     return { name: commandParts[0], args: args.length > 0 ? args : null };
   }
 
-  handleCommand(input: string): string {
+  handleCommand(input: string): void {
     const parsedCommand = this.parseCommand(input);
 
     const commandName = parsedCommand['name'];
     const commandArgs = parsedCommand['args'];
     const command = this.commandList[commandName];
 
+    // Check if command exists
+    if (!command) {
+      this.message$.next(`Command "${commandName + (commandArgs ? (' ' + commandArgs) : '')}" not found.`);
+      return;
+    }
+
     // Check if command is hidden -- added to circumvent revealing extra info about hidden commands in other guards
     if (this.commandListSecrets.includes(commandName)) {
       if (commandArgs) { command.action(commandArgs); }
       else { command.action(); }
-      return this.prompt;
-    }
-
-    // Check if command exists
-    if (!command) {
-      this.prompt = `Command "${commandName + (commandArgs ? (' ' + commandArgs) : '')}" not found.`;
-      return this.prompt;
+      return;
     }
 
     // Check if command accepts arguments
     if (!command.arguments && commandArgs) {
-      this.prompt = `Argument(s) not accepted. Try "${commandName}".`;
-      return this.prompt;
+      this.message$.next(`Command "${commandName}" does not accept arguments.`);
+      return;
     }
 
-    return command.action(commandArgs);
+    // If everything is fine, execute the command
+    if (commandArgs) { command.action(commandArgs); }
+    else { command.action(); }
   }
+
   commandListSecrets = ['/bhuinda'];
 };
