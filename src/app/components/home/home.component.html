@@ -4,18 +4,17 @@
       <div id="welcome">
         <h1>Lie. Sleep. Repeat.</h1>
         <p>Mafia is a fast-paced social deduction game where you investigate, collaborate with, and conspire against up to 15 players. With over 50 roles and endless ways to customize the game, every round will be wildly different. Survive the night, outplay your foes, and win. And always remember: <span style="color: red; display: inline-flex">DEATH IS PERMANENT.</span></p>
-      </div>
-      <!-- Dummy of app-home-stats -->
-      <div id="overview">
-        <div class="container">
-          <div class="login-prompt" *ngIf="!authStatus">
-            <p>[<a routerLink="/auth" style="color: yellow; text-decoration: none">LOGIN</a>] to see your stats.</p>
+
+        <div id="overview">
+          <div class="container">
+            <div class="login-prompt" *ngIf="!authStatus">
+              <p>[<a routerLink="/auth" style="color: yellow; text-decoration: none">LOGIN</a>] to see your profile.</p>
+            </div>
+            <div *ngIf="authStatus">
+              <p>Welcome in.</p>
+              <p>[<a routerLink="/auth" style="color: yellow; text-decoration: none">SIGN OUT</a>]</p>
+            </div>
           </div>
-          <div *ngIf="authStatus">
-            <p>Logged in! (Stats)</p>
-            <p>[<a routerLink="/auth" style="color: yellow; text-decoration: none">LOGOUT</a>]</p>
-          </div>
-          <!-- <div class="stats-card" *ngIf="status != null"></div> -->
         </div>
       </div>
     </div>

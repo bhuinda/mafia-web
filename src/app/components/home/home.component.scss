@@ -43,6 +43,16 @@ h1 {
 
 #overview {
   margin-left: 1rem;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      text-align: center;
+    }
+  }
 }
 
 #lobby-finder {
