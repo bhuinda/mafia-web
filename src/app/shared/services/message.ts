@@ -4,7 +4,7 @@ import Pusher from 'pusher-js';
 import { UserService } from "./user";
 import { User } from "../models/user";
 import { BehaviorSubject, Subscription } from "rxjs";
-import { TerminalService } from "@app/components/footer/terminal/terminal.service";
+import { TerminalService } from "@app/shared/services/terminal";
 
 interface Content {
   text: string;

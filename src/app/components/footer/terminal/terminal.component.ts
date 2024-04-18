@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { UserService } from '@services/user';
 import { User } from '@models/user';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
-import { TerminalService } from './terminal.service';
+import { TerminalService } from '../../../shared/services/terminal';
 import { ChatComponent } from './chat/chat.component';
 import { MessageService } from '@app/shared/services/message';
 

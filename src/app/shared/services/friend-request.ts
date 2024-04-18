@@ -4,7 +4,6 @@ import { UserService } from './user';
 import { Observable, Subscription, of, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from '@environments/environment'
-import { subscribeOnce } from '../helpers/subscribeOnce';
 
 @Injectable({
   providedIn: 'root'
