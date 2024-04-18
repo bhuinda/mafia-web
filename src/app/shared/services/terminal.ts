@@ -68,7 +68,7 @@ export class TerminalService {
           this.message$.next(`You are already on this page.`);
         }
 
-        this.message$.next(this.messageCommandSuccess);
+        this.message$.next(`Navigated to /${args[0]}.`);
         this.router.navigateByUrl(`/${args[0]}`);
       }
     },
@@ -95,21 +95,50 @@ export class TerminalService {
     },
 
     // === FRIENDS === //
+
+    // TO-DO: Fix error handling
     '/friend': {
-      arguments: ['add', 'remove', 'accept', 'decline', 'list'],
+      arguments: ['request', 'requests', 'remove', 'accept', 'decline', 'list'],
       action: (args?: Argument) => {
         if (!args) {
-          this.message$.next(`FORMAT: /friend [arg] [subject] -- manage friends. ARGs: ${this.commandList['/friends'].arguments.join(', ')}`);
+          this.message$.next(`FORMAT: /friend [arg] [subject] -- manage friends. ARGs: ${this.commandList['/friend'].arguments.join(', ')}`);
         }
 
         const arg = args[0];
-        const argSubject = args[1] || null;
+        const argSubject = args[1];
 
         if (!this.commandList['/friend'].arguments.includes(arg)) {
           this.message$.next(`Argument "${arg}" not found. Try "/friend".`);
         }
 
-        else if (arg === 'add') {
+        else if (arg === 'list') {
+          this.friendService.getFriends()
+            .pipe(
+              map((response) => {
+                console.log(response)
+                this.message$.next('FRIENDS =====');
+                this.message$.next(`FRIENDS: ${response.map(friend => friend.username).join(', ')}`);
+              })
+            ).subscribe();
+        }
+
+        else if (arg === 'requests') {
+          this.friendRequestService.getFriendRequests()
+            .pipe(
+              map((response) => {
+                this.message$.next('FRIEND REQUESTS =====');
+                this.message$.next(`INCOMING: ${response.incoming.map(request => request.user.username).join(', ')}`);
+                this.message$.next(`OUTGOING: ${response.outgoing.map(request => request.friend.username).join(', ')}`);
+              })
+            ).subscribe();
+        }
+
+        else if (arg === 'request') {
+          if (!argSubject) {
+            this.message$.next('FORMAT: /friend request [username] -- send friend request.');
+            return;
+          }
+
           this.friendRequestService.createFriendRequest(argSubject)
             .pipe(
               map(() => this.message$.next(`Friend request sent to ${argSubject}.`)),
@@ -137,6 +166,23 @@ export class TerminalService {
           this.friendRequestService.declineFriendRequest(argSubject)
             .pipe(
               map(() => this.message$.next(`Declined ${argSubject}'s friend request.`)),
+              catchError((error) => {
+                console.log(error);
+                this.message$.next(error.error.message)
+                return of(null);
+              })
+            ).subscribe();
+        }
+
+        else if (arg === 'remove') {
+          if (!argSubject) {
+            this.message$.next('FORMAT: /friend remove [username] -- remove friend.');
+            return;
+          }
+
+          this.friendService.removeFriend(argSubject)
+            .pipe(
+              map(() => this.message$.next(`Removed ${argSubject} from friends.`)),
               catchError((error) => {
                 console.log(error);
                 this.message$.next(error.error.message)
