@@ -26,14 +26,6 @@ export class FriendRequestService {
     return this.http.get(`${this.url}/friend_requests`);
   }
 
-  // ACCEPTANCE AND REJECTION
-
-  // public acceptFriendRequest(username: string): Observable<any> {
-  //   this.checkFriend(username);
-
-  //   return this.http.patch(`${this.url}/friend_requests/${this.friend.id}`);
-  // }
-
   public createFriendRequest(username: string): Observable<any> {
     return this.checkFriend(username).pipe(
       switchMap(() => {
@@ -46,9 +38,15 @@ export class FriendRequestService {
     );
   }
 
-  public rejectFriendRequest(username: string): Observable<any> {
+  public acceptFriendRequest(username: string): Observable<any> {
     return this.checkFriend(username).pipe(
-      switchMap(friend => this.http.delete(`${this.url}/friend_requests/${friend.id}`))
+      switchMap(() => this.http.put(`${this.url}/friend_requests/${this.friend.id}/accept`, {}))
+    );
+  }
+
+  public declineFriendRequest(username: string): Observable<any> {
+    return this.checkFriend(username).pipe(
+      switchMap(() => this.http.delete(`${this.url}/friend_requests/${this.friend.id}/decline`))
     );
   }
 

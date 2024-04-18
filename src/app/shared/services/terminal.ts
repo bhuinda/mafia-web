@@ -113,8 +113,33 @@ export class TerminalService {
           this.friendRequestService.createFriendRequest(argSubject)
             .pipe(
               map(() => this.message$.next(`Friend request sent to ${argSubject}.`)),
-              catchError(() => {
-                this.message$.next(`Failed to send friend request to ${argSubject}.`)
+              catchError((error) => {
+                console.log(error);
+                this.message$.next(error.error.message)
+                return of(null);
+              })
+            ).subscribe();
+        }
+
+        else if (arg === 'accept') {
+          this.friendRequestService.acceptFriendRequest(argSubject)
+            .pipe(
+              map(() => this.message$.next(`Accepted ${argSubject}'s friend request.`)),
+              catchError((error) => {
+                console.log(error);
+                this.message$.next(error.error.message)
+                return of(null);
+              })
+            ).subscribe();
+        }
+
+        else if (arg === 'decline') {
+          this.friendRequestService.declineFriendRequest(argSubject)
+            .pipe(
+              map(() => this.message$.next(`Declined ${argSubject}'s friend request.`)),
+              catchError((error) => {
+                console.log(error);
+                this.message$.next(error.error.message)
                 return of(null);
               })
             ).subscribe();
