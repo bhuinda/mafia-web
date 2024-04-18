@@ -28,13 +28,13 @@
       </form>
 
       <form class="slider">
-        <label for="slider">Brightness</label>
+        <label for="slider" class="add-spacing">Brightness</label>
         <input type="range" id="brightness" name="slider" min="10" max="100" [(ngModel)]="brightnessLevelValue">
       </form>
 
       <form class="slider">
-        <label for="slider">Blur</label>
-        <input type="range" id="blur" name="slider" min="0" max="200" [(ngModel)]="blurLevelValue">
+        <label for="slider" class="add-spacing">Blur</label>
+        <input type="range" id="blur" name="slider" min="0" max="300" [(ngModel)]="blurLevelValue">
       </form>
 
       <button class="apply-button" (click)="applySettingsChanges()">APPLY</button>

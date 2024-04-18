@@ -56,7 +56,7 @@ const settingsConfig: SettingsConfig = {
   // Adjusts blur of application; 0 is blur(0)
   blurLevel: {
     value: 0,
-    range: [0, 200]
+    range: [0, 300]
   },
   // SECRET - Toggles rainbow mode
   secretMode: {
