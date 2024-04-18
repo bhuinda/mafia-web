@@ -241,6 +241,8 @@ export class TerminalService {
     }
   };
 
+  commandListSecrets = ['/bhuinda'];
+
   parseCommand(input: string): { name: string, args: Argument } {
     const commandParts = input.split(' ');
     const args = commandParts.slice(1);
@@ -278,6 +280,4 @@ export class TerminalService {
     if (commandArgs) { command.action(commandArgs); }
     else { command.action(); }
   }
-
-  commandListSecrets = ['/bhuinda'];
 };

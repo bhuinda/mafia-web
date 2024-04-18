@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 import { environment } from '@environments/environment';
 import { UserService } from './user';
 import { subscribeOnce } from '../helpers/subscribeOnce';
+import { UserInfoService } from './user-info';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private url = environment.apiUrl;
   private userService = inject(UserService);
+  private userInfoService = inject(UserInfoService);
 
   public status$ = new BehaviorSubject<boolean>(false);
 
@@ -43,7 +45,8 @@ export class AuthService {
       tap((response: any) => {
         localStorage.setItem('token', response.token);
         subscribeOnce(this.validateToken());
-        subscribeOnce(this.userService.getCurrentUser());
+        subscribeOnce(this.userService.getCurrentUser())
+        subscribeOnce(this.userInfoService.getCurrentUserInfo());
       })
     );
   }
