@@ -6,6 +6,7 @@ import { NavService } from '@services/nav';
 import { BehaviorSubject, Subscription, catchError, map, of } from 'rxjs';
 import { FriendService } from '@app/shared/services/friend';
 import { FriendRequestService } from '@app/shared/services/friend-request';
+import { ChatService } from './chat';
 
 // If args are provided, there should be a "help" and blank arg that explains how to use the command.
 interface Command {
@@ -38,8 +39,19 @@ export class TerminalService {
   messageCommandSuccess: string = 'Command was successful.';
   message$: BehaviorSubject<string> = new BehaviorSubject<string>(this.messageDefault);
 
+  chatService = inject(ChatService);
+  chatMessages: any[] = [];
+
   constructor() {
     this.settingsSubscription = this.settingsService.subscribe(this.settingsList, (key, value) => this.settings[key] = value);
+
+    this.chatService.getMessages().subscribe((messages: any) => {
+      this.chatMessages = messages;
+    });
+
+    this.chatService.subscribeToNewMessages((message: any) => {
+      this.chatMessages.push(message);
+    });
   }
 
   commandList: { [name: string]: Command } = {
@@ -91,6 +103,24 @@ export class TerminalService {
         window.location.reload();
 
         this.message$.next(this.messageCommandSuccess);
+      }
+    },
+
+    // === LIVE MESSAGING === //
+
+    '/msg': {
+      action: (args?: Argument) => {
+        if (!args) {
+          this.message$.next(`FORMAT: /msg [text] -- send messages.`);
+
+          return
+        }
+
+        const message = args.join(' ');
+
+        this.chatService.sendMessage(message).subscribe((message: any) => {
+          this.chatMessages.push(message);
+        });
       }
     },
 

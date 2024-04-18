@@ -43,6 +43,7 @@ const warningsConfig = {
 })
 export class MessageService {
   private pusher: any;
+  private channel: any;
 
   private terminalService = inject(TerminalService);
   private terminalSubscription: Subscription;
