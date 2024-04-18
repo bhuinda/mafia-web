@@ -50,7 +50,7 @@ export class AuthService {
 
   signOut(): void {
     this.destroyToken();
-    this.userService.user$.next(null);
+    this.userService.setUserToDummy();
     this.status$.next(false);
   }
 

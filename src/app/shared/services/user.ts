@@ -23,12 +23,14 @@ export class UserService {
         tap((user: any) => this.user$.next(user)),
         catchError(error => {
           console.error('Failed to get current user:', error);
-
           this.user$.next(this.userDummy);
-
-          return of(this.userDummy);
+          return of(error);
         })
       );
+  }
+
+  public setUserToDummy(): void {
+    this.user$.next(this.userDummy);
   }
 
   // Fetch all users
