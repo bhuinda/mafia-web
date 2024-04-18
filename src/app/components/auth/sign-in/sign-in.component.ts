@@ -53,18 +53,17 @@ export class SignInComponent {
       return;
     }
 
-    subscribeOnce(this.auth.signIn(email, password), {
-      next: () => {
+    subscribeOnce(this.auth.signIn(email, password))
+      .then(() => {
         this.signInFailed = false;
         this.formSubmitted = false;
 
         this.invokeHandleAuth.emit();
-      },
-      error: (error) => {
+      })
+      .catch(error => {
         console.log(error);
         this.signInFailed = true;
         this.formSubmitted = true;
-      }
-    });
+      });
   }
 }
