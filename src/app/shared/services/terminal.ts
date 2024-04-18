@@ -120,8 +120,7 @@ export class TerminalService {
             .pipe(
               map((response) => {
                 console.log(response)
-                this.message$.next('FRIENDS =====');
-                this.message$.next(`FRIENDS: ${response.map(friend => friend.username).join(', ')}`);
+                this.message$.next(`FRIENDS (${response.map(friend => friend.username).join(', ')})`);
               })
             ).subscribe();
 
@@ -132,9 +131,8 @@ export class TerminalService {
           this.friendRequestService.getFriendRequests()
             .pipe(
               map((response) => {
-                this.message$.next('FRIEND REQUESTS =====');
-                this.message$.next(`INCOMING: ${response.incoming.map(request => request.user.username).join(', ')}`);
-                this.message$.next(`OUTGOING: ${response.outgoing.map(request => request.friend.username).join(', ')}`);
+                this.message$.next(`INCOMING (${response.incoming.map(request => request.user.username).join(', ')})`);
+                this.message$.next(`OUTGOING (${response.outgoing.map(request => request.friend.username).join(', ')})`);
               })
             ).subscribe();
 
@@ -162,6 +160,12 @@ export class TerminalService {
         }
 
         else if (arg === 'accept') {
+          if (!argSubject) {
+            this.message$.next('FORMAT: /friend accept [username] -- accept friend request.');
+
+            return;
+          }
+
           this.friendRequestService.acceptFriendRequest(argSubject)
             .pipe(
               map(() => this.message$.next(`Accepted ${argSubject}'s friend request.`)),
@@ -176,6 +180,12 @@ export class TerminalService {
         }
 
         else if (arg === 'decline') {
+          if (!argSubject) {
+            this.message$.next('FORMAT: /friend decline [username] -- decline friend request.');
+
+            return;
+          }
+
           this.friendRequestService.declineFriendRequest(argSubject)
             .pipe(
               map(() => this.message$.next(`Declined ${argSubject}'s friend request.`)),
