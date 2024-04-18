@@ -2,7 +2,7 @@
 import { Injectable, inject } from '@angular/core';
 import { User } from '../models/user';
 import { UserService } from './user';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from '@environments/environment'
 import { subscribeOnce } from '../helpers/subscribeOnce';
@@ -20,5 +20,15 @@ export class FriendService {
 
   constructor() {
     this.userSubscription = this.userService.user$.subscribe(user => this.user = user);
+  }
+
+  public getFriends(): Observable<any> {
+    return this.http.get(`${this.url}/friendships`);
+  }
+
+  public removeFriend(username: string): Observable<any> {
+    return this.userService.findUser(username).pipe(
+      switchMap((user) => this.http.delete(`${this.url}/friendships/${user.id}`))
+    );
   }
 }
