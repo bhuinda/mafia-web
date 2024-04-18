@@ -102,13 +102,17 @@ export class TerminalService {
       action: (args?: Argument) => {
         if (!args) {
           this.message$.next(`FORMAT: /friend [arg] [subject] -- manage friends. ARGs: ${this.commandList['/friend'].arguments.join(', ')}`);
+
+          return;
         }
 
-        const arg = args[0];
-        const argSubject = args[1];
+        const arg = args[0] ? args[0].toLowerCase() : null;
+        const argSubject = args[1] ? args[1] : null;
 
         if (!this.commandList['/friend'].arguments.includes(arg)) {
           this.message$.next(`Argument "${arg}" not found. Try "/friend".`);
+
+          return;
         }
 
         else if (arg === 'list') {
@@ -120,6 +124,8 @@ export class TerminalService {
                 this.message$.next(`FRIENDS: ${response.map(friend => friend.username).join(', ')}`);
               })
             ).subscribe();
+
+          return;
         }
 
         else if (arg === 'requests') {
@@ -131,11 +137,14 @@ export class TerminalService {
                 this.message$.next(`OUTGOING: ${response.outgoing.map(request => request.friend.username).join(', ')}`);
               })
             ).subscribe();
+
+            return;
         }
 
         else if (arg === 'request') {
           if (!argSubject) {
             this.message$.next('FORMAT: /friend request [username] -- send friend request.');
+
             return;
           }
 
@@ -148,6 +157,8 @@ export class TerminalService {
                 return of(null);
               })
             ).subscribe();
+
+          return;
         }
 
         else if (arg === 'accept') {
@@ -160,6 +171,8 @@ export class TerminalService {
                 return of(null);
               })
             ).subscribe();
+
+          return;
         }
 
         else if (arg === 'decline') {
@@ -172,6 +185,8 @@ export class TerminalService {
                 return of(null);
               })
             ).subscribe();
+
+          return;
         }
 
         else if (arg === 'remove') {
@@ -189,6 +204,8 @@ export class TerminalService {
                 return of(null);
               })
             ).subscribe();
+
+          return;
         }
       }
     },

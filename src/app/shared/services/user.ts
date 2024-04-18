@@ -18,7 +18,7 @@ export class UserService {
   }
 
   public getCurrentUser(): Observable<any> {
-    return this.http.get(`${this.url}/users/me`)
+    return this.http.get(`${this.url}/users`)
       .pipe(
         tap((user: any) => this.user$.next(user)),
         catchError(error => {
@@ -31,11 +31,6 @@ export class UserService {
 
   public setUserToDummy(): void {
     this.user$.next(this.userDummy);
-  }
-
-  // Fetch all users
-  public getUsers(): Observable<any> {
-    return this.http.get(`${this.url}/users`);
   }
 
   // Fetch a single user by id
