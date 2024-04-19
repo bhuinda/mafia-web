@@ -6,7 +6,7 @@
       <h1><span>subject</span>: {{user.username}}</h1>
 
       <div class="primary-info">
-        <h2><span>LEVEL</span>: {{math.floor(userInfo.points / 1000) + 1}} ({{1000 - userInfo.points}} POINTS until next LEVEL.)</h2>
+        <h2><span>LEVEL</span>: {{math.floor(userInfo.points / 1000) + 1}} ({{(math.floor(userInfo.points / 1000) + 1) * 1000 - userInfo.points}} POINTS until next LEVEL.)</h2>
         <h2><span>BIRTHDAY</span>: {{user.created_at | date: 'short'}}</h2>
       </div>
 
